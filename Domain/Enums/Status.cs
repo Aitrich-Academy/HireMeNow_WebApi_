@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Enums
 {
-    public enum Role
+    public enum Status
     {
-        JOB_SEEKER, ADMIN, JOB_PROVIDER, COMPANY_USER
+        PENDING ,VERIFIED
     }
 }
