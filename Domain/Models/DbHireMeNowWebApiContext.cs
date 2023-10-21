@@ -16,6 +16,7 @@ public partial class DbHireMeNowWebApiContext : DbContext
     }
 
     public virtual DbSet<AuthUser> AuthUsers { get; set; }
+    public virtual DbSet<SignUpRequest> SignUpRequests { get; set; }
 
     public virtual DbSet<CompanyUser> CompanyUsers { get; set; }
 
@@ -43,28 +44,28 @@ public partial class DbHireMeNowWebApiContext : DbContext
 
     public virtual DbSet<Skill> Skills { get; set; }
 
-    public virtual DbSet<SystemUser> SystemUsers { get; set; }
+    //public virtual DbSet<SystemUser> SystemUsers { get; set; }
 
     public virtual DbSet<WorkExperience> WorkExperiences { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-PBRNQVI;Initial Catalog=DB_HireMeNow_WebApi;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-EV8O311;Initial Catalog=DB_HireMeNow_WebApi;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AuthUser>(entity =>
-        {
-            entity.ToTable("AuthUser");
+        //modelBuilder.Entity<AuthUser>(entity =>
+        //{
+        //    entity.ToTable("AuthUser");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+        //    entity.Property(e => e.Id).ValueGeneratedNever();
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.AuthUserIdNavigation).HasForeignKey<AuthUser>(d => d.Id);
+        //    entity.HasOne(d => d.IdNavigation).WithOne(p => p.AuthUserIdNavigation).HasForeignKey<AuthUser>(d => d.Id);
 
-            entity.HasOne(d => d.SystemUser).WithMany(p => p.AuthUserSystemUsers)
-                .HasForeignKey(d => d.SystemUserId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-        });
+        //    entity.HasOne(d => d.SystemUser).WithMany(p => p.AuthUserSystemUsers)
+        //        .HasForeignKey(d => d.SystemUserId)
+        //        .OnDelete(DeleteBehavior.ClientSetNull);
+        //});
 
         modelBuilder.Entity<CompanyUser>(entity =>
         {
@@ -171,15 +172,15 @@ public partial class DbHireMeNowWebApiContext : DbContext
                 .HasConstraintName("FK_JobResponsibility_JobPost");
         });
 
-        modelBuilder.Entity<JobSeeker>(entity =>
-        {
-            entity.ToTable("JobSeeker");
+        //modelBuilder.Entity<JobSeeker>(entity =>
+        //{
+        //    entity.ToTable("JobSeeker");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Email).HasMaxLength(450);
+        //    entity.Property(e => e.Id).ValueGeneratedNever();
+        //    entity.Property(e => e.Email).HasMaxLength(450);
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.JobSeeker).HasForeignKey<JobSeeker>(d => d.Id);
-        });
+        //    entity.HasOne(d => d.IdNavigation).WithOne(p => p.JobSeeker).HasForeignKey<JobSeeker>(d => d.Id);
+        //});
 
         modelBuilder.Entity<JobSeekerProfile>(entity =>
         {
@@ -260,13 +261,13 @@ public partial class DbHireMeNowWebApiContext : DbContext
                 .HasConstraintName("FK_Skill_JobSeekerProfile1");
         });
 
-        modelBuilder.Entity<SystemUser>(entity =>
-        {
-            entity.ToTable("SystemUser");
+        //modelBuilder.Entity<SystemUser>(entity =>
+        //{
+        //    entity.ToTable("SystemUser");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Email).HasMaxLength(450);
-        });
+        //    entity.Property(e => e.Id).ValueGeneratedNever();
+        //    entity.Property(e => e.Email).HasMaxLength(450);
+        //});
 
         modelBuilder.Entity<WorkExperience>(entity =>
         {
@@ -281,6 +282,9 @@ public partial class DbHireMeNowWebApiContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_WorkExperience_JobSeekerProfile");
         });
+
+
+
 
         OnModelCreatingPartial(modelBuilder);
     }
