@@ -1,5 +1,4 @@
-﻿using Domain.Models;
-using Domain.Service.Job.Interfaces;
+﻿using Domain.Service.JobSeeker.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,19 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Service.Job
 {
-
-	public class JobServices:IJobServices
+	public class JobServices:IJobSeeekerService
 	{
-		private readonly IJobRepository _jobRepository;
-
-		public JobServices(IJobRepository jobRepository)
-		{
-			_jobRepository = jobRepository;
-		}
-
-		public List<SavedJob> GellAllsavedJobs()
-		{
-			return _jobRepository.GellAllsavedJobs();
-		}
 	}
 }
