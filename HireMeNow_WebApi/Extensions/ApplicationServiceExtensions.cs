@@ -8,6 +8,8 @@ using Domain.Service.Authuser;
 using Domain.Service.SignUp.Interfaces;
 using Domain.Service.SignUp;
 using Domain.Models;
+using Domain.Service.Login.Interfaces;
+using Domain.Service.Login;
 
 namespace HireMeNow_WebApi.Extensions
 {
@@ -20,6 +22,8 @@ namespace HireMeNow_WebApi.Extensions
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection"))
             );
             services.AddTransient<IEmailService, EmailService>();
+            services.AddScoped<ILoginRequestService, LoginRequestService>();
+            services.AddScoped<ILoginRequestRepository, LoginRequestRepository>();
             services.AddScoped<ISignUpRequestRepository, SignUpRequestRepository>();
             services.AddScoped<ISignUpRequestService, SignUpRequestService>();
             services.AddScoped<IAuthUserRepository, AuthUserRepository>();
