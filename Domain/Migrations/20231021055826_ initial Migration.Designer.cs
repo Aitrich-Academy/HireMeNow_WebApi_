@@ -4,6 +4,7 @@ using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(DbHireMeNowWebApiContext))]
-    partial class DbHireMeNowWebApiContextModelSnapshot : ModelSnapshot
+    [Migration("20231021055826_ initial Migration")]
+    partial class initialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,36 +28,20 @@ namespace Domain.Migrations
             modelBuilder.Entity("Domain.Models.AuthUser", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("SystemUserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuthUser");
+                    b.HasIndex("SystemUserId");
+
+                    b.ToTable("AuthUser", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.CompanyUser", b =>
@@ -234,12 +221,12 @@ namespace Domain.Migrations
             modelBuilder.Entity("Domain.Models.JobSeeker", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -260,7 +247,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("JobSeekers");
+                    b.ToTable("JobSeeker", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.JobSeekerProfile", b =>
@@ -368,38 +355,6 @@ namespace Domain.Migrations
                     b.ToTable("Role", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Models.SignUpRequest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SignUpRequests");
-                });
-
             modelBuilder.Entity("Domain.Models.Skill", b =>
                 {
                     b.Property<Guid>("Id")
@@ -412,9 +367,6 @@ namespace Domain.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<Guid>("JobPost")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("JobSeekerProfileId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
