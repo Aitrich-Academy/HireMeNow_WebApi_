@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Service.Job.DTOs
 {
-	public class SavedJobsDtos
-	{
-
-	}
+    public class JobPostsDtos
+    {
+    }
 }
