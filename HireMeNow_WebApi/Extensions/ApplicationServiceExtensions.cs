@@ -8,6 +8,8 @@ using Domain.Service.Authuser;
 using Domain.Service.SignUp.Interfaces;
 using Domain.Service.SignUp;
 using Domain.Models;
+using Domain.Service.Job.Interfaces;
+using Domain.Service.Job;
 
 namespace HireMeNow_WebApi.Extensions
 {
@@ -23,6 +25,9 @@ namespace HireMeNow_WebApi.Extensions
             services.AddScoped<ISignUpRequestRepository, SignUpRequestRepository>();
             services.AddScoped<ISignUpRequestService, SignUpRequestService>();
             services.AddScoped<IAuthUserRepository, AuthUserRepository>();
+			services.AddScoped<IJobRepository,JobRepository>();
+            services.AddScoped<IJobServices, JobServices>();
+		
             return services;
         }
     }
