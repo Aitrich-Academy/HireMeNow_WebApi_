@@ -19,9 +19,9 @@ namespace Domain.Service.Job
 			_context = context;
 		}
 
-		//public List<SavedJob> GellAllsavedJobs()
-		//{
-		//	return _context.Sa
-		//}
+		public List<SavedJob> GellAllsavedJobs()
+		{
+			return _context.SavedJobs.ToList();
+		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Domain.Service.Job.Interfaces
 {
 	public interface IJobRepository
 	{
-		
+		public List<SavedJob> GellAllsavedJobs();
 	}
 }
