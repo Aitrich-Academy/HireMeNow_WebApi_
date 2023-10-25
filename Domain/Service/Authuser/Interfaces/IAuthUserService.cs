@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Service.Job.DTOs
+namespace Domain.Service.Authuser.Interfaces
 {
-	public class SavedJobsDtos
+	public interface IAuthUserService
 	{
-
+		string GetUserId();
 	}
 }

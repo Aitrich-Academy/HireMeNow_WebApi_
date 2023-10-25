@@ -1,6 +1,8 @@
-﻿using Domain.Models;
+﻿using Domain.Helpers;
+using Domain.Models;
 using Domain.Service.Job.Interfaces;
 using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +19,31 @@ namespace Domain.Service.Job
 		{
 			_context = context;
 		}
-		public Task<List<SavedJob>> GetAllSavedJobsOfSeeker(Guid seekerId)
+		public async Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(JobListParams param)
 		{
-			return _context.SavedJobs.Where(e => e.SavedBy == seekerId).ToListAsync();
+			// Making queryable
+			var query = _context.SavedJobs
+			   .OrderByDescending(c => c.DateSaved)
+			   //.ProjectTo<Job>(_mapper.ConfigurationProvider)
+			   .AsQueryable();
+			if(param.UserId!=null)
+			{
+				query = query.Where(c => c.SavedBy==param.UserId);
+			}
+
+			return await PagedList<SavedJob>.CreateAsync(query,
+				param.PageNumber, param.PageSize);
+		
+			//return _context.SavedJobs.Where(e => e.SavedBy == seekerId).Include(e => e.JobPost).Include(e => e.JobSeeker).ToListAsync();
+		}
+		public SavedJob RemoveSavedJob(Guid seekerId,Guid jobid)
+		{
+
+			SavedJob savedjob= _context.SavedJobs.Where(e => e.SavedBy == seekerId && e.Job==jobid).FirstOrDefault();
+			_context.Remove(savedjob);
+			_context.SaveChanges();
+			return savedjob;
+			//return _context.SavedJobs.Where(e => e.SavedBy == seekerId).Include(e => e.JobPost).Include(e => e.JobSeeker).ToListAsync();
 		}
 	}
 }

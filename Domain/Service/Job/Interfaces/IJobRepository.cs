@@ -1,4 +1,6 @@
-﻿using Domain.Models;
+﻿using Domain.Helpers;
+using Domain.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,8 @@ namespace Domain.Service.Job.Interfaces
 {
 	public interface IJobRepository
 	{
-		Task< List<SavedJob>> GetAllSavedJobsOfSeeker(Guid seekerId);
+		Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(JobListParams param);
+
+		SavedJob RemoveSavedJob(Guid seekerId, Guid jobid);
 	}
 }
