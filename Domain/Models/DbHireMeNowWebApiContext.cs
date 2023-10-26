@@ -54,7 +54,7 @@ public partial class DbHireMeNowWebApiContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-PBRNQVI;Initial Catalog=HireMeNowDb_WebApi;User ID=soudha;Password=soudha;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-PBRNQVI;Initial Catalog=JobPortal;User ID=soudha;Password=soudha;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -212,9 +212,7 @@ public partial class DbHireMeNowWebApiContext : DbContext
 
         modelBuilder.Entity<Qualification>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Qualification");
+            entity.ToTable("Qualification");
 
             entity.Property(e => e.Description)
                 .HasMaxLength(50)
@@ -302,25 +300,8 @@ public partial class DbHireMeNowWebApiContext : DbContext
             .HasOne(jps => jps.Skill)
             .WithMany(s => s.JobSeekerProfileSkills)
             .HasForeignKey(jps => jps.SkillId);
-
-        //modelBuilder.Entity<JobSeekerProfile>(entity =>
-        //{
-        //    entity.HasMany(jsp => jsp.Qualifications)
-        //          .WithOne(qual => qual.JobSeekerProfile)
-        //          .HasForeignKey(qual => qual.JobseekerProfileId);
-        //});
-
-        //modelBuilder.Entity<Qualification>(entity =>
-        //{
-        //    entity.HasKey(qual => qual.Id); // Define the primary key
-        //});
-
-        //  modelBuilder.Entity<JobSeekerProfile>()
-        //.HasMany(jsp => jsp.Qualifications)
-        //.WithOne(qual => qual.JobSeekerProfile)
-        //.HasForeignKey(qual => qual.JobseekerProfileId);
-
-        //  OnModelCreatingPartial(modelBuilder);
+   
+        OnModelCreatingPartial(modelBuilder);
 
     }
 
