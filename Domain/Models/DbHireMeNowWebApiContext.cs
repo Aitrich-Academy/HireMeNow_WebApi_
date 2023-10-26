@@ -36,6 +36,9 @@ public partial class DbHireMeNowWebApiContext : DbContext
 
     public virtual DbSet<Location> Locations { get; set; }
 
+
+    public virtual DbSet<JobApplication> JobApplications { get; set; }
+
     public virtual DbSet<Qualification> Qualifications { get; set; }
 
     public virtual DbSet<Resume> Resumes { get; set; }
@@ -300,12 +303,24 @@ public partial class DbHireMeNowWebApiContext : DbContext
             .WithMany(s => s.JobSeekerProfileSkills)
             .HasForeignKey(jps => jps.SkillId);
 
-      //  modelBuilder.Entity<JobSeekerProfile>()
-      //.HasMany(jsp => jsp.Qualifications)
-      //.WithOne(qual => qual.JobSeekerProfile)
-      //.HasForeignKey(qual => qual.JobseekerProfileId);
+        //modelBuilder.Entity<JobSeekerProfile>(entity =>
+        //{
+        //    entity.HasMany(jsp => jsp.Qualifications)
+        //          .WithOne(qual => qual.JobSeekerProfile)
+        //          .HasForeignKey(qual => qual.JobseekerProfileId);
+        //});
 
-      //  OnModelCreatingPartial(modelBuilder);
+        //modelBuilder.Entity<Qualification>(entity =>
+        //{
+        //    entity.HasKey(qual => qual.Id); // Define the primary key
+        //});
+
+        //  modelBuilder.Entity<JobSeekerProfile>()
+        //.HasMany(jsp => jsp.Qualifications)
+        //.WithOne(qual => qual.JobSeekerProfile)
+        //.HasForeignKey(qual => qual.JobseekerProfileId);
+
+        //  OnModelCreatingPartial(modelBuilder);
 
     }
 
