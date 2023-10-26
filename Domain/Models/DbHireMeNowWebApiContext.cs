@@ -51,7 +51,7 @@ public partial class DbHireMeNowWebApiContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-PBRNQVI;Initial Catalog=HireMeNowDb_WebApi;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-PBRNQVI;Initial Catalog=HireMeNowDb_WebApi;User ID=soudha;Password=soudha;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -190,6 +190,8 @@ public partial class DbHireMeNowWebApiContext : DbContext
             entity.Property(e => e.Id).ValueGeneratedNever();
 
             entity.HasOne(d => d.Resume).WithMany(p => p.JobSeekerProfiles).HasForeignKey(d => d.ResumeId);
+
+            //entity.HasMany(s=>s.Skills).WithMany(p => p.jo).HasForeignKey(d => d.ResumeId);
         });
 
         modelBuilder.Entity<Location>(entity =>
@@ -256,10 +258,10 @@ public partial class DbHireMeNowWebApiContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.JobPostNavigation).WithMany(p => p.Skills)
-                .HasForeignKey(d => d.JobPost)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Skill_JobSeekerProfile1");
+            //entity.HasOne(d => d.JobPostNavigation).WithMany(p => p.Skills)
+            //    .HasForeignKey(d => d.JobPost)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_Skill_JobSeekerProfile1");
         });
 
         //modelBuilder.Entity<SystemUser>(entity =>
@@ -285,9 +287,26 @@ public partial class DbHireMeNowWebApiContext : DbContext
         });
 
 
+        modelBuilder.Entity<JobSeekerProfileSkill>()
+       .HasKey(jps => new { jps.JobSeekerProfileId, jps.SkillId });
 
+        modelBuilder.Entity<JobSeekerProfileSkill>()
+            .HasOne(jps => jps.JobSeekerProfile)
+            .WithMany(jp => jp.JobSeekerProfileSkills)
+            .HasForeignKey(jps => jps.JobSeekerProfileId);
 
-        OnModelCreatingPartial(modelBuilder);
+        modelBuilder.Entity<JobSeekerProfileSkill>()
+            .HasOne(jps => jps.Skill)
+            .WithMany(s => s.JobSeekerProfileSkills)
+            .HasForeignKey(jps => jps.SkillId);
+
+      //  modelBuilder.Entity<JobSeekerProfile>()
+      //.HasMany(jsp => jsp.Qualifications)
+      //.WithOne(qual => qual.JobSeekerProfile)
+      //.HasForeignKey(qual => qual.JobseekerProfileId);
+
+      //  OnModelCreatingPartial(modelBuilder);
+
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
