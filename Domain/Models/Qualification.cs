@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Models;
 
 public partial class Qualification
 {
+    [Key]
     public Guid Id { get; set; }
 
     public string Name { get; set; } = null!;
@@ -16,4 +18,5 @@ public partial class Qualification
     public Guid? JobPostId { get; set; }
 
     public virtual JobPost? JobPost { get; set; }
+    public JobSeekerProfile JobSeekerProfile { get; set; }  
 }
