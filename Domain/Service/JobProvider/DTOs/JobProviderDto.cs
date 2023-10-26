@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Service.Job.DTOs
+namespace Domain.Service.JobProvider.DTOs
 {
-
-    public class JobPostsDtos
+    public class JobProviderDto
     {
         public Guid Id { get; set; }
 
