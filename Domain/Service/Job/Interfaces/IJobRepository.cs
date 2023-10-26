@@ -12,6 +12,7 @@ namespace Domain.Service.Job.Interfaces
 	public interface IJobRepository
 	{
 		Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(JobListParams param);
+		Task<PagedList<JobApplication>> GetAllAppliedJobs(JobListParams param);
 
 		SavedJob RemoveSavedJob(Guid seekerId, Guid jobid);
 	}

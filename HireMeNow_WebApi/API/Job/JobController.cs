@@ -1,37 +1,47 @@
-﻿using Domain.Helpers;
+﻿using AutoMapper;
+using Domain.Helpers;
 using Domain.Models;
 using Domain.Service.Authuser.Interfaces;
 using Domain.Service.Job.Interfaces;
+using Domain.Service.SignUp.DTOs;
 using HireMeNow_WebApi.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Bcpg;
-using PagedList;
+
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using Domain.Service.SignUp.DTOs;
+using HireMeNow_WebApi.Extensions;
 
 namespace HireMeNow_WebApi.API.Job
 {
 	
 	[ApiController]
-	//[Authorize(Roles = "JOBSEEKER")]
+	[Authorize(Roles = "JOB_SEEKER")]
 	public class JobController : BaseApiController<JobController>
 	{
 		protected IJobServices _jobservice;
 		protected IAuthUserService _authUserService;
+		
 
 		public JobController(IJobServices jobservice)
 		{
 			_jobservice = jobservice;
+			
 		}
 		[HttpGet]
 		[Route("job-seeker/savedjobs")]
-		public async Task<ActionResult> GetAllSavedJobs([FromQuery] JobListParams param)
+		public async Task<IActionResult> GetAllSavedJobs([FromQuery] JobListParams param)
 		{
-			
-			
+
+
 			//var UserId = _authUserService.GetUserId();
-			var savedJobs = _jobservice.GetAllSavedJobsOfSeeker(param);
-			if(savedJobs!=null)
+			var savedJobs =await  _jobservice.GetAllSavedJobsOfSeeker(param);
+			Response.AddPaginationHeader(savedJobs.CurrentPage, savedJobs.PageSize, savedJobs.TotalCount, savedJobs.TotalPages);
+
+			
+			if (savedJobs!=null)
 			{
 				return Ok(savedJobs);
 			}

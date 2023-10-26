@@ -28,7 +28,7 @@ namespace Domain.Service.Job
 			   .AsQueryable();
 			if(param.UserId!=null)
 			{
-				query = query.Where(c => c.SavedBy==param.UserId);
+				query = query.Where(c => c.SavedBy==param.UserId).Include(e=>e.JobPost);
 			}
 
 			return await PagedList<SavedJob>.CreateAsync(query,
@@ -44,6 +44,17 @@ namespace Domain.Service.Job
 			_context.SaveChanges();
 			return savedjob;
 			//return _context.SavedJobs.Where(e => e.SavedBy == seekerId).Include(e => e.JobPost).Include(e => e.JobSeeker).ToListAsync();
+		}
+		public async Task<PagedList<JobApplication>> GetAllAppliedJobs(JobListParams param)
+		{
+			var query = _context.AppliedJobs.AsQueryable();
+			if (param.UserId != null)
+			{
+				query = query.Where(c => c.Applicant == param.UserId).Include(e => e.JobPost);
+			}
+
+			return await PagedList<JobApplication>.CreateAsync(query,
+				param.PageNumber, param.PageSize);
 		}
 	}
 }

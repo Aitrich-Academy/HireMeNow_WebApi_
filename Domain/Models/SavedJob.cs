@@ -21,8 +21,8 @@ public partial class SavedJob
 		[ForeignKey(nameof(JobSeeker))]
 		public Guid SavedBy { get; set; }
 		public DateTime DateSaved { get; set; }
-		public virtual JobPost? JobPost { get; set; }
-		public virtual JobSeeker? JobSeeker { get; set; }
+		public virtual JobPost JobPost { get; set; }
+		public virtual JobSeeker JobSeeker { get; set; }
 	}
 
 
