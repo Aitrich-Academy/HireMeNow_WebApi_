@@ -14,6 +14,7 @@ namespace Domain.Service.SignUp.Interfaces
 
         //Task<Guid> AddJobseekerSignUpRequest(JobSeekerSignupRequest jobseekerCreateRequest);
         void CreateSignupRequest(JobSeekerSignupRequestDto data);
+       
         Task<bool> VerifyEmailAsync(Guid jobSeekerSignupRequestId);
     }
 }

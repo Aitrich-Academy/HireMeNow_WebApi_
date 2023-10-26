@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Service.Login.Interfaces;
 using Domain.Service.SignUp.DTOs;
 using Domain.Service.SignUp.Interfaces;
 using HireMeNow_WebApi.API.JobSeeker.RequestObjects;
@@ -13,9 +14,12 @@ namespace HireMeNow_WebApi.API.JobSeeker
     public class JobSeekerController : BaseApiController<JobSeekerController>
     {
         public ISignUpRequestService jobSeekerService { get; set; }
+
+        public ILoginRequestService loginRequestService { get; set; }
         public IMapper mapper { get; set; }
-        public JobSeekerController(ISignUpRequestService _jobSeekerService, IMapper _mapper) {
+        public JobSeekerController(ISignUpRequestService _jobSeekerService, IMapper _mapper,ILoginRequestService _loginRequestService) {
             jobSeekerService=_jobSeekerService;
+            loginRequestService=_loginRequestService;
             mapper=_mapper;
         }
         [HttpPost]
@@ -46,5 +50,20 @@ namespace HireMeNow_WebApi.API.JobSeeker
             await jobSeekerService.CreateJobseeker(jobSeekerSignupRequestId, password);
             return Ok();
         }
+
+        [HttpPost]
+        [Route("job-seeker/login")]
+        public async Task<ActionResult> Login(JobSeekerLoginRequest logdata)
+        {
+            //var user = _mapper.Map<User>(userDto);
+          var user = loginRequestService.login(logdata.Email, logdata.Password);
+            
+            if (user == null)
+            {
+                return BadRequest("Login Failed");
+            }
+            return Ok(user);
+        }
+
     }
 }

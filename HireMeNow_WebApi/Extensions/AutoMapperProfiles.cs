@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domain.Models;
+using Domain.Service.Login.DTOs;
 using Domain.Service.Job.DTOs;
 using Domain.Service.JobProvider.DTOs;
 using Domain.Service.SignUp.DTOs;

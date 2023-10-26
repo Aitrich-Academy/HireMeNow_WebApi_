@@ -13,6 +13,9 @@ using Domain.Service.Job;
 using Domain.Service.JobProvider.Interfaces;
 using Domain.Service.JobProvider;
 
+using Domain.Service.Login.Interfaces;
+using Domain.Service.Login;
+
 namespace HireMeNow_WebApi.Extensions
 {
     public static class ApplicationServiceExtensions
@@ -24,6 +27,8 @@ namespace HireMeNow_WebApi.Extensions
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection"))
             );
             services.AddTransient<IEmailService, EmailService>();
+            services.AddScoped<ILoginRequestService, LoginRequestService>();
+            services.AddScoped<ILoginRequestRepository, LoginRequestRepository>();
             services.AddScoped<ISignUpRequestRepository, SignUpRequestRepository>();
             services.AddScoped<ISignUpRequestService, SignUpRequestService>();
             services.AddScoped<IAuthUserRepository, AuthUserRepository>();
