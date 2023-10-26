@@ -8,7 +8,7 @@ namespace Domain.Models
 {
     public class JobSeekerProfileSkill
     {
-        public Guid JobSeekerProfileId { get; set; }
+              public Guid JobSeekerProfileId { get; set; }
         public JobSeekerProfile JobSeekerProfile { get; set; }
 
         public Guid SkillId { get; set; }
