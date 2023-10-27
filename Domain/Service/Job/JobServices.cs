@@ -26,7 +26,7 @@ namespace Domain.Service.Job
 			_jobrepository = jobrepository;
 			_mapper = mapper;	
 		}
-		public async Task< PagedList<SavedJobsDtos>> GetAllSavedJobsOfSeeker(JobListParams param)
+		public async Task<PagedList<SavedJobsDtos>> GetAllSavedJobsOfSeeker(JobListParams param)
 		{
 			var savedJobs = await _jobrepository.GetAllSavedJobsOfSeeker(param);
 			var savedjobsDto = _mapper.Map<PagedList<SavedJobsDtos>>(savedJobs);
