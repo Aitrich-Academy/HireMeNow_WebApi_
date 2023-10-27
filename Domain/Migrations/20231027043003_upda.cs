@@ -6,11 +6,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Domain.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class upda : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AuthUser",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuthUser", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Industry",
                 columns: table => new
@@ -34,6 +52,23 @@ namespace Domain.Migrations
                 },
                 constraints: table =>
                 {
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobSeekers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobSeekers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,7 +110,7 @@ namespace Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SystemUser",
+                name: "SignUpRequests",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -83,12 +118,12 @@ namespace Domain.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SystemUser", x => x.Id);
+                    table.PrimaryKey("PK_SignUpRequests", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -121,12 +156,19 @@ namespace Domain.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ResumeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobSeekerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProfileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfileSummary = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_JobSeekerProfile", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobSeekerProfile_JobSeekers_JobSeekerId",
+                        column: x => x.JobSeekerId,
+                        principalTable: "JobSeekers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_JobSeekerProfile_Resume_ResumeId",
                         column: x => x.ResumeId,
@@ -136,58 +178,11 @@ namespace Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AuthUser",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SystemUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuthUser", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AuthUser_SystemUser_Id",
-                        column: x => x.Id,
-                        principalTable: "SystemUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AuthUser_SystemUser_SystemUserId",
-                        column: x => x.SystemUserId,
-                        principalTable: "SystemUser",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "JobSeeker",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_JobSeeker", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_JobSeeker_SystemUser_Id",
-                        column: x => x.Id,
-                        principalTable: "SystemUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CompanyUser",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Company = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Company = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -196,7 +191,8 @@ namespace Domain.Migrations
                         name: "FK_CompanyUser_JobProviderCompany",
                         column: x => x.Company,
                         principalTable: "JobProviderCompany",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,6 +247,42 @@ namespace Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobApplications",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobPost_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Applicant = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Resume_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CoverLetter = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Datesubmitted = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SeekerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobApplications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobApplications_JobPost_JobPost_id",
+                        column: x => x.JobPost_id,
+                        principalTable: "JobPost",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobApplications_JobSeekers_SeekerId",
+                        column: x => x.SeekerId,
+                        principalTable: "JobSeekers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobApplications_Resume_Resume_id",
+                        column: x => x.Resume_id,
+                        principalTable: "Resume",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JobResponsibility",
                 columns: table => new
                 {
@@ -281,11 +313,43 @@ namespace Domain.Migrations
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_Qualification", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Qualification_JobSeekerProfile",
                         column: x => x.JobPostId,
                         principalTable: "JobPost",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Qualification_JobSeekerProfile_JobseekerProfileId",
+                        column: x => x.JobseekerProfileId,
+                        principalTable: "JobSeekerProfile",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SavedJobs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Job = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SavedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateSaved = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SavedJobs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SavedJobs_JobPost_Job",
+                        column: x => x.Job,
+                        principalTable: "JobPost",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SavedJobs_JobSeekers_SavedBy",
+                        column: x => x.SavedBy,
+                        principalTable: "JobSeekers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -295,33 +359,61 @@ namespace Domain.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    JobPost = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    JobPostId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Skill", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Skill_JobSeekerProfile1",
-                        column: x => x.JobPost,
+                        name: "FK_Skill_JobPost_JobPostId",
+                        column: x => x.JobPostId,
                         principalTable: "JobPost",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobSeekerProfileSkill",
+                columns: table => new
+                {
+                    JobSeekerProfileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SkillId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobSeekerProfileSkill", x => new { x.JobSeekerProfileId, x.SkillId });
                     table.ForeignKey(
-                        name: "FK_Skill_JobSeekerProfile_Id",
-                        column: x => x.Id,
+                        name: "FK_JobSeekerProfileSkill_JobSeekerProfile_JobSeekerProfileId",
+                        column: x => x.JobSeekerProfileId,
                         principalTable: "JobSeekerProfile",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobSeekerProfileSkill_Skill_SkillId",
+                        column: x => x.SkillId,
+                        principalTable: "Skill",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AuthUser_SystemUserId",
-                table: "AuthUser",
-                column: "SystemUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CompanyUser_Company",
                 table: "CompanyUser",
                 column: "Company");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobApplications_JobPost_id",
+                table: "JobApplications",
+                column: "JobPost_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobApplications_Resume_id",
+                table: "JobApplications",
+                column: "Resume_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobApplications_SeekerId",
+                table: "JobApplications",
+                column: "SeekerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobPost_JobLocation",
@@ -344,9 +436,19 @@ namespace Domain.Migrations
                 column: "JobPost");
 
             migrationBuilder.CreateIndex(
+                name: "IX_JobSeekerProfile_JobSeekerId",
+                table: "JobSeekerProfile",
+                column: "JobSeekerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_JobSeekerProfile_ResumeId",
                 table: "JobSeekerProfile",
                 column: "ResumeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobSeekerProfileSkill_SkillId",
+                table: "JobSeekerProfileSkill",
+                column: "SkillId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Qualification_JobPostId",
@@ -354,9 +456,24 @@ namespace Domain.Migrations
                 column: "JobPostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Skill_JobPost",
+                name: "IX_Qualification_JobseekerProfileId",
+                table: "Qualification",
+                column: "JobseekerProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SavedJobs_Job",
+                table: "SavedJobs",
+                column: "Job");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SavedJobs_SavedBy",
+                table: "SavedJobs",
+                column: "SavedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Skill_JobPostId",
                 table: "Skill",
-                column: "JobPost");
+                column: "JobPostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkExperience_JobSeekerProfileId",
@@ -374,13 +491,16 @@ namespace Domain.Migrations
                 name: "Industry");
 
             migrationBuilder.DropTable(
+                name: "JobApplications");
+
+            migrationBuilder.DropTable(
                 name: "JobCategory");
 
             migrationBuilder.DropTable(
                 name: "JobResponsibility");
 
             migrationBuilder.DropTable(
-                name: "JobSeeker");
+                name: "JobSeekerProfileSkill");
 
             migrationBuilder.DropTable(
                 name: "Qualification");
@@ -389,25 +509,31 @@ namespace Domain.Migrations
                 name: "Role");
 
             migrationBuilder.DropTable(
-                name: "Skill");
+                name: "SavedJobs");
+
+            migrationBuilder.DropTable(
+                name: "SignUpRequests");
 
             migrationBuilder.DropTable(
                 name: "WorkExperience");
 
             migrationBuilder.DropTable(
-                name: "SystemUser");
-
-            migrationBuilder.DropTable(
-                name: "JobPost");
+                name: "Skill");
 
             migrationBuilder.DropTable(
                 name: "JobSeekerProfile");
 
             migrationBuilder.DropTable(
-                name: "CompanyUser");
+                name: "JobPost");
+
+            migrationBuilder.DropTable(
+                name: "JobSeekers");
 
             migrationBuilder.DropTable(
                 name: "Resume");
+
+            migrationBuilder.DropTable(
+                name: "CompanyUser");
 
             migrationBuilder.DropTable(
                 name: "JobProviderCompany");

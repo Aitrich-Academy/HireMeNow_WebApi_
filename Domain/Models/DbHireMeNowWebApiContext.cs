@@ -51,7 +51,7 @@ public partial class DbHireMeNowWebApiContext : DbContext
 	//public virtual DbSet<SystemUser> SystemUsers { get; set; }
 
 	public virtual DbSet<WorkExperience> WorkExperiences { get; set; }
-	public virtual DbSet<JobApplication> AppliedJobs { get; set; }
+
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
       => optionsBuilder.UseSqlServer("Data Source=RAZIYA;Initial Catalog=HireMeNowDbNew;Integrated Security=True;Persist Security Info=True;Trust Server Certificate=True;");

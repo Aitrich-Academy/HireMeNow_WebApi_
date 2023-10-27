@@ -47,7 +47,7 @@ namespace Domain.Service.Job
 		}
 		public async Task<PagedList<JobApplication>> GetAllAppliedJobs(JobListParams param)
 		{
-			var query = _context.AppliedJobs.AsQueryable();
+			var query = _context.JobApplications.AsQueryable();
 			if (param.UserId != null)
 			{
 				query = query.Where(c => c.Applicant == param.UserId).Include(e => e.JobPost);
