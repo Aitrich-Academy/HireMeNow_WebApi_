@@ -31,6 +31,6 @@ namespace Domain.Models
 		public virtual JobSeeker JobSeeker { get; set; }
         public virtual Resume Resume { get; set; }
         public virtual JobSeeker Seeker { get; set; }
-    
+      
     }
 }

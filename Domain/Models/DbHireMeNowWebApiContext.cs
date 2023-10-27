@@ -54,7 +54,8 @@ public partial class DbHireMeNowWebApiContext : DbContext
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-       => optionsBuilder.UseSqlServer("Data Source=DESKTOP-PBRNQVI;Initial Catalog=JobPortal;User ID=soudha;Password=soudha;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=true;");
+
+      => optionsBuilder.UseSqlServer("Data Source=RAZIYA;Initial Catalog=HireMeNowDbNew;Integrated Security=True;Persist Security Info=True;Trust Server Certificate=True;");
 
       
 
