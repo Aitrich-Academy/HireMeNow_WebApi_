@@ -51,10 +51,10 @@ public partial class DbHireMeNowWebApiContext : DbContext
 	//public virtual DbSet<SystemUser> SystemUsers { get; set; }
 
 	public virtual DbSet<WorkExperience> WorkExperiences { get; set; }
-	public virtual DbSet<JobApplication> AppliedJobs { get; set; }
+
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-       optionsBuilder.UseSqlServer("Data Source=DESKTOP-PBRNQVI;Initial Catalog=JobPortal;User ID=soudha;Password=soudha;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=true;");
+       => optionsBuilder.UseSqlServer("Data Source=DESKTOP-PBRNQVI;Initial Catalog=JobPortal;User ID=soudha;Password=soudha;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=true;");
 
       
 
