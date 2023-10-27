@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using Domain.Models;
 using Domain.Service.Job.DTOs;
 using Domain.Service.JobProvider.Dtos;

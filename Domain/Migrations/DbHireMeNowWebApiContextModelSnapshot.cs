@@ -114,9 +114,6 @@ namespace Domain.Migrations
                     b.Property<Guid>("JobPost_id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("JobSeekerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("Resume_id")
                         .HasColumnType("uniqueidentifier");
 
@@ -131,13 +128,11 @@ namespace Domain.Migrations
 
                     b.HasIndex("JobPost_id");
 
-                    b.HasIndex("JobSeekerId");
-
                     b.HasIndex("Resume_id");
 
                     b.HasIndex("SeekerId");
 
-                    b.ToTable("JobApplication");
+                    b.ToTable("JobApplications");
                 });
 
             modelBuilder.Entity("Domain.Models.JobCategory", b =>
@@ -576,12 +571,6 @@ namespace Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Models.JobSeeker", "JobSeeker")
-                        .WithMany()
-                        .HasForeignKey("JobSeekerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Models.Resume", "Resume")
                         .WithMany()
                         .HasForeignKey("Resume_id")
@@ -595,8 +584,6 @@ namespace Domain.Migrations
                         .IsRequired();
 
                     b.Navigation("JobPost");
-
-                    b.Navigation("JobSeeker");
 
                     b.Navigation("Resume");
 
