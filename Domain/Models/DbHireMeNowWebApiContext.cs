@@ -51,10 +51,12 @@ public partial class DbHireMeNowWebApiContext : DbContext
 	//public virtual DbSet<SystemUser> SystemUsers { get; set; }
 
 	public virtual DbSet<WorkExperience> WorkExperiences { get; set; }
+	public virtual DbSet<JobApplication> AppliedJobs { get; set; }
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-PBRNQVI;Initial Catalog=JobPortal;User ID=soudha;Password=soudha;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=true;");
+       optionsBuilder.UseSqlServer("Data Source=DESKTOP-PBRNQVI;Initial Catalog=JobPortal;User ID=soudha;Password=soudha;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=true;");
+
+      
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
