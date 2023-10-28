@@ -10,6 +10,7 @@ namespace Domain.Service.Job.DTOs
 {
 	public class SavedJobsDtos
 	{
+
 		public SavedJobsDtos(Guid job, DateTime dateSaved, JobPost jobPost)
 		{
 			Job = job;
@@ -21,6 +22,7 @@ namespace Domain.Service.Job.DTOs
 		public DateTime DateSaved { get; set; }
 		[JsonIgnore]
 		public  JobPost JobPost { get; set; }
+
 
 	}
 }
