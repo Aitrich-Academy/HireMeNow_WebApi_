@@ -35,7 +35,7 @@ namespace Domain.Service.JobProvider
 			return compayRegistrationDtos;
 		}
 		public async Task<JobProviderCompany> UpdateAsync(CompanyUpdateDtos company)
-		{
+	{
 			JobProviderCompany jobProviderCompany=mapper.Map<JobProviderCompany>(company);
 			var jobProviderUpdatedCompany= await companyRepository.updateCompanyAsync(jobProviderCompany);
 			//var ComapnyRegistrationDto = mapper.Map<CompanyRegistrationDtos>(jobProviderUpdatedCompany);

@@ -18,7 +18,7 @@ namespace HireMeNow_WebApi.API.Job
 {
 
 	[ApiController]
-	[Authorize(Roles = "JOB_SEEKER")]
+	//[Authorize(Roles = "JOB_SEEKER")]
 	public class JobController : BaseApiController<JobController>
 	{
 		protected IJobServices _jobservice;
