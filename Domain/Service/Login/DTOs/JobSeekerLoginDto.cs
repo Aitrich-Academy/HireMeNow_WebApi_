@@ -18,7 +18,7 @@ namespace Domain.Service.Login.DTOs
         public string Phone { get; set; }
         [Required]
         [EmailAddress]
-
+        public string Role {  get; set; }
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
