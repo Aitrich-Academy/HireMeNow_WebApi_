@@ -1,4 +1,6 @@
-﻿using Domain.Service.JobSeeker.Interfaces;
+﻿using Domain.Models;
+using Domain.Service.Job.Interfaces;
+using Domain.Service.JobSeeker.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,6 @@ namespace Domain.Service.JobSeeker
 {
 	public class JobSeekerService:IJobSeeekerService
 	{
-
+		
 	}
 }

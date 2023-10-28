@@ -1,4 +1,8 @@
-﻿using Domain.Models;
+
+
+﻿using Domain.Helpers;
+using Domain.Models;
+using Domain.Service.Job.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +13,19 @@ namespace Domain.Service.Job.Interfaces
 {
     public interface IJobServices
 	{
+
         public Task<List<JobPost>> GetJobs();
 
         public Task<List<JobPost>> GetJobsByCompany(Guid companyId);
 
         public Task<List<JobPost>> GetJobsById(Guid companyId, Guid jobId);
 
-    }
+  
+		Task<PagedList<SavedJobsDtos>> GetAllSavedJobsOfSeeker(JobListParams param);
+
+		SavedJob RemoveSavedJob(Guid seekerId, Guid jobid);
+		Task<PagedList<AppliedJobsDtos>> GetAllAppliedJobs(JobListParams param);
+
+	}
+
 }
