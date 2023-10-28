@@ -16,9 +16,9 @@ using HireMeNow_WebApi.Extensions;
 
 namespace HireMeNow_WebApi.API.Job
 {
-	
+
 	[ApiController]
-	//[Authorize(Roles = "JOB_SEEKER")]
+	[Authorize(Roles = "JOB_SEEKER")]
 	public class JobController : BaseApiController<JobController>
 	{
 		protected IJobServices _jobservice;
@@ -51,11 +51,11 @@ namespace HireMeNow_WebApi.API.Job
 			}
 		}
 		[HttpGet]
-		[Route("job-seeker/savedjobs/{jobid}")]
-		public ActionResult GetSavedJobs(Guid jobid)
+		[Route("job-seeker/{jobseekerId}/savedjobs/{savedJobId}")]
+		public ActionResult GetSavedJobs(Guid jobseekerId,Guid savedJobId)
 		{
-			var UserId = new Guid("A52C61EA-F163-4EA1-6A69-08DBD2287DF5");
-			SavedJob savedJob =  _jobservice.RemoveSavedJob(UserId,jobid);
+			//var UserId = new Guid("A52C61EA-F163-4EA1-6A69-08DBD2287DF5");
+			SavedJob savedJob =  _jobservice.RemoveSavedJob(jobseekerId, savedJobId);
 			if( savedJob!=null )
 			{
 			return Ok("Deleted");	

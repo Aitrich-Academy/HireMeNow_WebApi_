@@ -11,6 +11,7 @@ namespace HireMeNow_WebApi.API.JobSeeker
 {
     //[Route("api/[controller]")]
     [ApiController]
+
     public class JobSeekerController : BaseApiController<JobSeekerController>
     {
         public ISignUpRequestService jobSeekerService { get; set; }

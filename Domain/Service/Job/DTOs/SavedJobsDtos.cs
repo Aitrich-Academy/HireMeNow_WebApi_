@@ -10,6 +10,10 @@ namespace Domain.Service.Job.DTOs
 {
 	public class SavedJobsDtos
 	{
+		public SavedJobsDtos()
+		{
+		}
+
 		public SavedJobsDtos(Guid job, DateTime dateSaved, JobPost jobPost)
 		{
 			Job = job;

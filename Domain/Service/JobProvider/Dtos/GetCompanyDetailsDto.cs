@@ -1,8 +1,14 @@
-﻿namespace HireMeNow_WebApi.API.JobProvider.RequestObjects
+﻿using Domain.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Domain.Service.JobProvider.Dtos
 {
-	public class AddCompanyRequestobject
+	public class GetCompanyDetailsDto
 	{
-		public Guid Id { get; set; }
 		public string LegalName { get; set; } = null!;
 
 		public string Summary { get; set; } = null!;
@@ -19,6 +25,7 @@
 
 		public Guid Location { get; set; }
 
-
+		public Location Locations {  get; set; }	
+		public Industry industry { get; set; }
 	}
 }
