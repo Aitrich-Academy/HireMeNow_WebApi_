@@ -10,5 +10,6 @@ namespace Domain.Service.Authuser.Interfaces
     public interface IAuthUserRepository
     {
         Task<AuthUser> AddAuthUser(AuthUser authUser);
+        string? CreateToken(AuthUser user);
     }
 }

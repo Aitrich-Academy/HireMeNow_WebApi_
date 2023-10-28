@@ -77,7 +77,7 @@ namespace HireMeNow_WebApi.API.JobProvider
             _jobProviderService.PostJob(job);
             return Ok(jobpostDto);
 
-        }
+    }
 
         [AllowAnonymous]
         [HttpPut]
@@ -91,7 +91,7 @@ namespace HireMeNow_WebApi.API.JobProvider
                 var job = _mapper.Map<JobPost>(jobpostDto);
                 _jobProviderService.Update(job);
                 return Ok(_mapper.Map<JobPostsDtos>(job));
-            }
+}
             catch(Exception ex)
             {
                 return BadRequest();

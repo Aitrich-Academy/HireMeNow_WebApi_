@@ -24,6 +24,8 @@ namespace HireMeNow_WebApi.Extensions
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection"))
             );
             services.AddTransient<IEmailService, EmailService>();
+            services.AddScoped<ILoginRequestService, LoginRequestService>();
+            services.AddScoped<ILoginRequestRepository, LoginRequestRepository>();
             services.AddScoped<ISignUpRequestRepository, SignUpRequestRepository>();
             services.AddScoped<ISignUpRequestService, SignUpRequestService>();
             services.AddScoped<IAuthUserRepository, AuthUserRepository>();
