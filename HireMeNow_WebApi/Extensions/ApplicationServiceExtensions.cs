@@ -22,7 +22,6 @@ using Domain.Service.Profile;
 using Domain.Service.JobSeeker.Interfaces;
 using Domain.Service.Profile.Interface;
 
-
 namespace HireMeNow_WebApi.Extensions
 {
     public static class ApplicationServiceExtensions
@@ -49,7 +48,6 @@ namespace HireMeNow_WebApi.Extensions
 			services.AddScoped<IAuthUserService, AuthUserService>();
             services.AddScoped<IJobSeekerProfileService, ProfileService>();
             services.AddScoped<IJobSeekerProfileRepository, ProfileRepository>();
-
 
             return services;
         }

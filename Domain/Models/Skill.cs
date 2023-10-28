@@ -11,7 +11,7 @@ public partial class Skill
 
     public string Description { get; set; } = null!;
 
-    public List<JobSeekerProfileSkill> JobSeekerProfileSkills { get; set; }
+    //public List<JobSeekerProfileSkill> JobSeekerProfileSkills { get; set; }
 
     //public Guid JobSeekerProfileId { get; set; }
 

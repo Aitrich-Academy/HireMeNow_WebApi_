@@ -54,9 +54,7 @@ public partial class DbHireMeNowWebApiContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-
         => optionsBuilder.UseSqlServer("Data Source=DESKTOP-PBRNQVI;Initial Catalog=WebApi_DB;User ID=soudha;Password=soudha;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=true;");
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -298,10 +296,10 @@ public partial class DbHireMeNowWebApiContext : DbContext
             .WithMany(jp => jp.JobSeekerProfileSkills)
             .HasForeignKey(jps => jps.JobSeekerProfileId);
 
-        modelBuilder.Entity<JobSeekerProfileSkill>()
-            .HasOne(jps => jps.Skill)
-            .WithMany(s => s.JobSeekerProfileSkills)
-            .HasForeignKey(jps => jps.SkillId);
+        //modelBuilder.Entity<JobSeekerProfileSkill>()
+        //    .HasOne(jps => jps.Skill)
+        //    .WithMany(s => s.JobSeekerProfileSkills)
+        //    .HasForeignKey(jps => jps.SkillId);
    
         OnModelCreatingPartial(modelBuilder);
 
