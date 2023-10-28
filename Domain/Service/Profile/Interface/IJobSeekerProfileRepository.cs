@@ -9,6 +9,9 @@ namespace Domain.Service.Profile.Interface
 {
     public interface IJobSeekerProfileRepository
     {
+   
+        Task AddSkillsToProfile(JobSeekerProfile profile);
+        Task<JobSeekerProfile?>GetJobSeekerProfileByIds(Guid jobseekerId, Guid profileId);
         Task<JobSeekerProfile> GetProfileAsync(Guid jobSeekerId);
     }
 }

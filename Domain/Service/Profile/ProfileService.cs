@@ -13,8 +13,35 @@ namespace Domain.Service.Profile
         public readonly IJobSeekerProfileRepository _profileRepository;
         public ProfileService(IJobSeekerProfileRepository profileRepository)
         {
-            profileRepository = profileRepository;
+            _profileRepository = profileRepository;
         }
+
+
+        public async Task AddSkillsToProfile(Guid jobseekerId, Guid profileId, List<Guid> skills)
+        {
+         var profile = await _profileRepository.GetJobSeekerProfileByIds(jobseekerId, profileId);
+
+        if (profile != null)
+        {
+                List<JobSeekerProfileSkill> skillslist = new List<JobSeekerProfileSkill>();
+                skills.ForEach(x =>
+                {
+                    JobSeekerProfileSkill jobSeekerProfileSkill = new JobSeekerProfileSkill();
+
+                    jobSeekerProfileSkill.SkillId = x;
+                    jobSeekerProfileSkill.JobSeekerProfileId = profile.Id;
+                    skillslist.Add(jobSeekerProfileSkill);
+                });
+                profile.JobSeekerProfileSkills= skillslist;
+            // Add the skills to the profile
+            await _profileRepository.AddSkillsToProfile(profile);
+        }
+        else
+        {
+            throw new Exception("Profile not found");
+        }
+        }
+
         public async Task<JobSeekerProfile> GetProfileAsync(Guid jobSeekerId)
         {
             return await _profileRepository.GetProfileAsync(jobSeekerId);
