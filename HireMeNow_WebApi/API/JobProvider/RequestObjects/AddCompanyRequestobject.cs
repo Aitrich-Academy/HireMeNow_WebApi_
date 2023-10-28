@@ -2,7 +2,7 @@
 {
 	public class AddCompanyRequestobject
 	{
-		public Guid Id { get; set; }
+		
 		public string LegalName { get; set; } = null!;
 
 		public string Summary { get; set; } = null!;

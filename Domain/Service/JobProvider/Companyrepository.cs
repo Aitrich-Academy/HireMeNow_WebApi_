@@ -22,9 +22,16 @@ namespace Domain.Service.JobProvider
 	
 		public async Task AddCompany(JobProviderCompany data)
 		{
-
-			_context.JobProviderCompanies.AddAsync(data);
-			_context.SaveChanges();
+			try
+			{
+				_context.JobProviderCompanies.AddAsync(data);
+				_context.SaveChanges();
+			}
+			catch (Exception ex)
+			{
+				
+			}
+		
 		}
 		public JobProviderCompany GetCompany(Guid companyId)
 		{

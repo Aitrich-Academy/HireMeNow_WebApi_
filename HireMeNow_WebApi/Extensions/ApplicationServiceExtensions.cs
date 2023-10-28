@@ -38,6 +38,8 @@ namespace HireMeNow_WebApi.Extensions
 			services.AddScoped<IJobRepository, JobRepository>();
 			services.AddScoped<IJobServices, JobServices>();
 			services.AddScoped<IAuthUserService, AuthUserService>();
+            services.AddScoped<ICompanyRepository, Companyrepository>();
+            services.AddScoped<ICompanyService,Companyservice>();   
 
             return services;
         }

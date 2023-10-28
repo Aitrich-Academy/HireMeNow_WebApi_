@@ -10,9 +10,9 @@ public partial class JobProviderCompany
 	[Key]
 	[Required]
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-	public Guid Id { get; set; } 
+	public Guid Id { get; set; } = Guid.NewGuid();
 
-    public string LegalName { get; set; } = null!;
+	public string LegalName { get; set; } = null!;
 
     public string Summary { get; set; } = null!;
 

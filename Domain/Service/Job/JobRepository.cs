@@ -50,7 +50,7 @@ namespace Domain.Service.Job
 			var query = _context.JobApplications.AsQueryable();
 			if (param.UserId != null)
 			{
-				query = query.Where(c => c.Applicant == param.UserId).Include(e => e.JobPost);
+				query = query.Where(c => c.Applicant == param.UserId);
 			}
 
 			return await PagedList<JobApplication>.CreateAsync(query,
