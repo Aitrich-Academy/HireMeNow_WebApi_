@@ -28,11 +28,11 @@ namespace Domain.Service.JobProvider
 
 			
 		}
-		public CompanyRegistrationDtos GetCompany(Guid companyId)
+		public GetCompanyDetailsDto GetCompany(Guid companyId)
 		{
 			var company=companyRepository.GetCompany(companyId);	
-			var compayRegistrationDtos=mapper.Map<CompanyRegistrationDtos>(company);
-			return compayRegistrationDtos;
+			var getCompanyDetailsDto=mapper.Map<GetCompanyDetailsDto>(company);
+			return getCompanyDetailsDto;
 		}
 		public async Task<JobProviderCompany> UpdateAsync(CompanyUpdateDtos company)
 	{

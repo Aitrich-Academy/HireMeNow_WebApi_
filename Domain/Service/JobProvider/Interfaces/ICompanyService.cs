@@ -12,7 +12,7 @@ namespace Domain.Service.JobProvider.Interfaces
 	public interface ICompanyService
 	{
 		Task  AddCompany(CompanyRegistrationDtos data);
-		CompanyRegistrationDtos GetCompany(Guid companyId);
+		GetCompanyDetailsDto GetCompany(Guid companyId);
 		Task<JobProviderCompany> UpdateAsync(CompanyUpdateDtos company);
 	}
 }

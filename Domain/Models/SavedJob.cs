@@ -23,6 +23,7 @@ public partial class SavedJob
 		public DateTime DateSaved { get; set; }
 		public virtual JobPost JobPost { get; set; }
 		public virtual JobSeeker JobSeeker { get; set; }
-	}
+	
+}
 
 

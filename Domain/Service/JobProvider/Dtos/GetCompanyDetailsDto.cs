@@ -13,8 +13,7 @@ namespace Domain.Service.JobProvider.Dtos
 
 		public string Summary { get; set; } = null!;
 
-		public Guid Industry { get; set; }
-
+		
 		public string Email { get; set; } = null!;
 
 		public long Phone { get; set; }
@@ -23,9 +22,8 @@ namespace Domain.Service.JobProvider.Dtos
 
 		public string Website { get; set; } = null!;
 
-		public Guid Location { get; set; }
+		
 
-		public Location Locations {  get; set; }	
-		public Industry industry { get; set; }
+
 	}
 }

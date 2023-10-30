@@ -35,7 +35,7 @@ namespace Domain.Service.JobProvider
 		}
 		public JobProviderCompany GetCompany(Guid companyId)
 		{
-			JobProviderCompany company = _context.JobProviderCompanies.Where(e => e.Id == companyId).Include(e => e.Location).Include(e => e.Industry).FirstOrDefault();
+			JobProviderCompany company = _context.JobProviderCompanies.Where(e => e.Id == companyId).FirstOrDefault();
 			return company;
 
 		}

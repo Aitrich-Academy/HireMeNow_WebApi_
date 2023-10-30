@@ -8,6 +8,7 @@ namespace Domain.Helpers
 	
 		private object count;
 		private int pageNumber;
+		public PagedList() { }
 
 		public PagedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)
 		{
