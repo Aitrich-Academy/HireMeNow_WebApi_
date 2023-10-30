@@ -41,17 +41,17 @@ namespace Domain.Service.Job
 		}
    public async Task<List<JobPost>> GetJobs()
         {
-            return await _jobRepository.GetJobs();
+            return await _jobrepository.GetJobs();
         }
 
         public async Task<List<JobPost>> GetJobsByCompany(Guid companyId)
         {
-            return await _jobRepository.GetJobsByCompany(companyId);
+            return await _jobrepository.GetJobsByCompany(companyId);
         }
 
         public async Task<List<JobPost>> GetJobsById(Guid companyId, Guid jobId)
         {
-            return await _jobRepository.GetJobsById(companyId,jobId);
+            return await _jobrepository.GetJobsById(companyId,jobId);
         }
 		public async Task<PagedList<AppliedJobsDtos>> GetAllAppliedJobs(JobListParams param)
 		{

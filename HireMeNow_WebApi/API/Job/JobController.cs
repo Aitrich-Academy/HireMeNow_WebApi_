@@ -35,8 +35,8 @@ namespace HireMeNow_WebApi.API.Job
  public JobController(IMapper mapper, IJobServices jobService, IJobRepository jobRepostory)
         {
             _mapper = mapper;
-            _jobService = jobService;
-            _jobRepository = jobRepostory;
+            _jobservice = jobService;
+           
         }
 
 	
@@ -82,7 +82,7 @@ namespace HireMeNow_WebApi.API.Job
         {
             try
             {
-                List<JobPost> jobposts = await _jobService.GetJobsById(companyId,jobId);
+                List<JobPost> jobposts = await _jobservice.GetJobsById(companyId,jobId);
                 return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
             }
             catch (Exception ex)
@@ -97,7 +97,7 @@ namespace HireMeNow_WebApi.API.Job
         {
             try
             {
-                List<JobPost> jobposts = await _jobService.GetJobsByCompany(companyId);
+                List<JobPost> jobposts = await _jobservice.GetJobsByCompany(companyId);
                 return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
             }
             catch (Exception ex)
@@ -111,7 +111,7 @@ namespace HireMeNow_WebApi.API.Job
         {
             try
             {
-                List<JobPost> jobposts = await _jobService.GetJobs();
+                List<JobPost> jobposts = await _jobservice.GetJobs();
                 return Ok(_mapper.Map<List<JobPostsDtos> >(jobposts));
             }
             catch(Exception ex)
@@ -124,4 +124,4 @@ namespace HireMeNow_WebApi.API.Job
 
 	}
 
-}
+
