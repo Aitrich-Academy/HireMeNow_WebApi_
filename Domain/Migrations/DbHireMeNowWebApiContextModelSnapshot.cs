@@ -114,30 +114,21 @@ namespace Domain.Migrations
                     b.Property<Guid>("JobPost_id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("JobSeekerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("Resume_id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SeekerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobPost_id");
+                    b.HasIndex("Applicant");
 
-                    b.HasIndex("JobSeekerId");
+                    b.HasIndex("JobPost_id");
 
                     b.HasIndex("Resume_id");
 
-                    b.HasIndex("SeekerId");
-
-                    b.ToTable("JobApplication");
+                    b.ToTable("JobApplications");
                 });
 
             modelBuilder.Entity("Domain.Models.JobCategory", b =>
@@ -218,7 +209,7 @@ namespace Domain.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<Guid>("Industry")
+                    b.Property<Guid>("IndustryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LegalName")
@@ -246,6 +237,8 @@ namespace Domain.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IndustryId");
 
                     b.HasIndex("Location");
 
@@ -570,15 +563,15 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Models.JobApplication", b =>
                 {
-                    b.HasOne("Domain.Models.JobPost", "JobPost")
+                    b.HasOne("Domain.Models.JobSeeker", "Seeker")
                         .WithMany()
-                        .HasForeignKey("JobPost_id")
+                        .HasForeignKey("Applicant")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Models.JobSeeker", "JobSeeker")
+                    b.HasOne("Domain.Models.JobPost", "JobPost")
                         .WithMany()
-                        .HasForeignKey("JobSeekerId")
+                        .HasForeignKey("JobPost_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -588,15 +581,7 @@ namespace Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Models.JobSeeker", "Seeker")
-                        .WithMany()
-                        .HasForeignKey("SeekerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("JobPost");
-
-                    b.Navigation("JobSeeker");
 
                     b.Navigation("Resume");
 
@@ -624,11 +609,19 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Models.JobProviderCompany", b =>
                 {
+                    b.HasOne("Domain.Models.Industry", "Industry")
+                        .WithMany()
+                        .HasForeignKey("IndustryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Models.Location", "LocationNavigation")
                         .WithMany("JobProviderCompanies")
                         .HasForeignKey("Location")
                         .IsRequired()
                         .HasConstraintName("FK_JobProviderCompany_Location");
+
+                    b.Navigation("Industry");
 
                     b.Navigation("LocationNavigation");
                 });
