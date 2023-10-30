@@ -1,8 +1,9 @@
-﻿using Domain.Helpers;
+
+﻿using AutoMapper;
+using Domain.Helpers;
 using Domain.Models;
 using Domain.Service.Job.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,59 +12,46 @@ using System.Threading.Tasks;
 
 namespace Domain.Service.Job
 {
-	public class JobRepository:IJobRepository
-	{
-		private DbHireMeNowWebApiContext _context;
+    public class JobRepository : IJobRepository
+    {
+       
 
-		public JobRepository(DbHireMeNowWebApiContext context)
-		{
-			_context = context;
-		}
-		public async Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(Guid jobseekerId, JobListParams param)
-		{
-			try
-			{
-				// Making queryable
-				var query = _context.SavedJobs.Where(e => e.SavedBy == jobseekerId)
-				   .OrderByDescending(c => c.DateSaved).Include(e => e.JobPost)
-				   //.ProjectTo<Job>(_mapper.ConfigurationProvider)
-				   .AsQueryable();
+       
+        DbHireMeNowWebApiContext _context;
+        IMapper _mapper;
 
+        public JobRepository(DbHireMeNowWebApiContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
 
-				return await PagedList<SavedJob>.CreateAsync(query,
-					param.PageNumber, param.PageSize);
-			}
-			catch(Exception ex)
+        public Task<PagedList<JobApplication>> GetAllAppliedJobs(JobListParams param)
+        {
+            throw new NotImplementedException();
+        }
 
-			{
-				throw ex;
+        public Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(JobListParams param)
+        {
+            throw new NotImplementedException();
+        }
 
+        public async Task<List<JobPost>> GetJobs()
+        {
+            return await _context.JobPosts.ToListAsync();
+        }
 
-			}
-			
-		
-			//return _context.SavedJobs.Where(e => e.SavedBy == seekerId).Include(e => e.JobPost).Include(e => e.JobSeeker).ToListAsync();
-		}
-		
-		public SavedJob GetsavedJobById(Guid jobseekerId, Guid SavedJobId)
-		{
-			var savedJob = _context.SavedJobs.Where(e => e.SavedBy == jobseekerId && e.Job == SavedJobId).Include(e=>e.JobPost).FirstOrDefault();
-			return savedJob;
-		}
-		public SavedJob RemoveSavedJob(Guid seekerId,Guid jobid)
-		{
-
-			SavedJob savedjob= _context.SavedJobs.Where(e => e.SavedBy == seekerId && e.Id==jobid).FirstOrDefault();
-			_context.Remove(savedjob);
-			_context.SaveChanges();
-			return savedjob;
-			//return _context.SavedJobs.Where(e => e.SavedBy == seekerId).Include(e => e.JobPost).Include(e => e.JobSeeker).ToListAsync();
-		}
-		public async Task<PagedList<JobApplication>> GetAllAppliedJobs(Guid jobseekerId,JobListParams param)
-		{
-			var query = _context.JobApplications.Where(e => e.Applicant == jobseekerId).Include(e => e.JobPost).AsQueryable();
+        public async Task<List<JobPost>> GetJobsByCompany(Guid companyId)
+        {
+            /*   return await _context.JobPosts.Include(j => j.Company== companyId).ToListAsync();*/
+            return await _context.JobPosts.Where(e => e.Company == companyId).ToListAsync();
+        }
 
 
+        public async Task<List<JobPost>> GetJobsById(Guid companyId, Guid jobId)
+        {
+            return await _context.JobPosts.Where(e => e.Company == companyId && e.Id == jobId).ToListAsync();
+        }
 
 			return await PagedList<JobApplication>.CreateAsync(query,
 				param.PageNumber, param.PageSize);
@@ -99,3 +87,51 @@ namespace Domain.Service.Job
 			
 	}
 }
+        public SavedJob RemoveSavedJob(Guid seekerId, Guid jobid)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+		//public async Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(JobListParams param)
+		//{
+		//	// Making queryable
+		//	var query = _context.SavedJobs
+		//	   .OrderByDescending(c => c.DateSaved)
+		//	   //.ProjectTo<Job>(_mapper.ConfigurationProvider)
+		//	   .AsQueryable();
+		//	if(param.UserId!=null)
+		//	{
+		//		query = query.Where(c => c.SavedBy==param.UserId).Include(e=>e.JobPost);
+		//	}
+
+		//	return await PagedList<SavedJob>.CreateAsync(query,
+		//		param.PageNumber, param.PageSize);
+		
+		//	//return _context.SavedJobs.Where(e => e.SavedBy == seekerId).Include(e => e.JobPost).Include(e => e.JobSeeker).ToListAsync();
+		//}
+		//public SavedJob RemoveSavedJob(Guid seekerId,Guid jobid)
+		//{
+
+		//	SavedJob savedjob= _context.SavedJobs.Where(e => e.SavedBy == seekerId && e.Job==jobid).FirstOrDefault();
+		//	_context.Remove(savedjob);
+		//	_context.SaveChanges();
+		//	return savedjob;
+		//	//return _context.SavedJobs.Where(e => e.SavedBy == seekerId).Include(e => e.JobPost).Include(e => e.JobSeeker).ToListAsync();
+		//}
+		//public async Task<PagedList<JobApplication>> GetAllAppliedJobs(JobListParams param)
+		//{
+		//	var query = _context.JobApplications.AsQueryable();
+		//	if (param.UserId != null)
+		//	{
+		//		query = query.Where(c => c.Applicant == param.UserId).Include(e => e.JobPost);
+		//	}
+
+		//	return await PagedList<JobApplication>.CreateAsync(query,
+		//		param.PageNumber, param.PageSize);
+		//}
+	}
+
+
+

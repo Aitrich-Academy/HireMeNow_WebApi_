@@ -299,10 +299,10 @@ public partial class DbHireMeNowWebApiContext : DbContext
             .WithMany(jp => jp.JobSeekerProfileSkills)
             .HasForeignKey(jps => jps.JobSeekerProfileId);
 
-        modelBuilder.Entity<JobSeekerProfileSkill>()
-            .HasOne(jps => jps.Skill)
-            .WithMany(s => s.JobSeekerProfileSkills)
-            .HasForeignKey(jps => jps.SkillId);
+        //modelBuilder.Entity<JobSeekerProfileSkill>()
+        //    .HasOne(jps => jps.Skill)
+        //    .WithMany(s => s.JobSeekerProfileSkills)
+        //    .HasForeignKey(jps => jps.SkillId);
    
         OnModelCreatingPartial(modelBuilder);
 

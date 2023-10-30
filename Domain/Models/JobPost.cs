@@ -29,5 +29,5 @@ public partial class JobPost
 
     public virtual CompanyUser PostedByNavigation { get; set; } = null!;
 
-    public virtual ICollection<Skill> Skills { get; set; } = new List<Skill>();
+    //public virtual ICollection<Skill> Skills { get; set; } = new List<Skill>();
 }

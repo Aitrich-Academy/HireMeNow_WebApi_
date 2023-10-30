@@ -4,6 +4,8 @@ using Domain.Models;
 using Domain.Service.Job.DTOs;
 using Domain.Service.JobProvider.Dtos;
 using Domain.Service.Login.DTOs;
+using Domain.Service.Job.DTOs;
+using Domain.Service.JobProvider.DTOs;
 using Domain.Service.SignUp.DTOs;
 using HireMeNow_WebApi.API.Job.SavedJobObjects;
 using HireMeNow_WebApi.API.JobProvider.RequestObjects;
@@ -21,6 +23,11 @@ namespace HireMeNow_WebApi.Extensions
 			CreateMap<SignUpRequest, SystemUser>().ReverseMap();
             CreateMap<AuthUser, Domain.Models.JobSeeker>().ReverseMap();
             CreateMap<AuthUser, SystemUser>().ReverseMap();
+
+            CreateMap<JobPost, JobPostsDtos>().ReverseMap();
+            CreateMap<JobPost, JobProviderDto>().ReverseMap();
+        
+
             CreateMap<AuthUser, JobSeekerLoginDto>();
 
             CreateMap<ApplyJobRequest, JobApplication>();
@@ -35,5 +42,6 @@ namespace HireMeNow_WebApi.Extensions
 
 
 		}
+
     }
 }

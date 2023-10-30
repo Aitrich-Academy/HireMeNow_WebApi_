@@ -21,7 +21,7 @@ namespace Domain.Service.Authuser
         public AuthUserRepository(DbHireMeNowWebApiContext dbContext,IMapper _mapper, IConfiguration configuration)
         {
             _context = dbContext;
-            mapper=_mapper;
+            mapper = _mapper;
             _configuration = configuration;
         }
 
