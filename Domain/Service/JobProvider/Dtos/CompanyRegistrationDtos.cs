@@ -13,7 +13,7 @@ namespace Domain.Service.JobProvider.Dtos
 
 		public string Summary { get; set; } = null!;
 
-		public Guid Industry { get; set; }
+		public Guid IndustryId { get; set; }
 
 		public string Email { get; set; } = null!;
 

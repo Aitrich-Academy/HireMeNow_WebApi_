@@ -21,7 +21,8 @@ namespace Domain.Service.Job.DTOs
 
 		public Guid Id { get; set; }
 		public virtual JobPost JobPost { get; set; }
-		public virtual JobProviderCompany Company { get; set; }	
+		
+		
 
 	}
 }

@@ -19,7 +19,7 @@ namespace Domain.Service.Job.DTOs
 
 		public Guid Job { get; set; }
 		public DateTime DateSaved { get; set; }
-		[JsonIgnore]
+		//[JsonIgnore]
 		public  JobPost JobPost { get; set; }
 
 

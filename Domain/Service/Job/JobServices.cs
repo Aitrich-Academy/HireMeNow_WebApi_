@@ -34,9 +34,9 @@ namespace Domain.Service.Job
 			_jobrepository = jobrepository;
 			_mapper = mapper;	
 		}
-		public async  Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(Guid jobseekerId,JobListParams param)
+		public async  Task<PagedList<SavedJobsDtos>> GetAllSavedJobsOfSeeker(Guid jobseekerId,JobListParams param)
 		{
-			var savedJobs = await _jobrepository.GetAllSavedJobsOfSeeker(param);
+			var savedJobs = await _jobrepository.GetAllSavedJobsOfSeeker(jobseekerId,param);
 			var savedjobsDto = _mapper.Map<PagedList<SavedJobsDtos>>(savedJobs);
 			return savedjobsDto;
 		}
@@ -54,9 +54,9 @@ namespace Domain.Service.Job
         {
             return await _jobrepository.GetJobsById(companyId,jobId);
         }
-		public async Task<PagedList<AppliedJobsDtos>> GetAllAppliedJobs(JobListParams param)
+		public async Task<PagedList<AppliedJobsDtos>> GetAllAppliedJobs(Guid jobseekerId, JobListParams param)
 		{
-			var appliedjobs=await _jobrepository.GetAllAppliedJobs(jobseekerId,param);
+			var appliedjobs= await _jobrepository.GetAllAppliedJobs(jobseekerId, param);
 
 			var appliedjobsDto = _mapper.Map<PagedList<AppliedJobsDtos>>(appliedjobs);
 			return appliedjobsDto;
@@ -85,6 +85,8 @@ namespace Domain.Service.Job
 			var SavedJobsDto = _mapper.Map<SavedJobsDtos>(savedJob);
 			return SavedJobsDto;	
 		}
+
+	
 	}
 
 }

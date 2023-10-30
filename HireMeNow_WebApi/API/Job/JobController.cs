@@ -35,7 +35,7 @@ namespace HireMeNow_WebApi.API.Job
 		protected IAuthUserService _authUserService;
 		protected IMapper _mapper;
 		
-  private readonly IMapper _mapper;
+  
  public JobController(IMapper mapper, IJobServices jobService, IJobRepository jobRepostory)
         {
             _mapper = mapper;

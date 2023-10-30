@@ -33,12 +33,13 @@ namespace HireMeNow_WebApi.Extensions
             CreateMap<ApplyJobRequest, JobApplication>();
             CreateMap<JobApplication, AppliedJobsDtos>();
             CreateMap<CompanyRegistrationDtos, JobProviderCompany>().ReverseMap();
-            CreateMap<AddCompanyRequestobject, JobProviderCompany>();
+            CreateMap<AddCompanyRequestobject, JobProviderCompany>().ReverseMap();
 			CreateMap<CompanyRegistrationDtos, AddCompanyRequestobject>().ReverseMap();
             CreateMap<CompanyUpdateDtos, CompanyupdateRequest>().ReverseMap();
             CreateMap<CompanyUpdateDtos,JobProviderCompany>().ReverseMap();
             CreateMap<SavedJob,SavedJobsDtos>();
             CreateMap<JobProviderCompany, GetCompanyDetailsDto>();
+           
 
 
 		}

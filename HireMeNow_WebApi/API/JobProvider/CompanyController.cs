@@ -66,15 +66,15 @@ namespace HireMeNow_WebApi.API.JobProvider
 			comapny.Id = companyId;
 			var companyUpdateDtos = mapper.Map<CompanyUpdateDtos>(comapny);
 			var updatedCompany = await companyService.UpdateAsync(companyUpdateDtos);
-			CompanyupdateRequest companyupdateRequest = mapper.Map<CompanyupdateRequest>(updatedCompany);
-			if (companyupdateRequest == null)
+			//CompanyupdateRequest companyupdateRequest = mapper.Map<CompanyupdateRequest>(updatedCompany);
+			if (updatedCompany == null)
 			{
 				return BadRequest("Company Not found");
 
 			}
 			else
 			{
-				return Ok(companyupdateRequest);
+				return Ok(updatedCompany);
 			}
 
 		}
