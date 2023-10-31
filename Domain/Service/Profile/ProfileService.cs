@@ -133,6 +133,16 @@ namespace Domain.Service.Profile
             return _profileRepository.GetProfileAsync(jobSeekerId);
         }
 
+        public List<JobseekerQualificationDTo> GetQualification(Guid profileId)
+        {
+
+            var Qualifications = _profileRepository.GetQualification(profileId);
+            var QualificationDtos = mapper.Map<List<JobseekerQualificationDTo>>(Qualifications);
+
+            return QualificationDtos;
+            
+        }
+
         public List<SkillDto> GetSkillsForJobSeekerProfile(Guid jobseekerId, Guid profileId)
         {
             return _profileRepository.GetSkillsForProfile(jobseekerId, profileId);

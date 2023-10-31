@@ -29,6 +29,8 @@ namespace HireMeNow_WebApi.Extensions
             CreateMap<JobPost, JobProviderDto>().ReverseMap();
             CreateMap<Qualification,QualificationsRequestDto>().ReverseMap();
             CreateMap<QualificationRequest, JobseekerQualificationDTo>();
+            CreateMap<Qualification,JobseekerQualificationDTo>();
+           
             CreateMap<JobseekerQualificationDTo, Qualification>();
             CreateMap<WorkExperieceRequest, JobseekerWorkExperienceDTo>();
             CreateMap<JobseekerWorkExperienceDTo, WorkExperience>();
