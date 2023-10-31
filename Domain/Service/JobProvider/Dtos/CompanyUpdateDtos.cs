@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Domain.Service.JobProvider.Dtos
 {
-	public class CompanyRegistrationDtos
+	public class CompanyUpdateDtos
 	{
-	
+		public Guid Id { get; set; }
 		public string LegalName { get; set; } = null!;
 
 		public string Summary { get; set; } = null!;
 
-		public Guid IndustryId { get; set; }
+		//public Guid Industry { get; set; }
 
 		public string Email { get; set; } = null!;
 
@@ -23,6 +23,6 @@ namespace Domain.Service.JobProvider.Dtos
 
 		public string Website { get; set; } = null!;
 
-		public Guid Location { get; set; }
+		//public Guid Location { get; set; }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,20 @@ namespace Domain.Service.Job.DTOs
 {
 	public class AppliedJobsDtos
 	{
+		public AppliedJobsDtos()
+		{
+		}
+
+		public AppliedJobsDtos(Guid id, JobPost jobPost)
+		{
+			Id = id;
+			JobPost = jobPost;
+		}
+
+		public Guid Id { get; set; }
+		public virtual JobPost JobPost { get; set; }
+		
+		
+
 	}
 }

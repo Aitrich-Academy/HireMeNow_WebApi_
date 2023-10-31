@@ -19,10 +19,13 @@ namespace Domain.Service.Job.Interfaces
 
         Task<List<JobPost>> GetJobsById(Guid companyId, Guid jobId);
 
-		Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(JobListParams param);
-		Task<PagedList<JobApplication>> GetAllAppliedJobs(JobListParams param);
+		Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(Guid jobseekerId,JobListParams param);
+		Task<PagedList<JobApplication>> GetAllAppliedJobs(Guid jobseekerId,JobListParams param);
 
 		SavedJob RemoveSavedJob(Guid seekerId, Guid jobid);
+		bool applyjob(JobApplication applyjob);
+		bool CancelAppliedJob(Guid jobseekerId, Guid JobApplicationId);
+		 SavedJob GetsavedJobById(Guid jobseekerId, Guid SavedJobId);
 	}
 
 }
