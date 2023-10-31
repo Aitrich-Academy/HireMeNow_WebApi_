@@ -19,5 +19,6 @@ namespace Domain.Service.Profile.Interface
         List<SkillDto> GetSkillsForProfile(Guid jobseekerId, Guid profileId);
         List<WorkExperience> GetExperience(Guid jobseekerId, Guid profileId);
         Task AddQualificationsToProfile(Guid profileId, Qualification qualification);
+        List<Qualification> GetQualification( Guid profileId);
     }
 }

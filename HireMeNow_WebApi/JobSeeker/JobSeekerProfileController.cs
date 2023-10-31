@@ -74,7 +74,42 @@ namespace HireMeNow_WebApi.JobSeeker
             _profileService.AddQualificationToProfileAsync(jobseekerId, profileId, JobseekerQualificationDTo);
             return Ok(data);
         }
+        [HttpGet]
+        [Route("/profile/{profileId}/Qualification")]
+        public ActionResult<List<JobseekerQualificationDTo>> GetQualification( Guid profileId)
+        {
+            var Qualification = _profileService.GetQualification(profileId);
 
+            if (Qualification == null || !Qualification.Any())
+                return NotFound();
+
+            return Ok(Qualification);
+        }
+
+        [HttpGet]
+        [Route("{jobseekerId}/profile/{profileId}/skills")]
+        public ActionResult<List<SkillDto>> GetSkills(Guid jobseekerId, Guid profileId)
+        {
+            var skills = _profileService.GetSkillsForJobSeekerProfile(jobseekerId, profileId);
+
+            if (skills == null || !skills.Any())
+                return NotFound();
+
+            return Ok(skills);
+        }
+
+
+        [HttpGet]
+        [Route("{jobseekerId}/profile/{profileId}/Experince")]
+        public ActionResult<List<ExperienceDto>> GetExperience(Guid jobseekerId, Guid profileId)
+        {
+            var Experience = _profileService.GetExperience(jobseekerId, profileId);
+
+            if (Experience == null || !Experience.Any())
+                return NotFound();
+
+            return Ok(Experience);
+        }
 
         [HttpGet]
         [Route("{jobseekerId}/profile/{profileId}/skills")]

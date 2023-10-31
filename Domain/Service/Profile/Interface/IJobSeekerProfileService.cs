@@ -17,6 +17,7 @@ namespace Domain.Service.Profile.Interface
         Task AddWorkExpericeToProfileAsync(Guid jobseekerId, Guid profileId, JobseekerWorkExperienceDTo jobseekerWorkExperienceDTo);
         List<ExperienceDto> GetExperience(Guid jobseekerId, Guid profileId);
         Task<JobSeekerProfile> GetProfileAsync(Guid jobSeekerId);
+        List<JobseekerQualificationDTo> GetQualification(Guid profileId);
         List<SkillDto> GetSkillsForJobSeekerProfile(Guid jobseekerId, Guid profileId);
     }
 }

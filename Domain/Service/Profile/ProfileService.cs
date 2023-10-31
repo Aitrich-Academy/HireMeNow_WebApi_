@@ -49,6 +49,32 @@ namespace Domain.Service.Profile
                 throw new Exception("Profile not found");
             }
 
+        //public async Task AddQualificationToProfile(Guid jobseekerId, Guid profileId, List<Guid> qualification)
+        //{
+        //   var profile = await _profileRepository.GetJobSeekerProfileByIds(jobseekerId, profileId);
+        //    if (profile != null)
+        //    {
+
+        //    }else
+        //    {
+        //        throw new Exception("Profile not found");
+        //    }
+        //}
+
+        public void AddQualificationToProfile(Guid jobseekerId, Guid profileId, Qualification qualification)
+        {
+            var profile = _profileRepository.GetJobSeekerProfileByIds(jobseekerId, profileId);
+            if (profile != null)
+            {
+                var Qualification = mapper.Map<Qualification>(qualification);
+                _profileRepository.AddQualificationsToProfile(profileId, Qualification);
+
+            }
+            else
+            {
+                throw new Exception("Profile not found");
+            }
+
         }
 
         public Task AddQualificationToProfileAsync(Guid jobseekerId, Guid profileId, JobseekerQualificationDTo jobseekerQualificationDTo)
@@ -131,6 +157,16 @@ namespace Domain.Service.Profile
         public Task<JobSeekerProfile> GetProfileAsync(Guid jobSeekerId)
         {
             return _profileRepository.GetProfileAsync(jobSeekerId);
+        }
+
+        public List<JobseekerQualificationDTo> GetQualification(Guid profileId)
+        {
+
+            var Qualifications = _profileRepository.GetQualification(profileId);
+            var QualificationDtos = mapper.Map<List<JobseekerQualificationDTo>>(Qualifications);
+
+            return QualificationDtos;
+            
         }
 
         public List<SkillDto> GetSkillsForJobSeekerProfile(Guid jobseekerId, Guid profileId)

@@ -97,6 +97,20 @@ namespace Domain.Service.Profile
                         .FirstOrDefaultAsync();
         }
 
+        public List<Qualification> GetQualification(Guid jobseekerId, Guid profileId)
+        {
+            return _context.Qualifications
+                .Where(qualification => qualification.JobseekerProfileId == profileId)
+                .ToList();
+        }
+
+        public List<Qualification> GetQualification(Guid profileId)
+        {
+            return _context.Qualifications
+                .Where(qualification => qualification.JobseekerProfileId == profileId)
+                .ToList();
+        }
+
         public List<SkillDto> GetSkillsForProfile(Guid jobseekerId, Guid profileId)
         {
             return _context.JobSeekerProfiles
