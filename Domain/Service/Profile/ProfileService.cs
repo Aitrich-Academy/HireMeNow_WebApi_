@@ -23,17 +23,17 @@ namespace Domain.Service.Profile
             _profileRepository = profileRepository;
         }
 
-        public async Task AddQualificationToProfile(Guid jobseekerId, Guid profileId, List<Guid> qualification)
-        {
-           var profile = await _profileRepository.GetJobSeekerProfileByIds(jobseekerId, profileId);
-            if (profile != null)
-            {
+        //public async Task AddQualificationToProfile(Guid jobseekerId, Guid profileId, List<Guid> qualification)
+        //{
+        //   var profile = await _profileRepository.GetJobSeekerProfileByIds(jobseekerId, profileId);
+        //    if (profile != null)
+        //    {
 
-            }else
-            {
-                throw new Exception("Profile not found");
-            }
-        }
+        //    }else
+        //    {
+        //        throw new Exception("Profile not found");
+        //    }
+        //}
 
         public void AddQualificationToProfile(Guid jobseekerId, Guid profileId, Qualification qualification)
         {
@@ -41,7 +41,7 @@ namespace Domain.Service.Profile
             if (profile != null)
             {
                 var Qualification = mapper.Map<Qualification>(qualification);
-                _profileRepository.AddQualificationToProfile(profileId, Qualification);
+                _profileRepository.AddQualificationsToProfile(profileId, Qualification);
 
             }
             else
@@ -49,6 +49,21 @@ namespace Domain.Service.Profile
                 throw new Exception("Profile not found");
             }
 
+        }
+
+        public Task AddQualificationToProfileAsync(Guid jobseekerId, Guid profileId, JobseekerQualificationDTo jobseekerQualificationDTo)
+        {
+            var profile = _profileRepository.GetJobSeekerProfileByIds(jobseekerId, profileId);
+            if (profile != null)
+            {
+                var Qualification = mapper.Map<Qualification>(jobseekerQualificationDTo);
+                return _profileRepository.AddQualificationsToProfile(profileId, Qualification);
+
+            }
+            else
+            {
+                throw new Exception("Profile not found");
+            }
         }
 
         public async Task AddSkillsToProfile(Guid jobseekerId, Guid profileId, List<Guid> skills)
@@ -100,6 +115,16 @@ namespace Domain.Service.Profile
 
             
 
+
+        }
+
+        public List<ExperienceDto> GetExperience(Guid jobseekerId, Guid profileId)
+        {
+
+            var workExperiences = _profileRepository.GetExperience(jobseekerId, profileId);
+            var experienceDtos = mapper.Map<List<ExperienceDto>>(workExperiences);
+
+            return experienceDtos;
 
         }
 

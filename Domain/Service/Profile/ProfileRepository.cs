@@ -20,13 +20,22 @@ namespace Domain.Service.Profile
             _context = context;
         }
 
-        public void AddQualificationToProfile(Guid profileId, Qualification qualification)
+        public async Task AddQualificationsToProfile(Guid profileId, Qualification qualification)
         {
 
             qualification.JobseekerProfileId = profileId;
-             _context.Qualifications.AddAsync(qualification);
-            _context.SaveChangesAsync();
+         _context.Qualifications.Add(qualification);
+         await  _context.SaveChangesAsync();
+           
         }
+
+        //public void AddQualificationToProfile(Guid profileId, Qualification qualification)
+        //{
+
+        //    qualification.JobseekerProfileId = profileId;
+        //     _context.Qualifications.AddAsync(qualification);
+        //    _context.SaveChangesAsync();
+        //}
         
 
         public async Task AddSkillsToProfile(JobSeekerProfile profile)
@@ -52,10 +61,25 @@ namespace Domain.Service.Profile
            await _context.SaveChangesAsync();
 
         }
+
+        public List<WorkExperience> GetExperience(Guid jobseekerId, Guid profileId)
+        {
+            return _context.WorkExperiences
+               .Where(experience => experience.JobSeekerProfileId == profileId)
+               .ToList();
+
+            //       .SelectMany(profile => profile.JobSeekerProfileSkills.Select(skill => new SkillDto
+            //       {
+            //           Name = skill.Skill.Name,
+            //           Description = skill.Skill.Description
+            //       }))
+            //       .ToList();
+        }
+
         //public async Task AddWorkExperienceToProfile(Guid profileId, WorkExperience experience)
         //{
         //}
-            public async Task<JobSeekerProfile?> GetJobSeekerProfileByIds(Guid jobseekerId, Guid profileId)
+        public async Task<JobSeekerProfile?> GetJobSeekerProfileByIds(Guid jobseekerId, Guid profileId)
         {
             return await _context.JobSeekerProfiles
              .FirstOrDefaultAsync(profile => profile.JobSeekerId == jobseekerId && profile.Id == profileId);

@@ -6,6 +6,6 @@
 
         public string Description { get; set; } = null!;
 
-        public Guid? JobseekerProfileId { get; set; }
+        
     }
 }
