@@ -111,6 +111,31 @@ namespace HireMeNow_WebApi.JobSeeker
             return Ok(Experience);
         }
 
+        [HttpGet]
+        [Route("{jobseekerId}/profile/{profileId}/skills")]
+        public ActionResult<List<SkillDto>> GetSkills(Guid jobseekerId, Guid profileId)
+        {
+            var skills = _profileService.GetSkillsForJobSeekerProfile(jobseekerId, profileId);
+
+            if (skills == null || !skills.Any())
+                return NotFound();
+
+            return Ok(skills);
+        }
+
+
+        [HttpGet]
+        [Route("{jobseekerId}/profile/{profileId}/Experice")]
+        public ActionResult<List<ExperienceDto>> GetExperience(Guid jobseekerId, Guid profileId)
+        {
+            var Experience = _profileService.GetExperience(jobseekerId, profileId);
+
+            if (Experience == null || !Experience.Any())
+                return NotFound();
+
+            return Ok(Experience);
+        }
+
 
     }
 }

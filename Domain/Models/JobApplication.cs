@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Domain.Models
 {
     public class JobApplication
     {
-        public Guid Id { get; set; }
+		[Key]
+		[Required]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public Guid Id { get; set; }
         [ForeignKey(nameof(JobPost))]
         public Guid JobPost_id {  get; set; }
-        [ForeignKey(nameof(Applicant))]
+        [ForeignKey(nameof(Seeker))]
         public Guid Applicant { get; set; }
 
         [ForeignKey(nameof(Resume))]
@@ -22,10 +27,12 @@ namespace Domain.Models
         public string CoverLetter { get; set; }
 
         public DateTime Datesubmitted { get; set; }
-        public string status { get; set; }
+        public Status status { get; set; }
 
         public virtual Resume Resume { get; set; }
         public virtual JobSeeker Seeker { get; set; }
-        public virtual JobPost JobPost { get; set; }
-    }
+        public virtual JobPost JobPost { get;set; }
+
+
+	}
 }
