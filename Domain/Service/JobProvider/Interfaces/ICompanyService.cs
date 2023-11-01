@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Helpers;
+using Domain.Models;
 using Domain.Service.JobProvider.Dtos;
 using Domain.Service.SignUp.DTOs;
 using System;
@@ -14,5 +15,7 @@ namespace Domain.Service.JobProvider.Interfaces
 		Task  AddCompany(CompanyRegistrationDtos data);
 		GetCompanyDetailsDto GetCompany(Guid companyId);
 		Task<JobProviderCompany> UpdateAsync(CompanyUpdateDtos company);
+		Task<PagedList<CompanyUser>> memberListing(Guid companyId,CompanyMemberListParam param);
+		bool memberDeleteById(Guid id);
 	}
 }

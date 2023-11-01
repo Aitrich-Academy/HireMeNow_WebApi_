@@ -47,6 +47,8 @@ public partial class DbHireMeNowWebApiContext : DbContext
 
     public virtual DbSet<Skill> Skills { get; set; }
 	public virtual DbSet<SavedJob> SavedJobs { get; set; }
+	public virtual DbSet<Interview> Interviews { get; set; }
+
 
 	//public virtual DbSet<SystemUser> SystemUsers { get; set; }
 
@@ -55,7 +57,7 @@ public partial class DbHireMeNowWebApiContext : DbContext
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 
-      => optionsBuilder.UseSqlServer("Data Source=RAZIYA;Initial Catalog=WebApi;Integrated Security=True;Persist Security Info=True;Trust Server Certificate=True;");
+      => optionsBuilder.UseSqlServer("Data Source=RAZIYA;Initial Catalog=NewDB;Integrated Security=True;Persist Security Info=True;Trust Server Certificate=True;");
 
       
 
@@ -128,10 +130,10 @@ public partial class DbHireMeNowWebApiContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_JobPost_Location");
 
-            entity.HasOne(d => d.PostedByNavigation).WithMany(p => p.JobPosts)
-                .HasForeignKey(d => d.PostedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_JobPost_Industry");
+            //entity.HasOne(d => d.PostedByNavigation).WithMany(p => p.JobPosts)
+            //    .HasForeignKey(d => d.PostedBy)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_JobPost_Industry");
         });
 
         modelBuilder.Entity<JobProviderCompany>(entity =>

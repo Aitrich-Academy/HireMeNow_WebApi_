@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Helpers;
 using Domain.Models;
 using Domain.Service.JobProvider.Dtos;
 using Domain.Service.JobProvider.Interfaces;
@@ -40,6 +41,16 @@ namespace Domain.Service.JobProvider
 			var jobProviderUpdatedCompany= await companyRepository.updateCompanyAsync(jobProviderCompany);
 			//var ComapnyRegistrationDto = mapper.Map<CompanyRegistrationDtos>(jobProviderUpdatedCompany);
 			return jobProviderUpdatedCompany;
+		}
+		
+
+		public async Task<PagedList<CompanyUser>> memberListing(Guid companyId, CompanyMemberListParam param)
+		{
+			return await companyRepository.memberListing(companyId, param);
+		}
+		public bool memberDeleteById(Guid id)
+		{
+			return companyRepository.memberDeleteById(id);
 		}
 	}
 }

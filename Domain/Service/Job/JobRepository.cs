@@ -50,9 +50,7 @@ namespace Domain.Service.Job
         {
 
 			var query = _context.SavedJobs
-			   .OrderByDescending(c => c.DateSaved).Where(e=>e.SavedBy==jobseekerId).Include(e=>e.JobPost)
-			   //.ProjectTo<Job>(_mapper.ConfigurationProvider)
-			   .AsQueryable();
+			   .OrderByDescending(c => c.DateSaved).Where(e=>e.SavedBy==jobseekerId).Include(e=>e.JobPost).AsQueryable();
 			return await PagedList<SavedJob>.CreateAsync(query,
 				param.PageNumber, param.PageSize);
 		}

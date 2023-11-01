@@ -10,6 +10,7 @@ using Domain.Service.SignUp.DTOs;
 using HireMeNow_WebApi.API.Job.SavedJobObjects;
 using HireMeNow_WebApi.API.JobProvider.RequestObjects;
 using HireMeNow_WebApi.API.JobSeeker.RequestObjects;
+using Domain.Helpers;
 
 namespace HireMeNow_WebApi.Extensions
 {
@@ -37,12 +38,17 @@ namespace HireMeNow_WebApi.Extensions
 			CreateMap<CompanyRegistrationDtos, AddCompanyRequestobject>().ReverseMap();
             CreateMap<CompanyUpdateDtos, CompanyupdateRequest>().ReverseMap();
             CreateMap<CompanyUpdateDtos,JobProviderCompany>().ReverseMap();
-            CreateMap<SavedJob,SavedJobsDtos>();
+            CreateMap<SavedJob,SavedJobsDtos>().ReverseMap();
             CreateMap<JobProviderCompany, GetCompanyDetailsDto>();
-           
-
+           CreateMap<InterviewSheduleObject,InterviewsheduleDtos>();    
+            CreateMap<InterviewsheduleDtos,Interview>();
+			CreateMap<SheduledInterviewDto,Interview>();
+			CreateMap<Interview, SheduledInterviewDto>();
+            CreateMap<CompanyUser, CompanyMemberListDtos>().ReverseMap();
+	
 
 		}
 
-    }
+		
+	}
 }

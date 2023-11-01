@@ -21,7 +21,7 @@ namespace Domain.Service.Job.Interfaces
         public Task<List<JobPost>> GetJobsById(Guid companyId, Guid jobId);
 
   
-		Task<PagedList<SavedJobsDtos>> GetAllSavedJobsOfSeeker(Guid jobseekerId, JobListParams param);
+		Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(Guid jobseekerId, JobListParams param);
 		
 
 		SavedJob RemoveSavedJob(Guid seekerId, Guid jobid);

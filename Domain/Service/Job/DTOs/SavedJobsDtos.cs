@@ -10,17 +10,19 @@ namespace Domain.Service.Job.DTOs
 {
 	public class SavedJobsDtos
 	{
-		public SavedJobsDtos(Guid job, DateTime dateSaved, JobPost jobPost)
+		public SavedJobsDtos( DateTime dateSaved,JobPost jobpost)
 		{
-			Job = job;
+			
 			DateSaved = dateSaved;
-			JobPost = jobPost;
+			JobPost = jobpost;
+			
 		}
 
-		public Guid Job { get; set; }
+	
 		public DateTime DateSaved { get; set; }
-		//[JsonIgnore]
-		public  JobPost JobPost { get; set; }
+		public virtual JobPost JobPost { get; set; }
+
+
 
 
 	}

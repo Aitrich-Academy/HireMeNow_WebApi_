@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Helpers;
+using Domain.Models;
 using Domain.Service.JobProvider.Dtos;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,7 @@ namespace Domain.Service.JobProvider.Interfaces
 		Task AddCompany(JobProviderCompany data);
 		JobProviderCompany GetCompany(Guid companyId);
 		Task<JobProviderCompany> updateCompanyAsync(JobProviderCompany company);
+		Task<PagedList<CompanyUser>> memberListing(Guid companyId,CompanyMemberListParam param);
+		bool memberDeleteById(Guid id);
 	}
 }

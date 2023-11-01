@@ -23,6 +23,7 @@ using Domain.Service.SignUp.DTOs;
 using HireMeNow_WebApi.Extensions;
 using Domain.Service.Job.DTOs;
 using Domain.Service.Job;
+using Domain.Service.JobProvider.Dtos;
 
 namespace HireMeNow_WebApi.API.Job
 {
@@ -53,12 +54,12 @@ namespace HireMeNow_WebApi.API.Job
 			//var UserId = _authUserService.GetUserId();
 			var savedJobs =  await _jobservice.GetAllSavedJobsOfSeeker(jobseekerId, param);
 			Response.AddPaginationHeader(savedJobs.CurrentPage, savedJobs.PageSize, savedJobs.TotalCount, savedJobs.TotalPages);
-			//var savedjobObjects = _mapper.Map<PagedList<SavedJobsDtos>>(savedjobs);
+			PagedList<SavedJobsDtos> savedjoblistdtos = _mapper.Map<PagedList<SavedJobsDtos>>(savedJobs);
 
 
-			if (savedJobs!=null)
+			if (savedjoblistdtos != null)
 			{
-				return Ok(savedJobs);
+				return Ok(savedjoblistdtos);
 			}
 			else
 			{

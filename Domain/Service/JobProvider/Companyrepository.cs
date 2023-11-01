@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Helpers;
+using Domain.Models;
 using Domain.Service.JobProvider.Dtos;
 using Domain.Service.JobProvider.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,7 @@ namespace Domain.Service.JobProvider
 			{
 				_context.JobProviderCompanies.AddAsync(data);
 				_context.SaveChanges();
+				
 			}
 			catch (Exception ex)
 			{
@@ -40,7 +42,7 @@ namespace Domain.Service.JobProvider
 
 		}
 		public async Task<JobProviderCompany> updateCompanyAsync(JobProviderCompany company)
-		{
+				{
 			var companyToUpdate = await _context.JobProviderCompanies.Where(e => e.Id == company.Id).FirstOrDefaultAsync();
 			if (companyToUpdate != null)
 			{
@@ -62,6 +64,29 @@ namespace Domain.Service.JobProvider
 				throw new NotFoundException("Company Not Found");
 			}
 			return companyToUpdate;
+		}
+		public async Task<PagedList<CompanyUser>> memberListing(Guid companyId,CompanyMemberListParam param)
+		{
+			var query =   _context.CompanyUsers.Where(e => e.Company == companyId)
+		   .AsQueryable();
+
+
+			return await PagedList<CompanyUser>.CreateAsync(query,
+				param.PageNumber, param.PageSize);
+		}
+		public bool memberDeleteById(Guid id)
+		{
+			CompanyUser user = _context.CompanyUsers.Where(e => e.Id == id).FirstOrDefault();
+			if (user != null)
+			{
+				_context.CompanyUsers.Remove(user);
+				_context.SaveChanges();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		//}

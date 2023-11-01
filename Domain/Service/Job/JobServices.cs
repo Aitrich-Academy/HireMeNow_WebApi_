@@ -34,11 +34,11 @@ namespace Domain.Service.Job
 			_jobrepository = jobrepository;
 			_mapper = mapper;	
 		}
-		public async  Task<PagedList<SavedJobsDtos>> GetAllSavedJobsOfSeeker(Guid jobseekerId,JobListParams param)
+		public async Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(Guid jobseekerId,JobListParams param)
 		{
 			var savedJobs = await _jobrepository.GetAllSavedJobsOfSeeker(jobseekerId,param);
-			var savedjobsDto = _mapper.Map<PagedList<SavedJobsDtos>>(savedJobs);
-			return savedjobsDto;
+			//var savedjobsDto = _mapper.Map<PagedList<SavedJob>>(savedJobs);
+			return savedJobs;
 		}
    public async Task<List<JobPost>> GetJobs()
         {
