@@ -33,5 +33,6 @@ namespace Domain.Service.Job.Interfaces
 
 
 
-    }
+	}
+
 }

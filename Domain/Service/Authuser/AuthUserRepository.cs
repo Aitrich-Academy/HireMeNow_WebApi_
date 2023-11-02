@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using Domain.Models;
 using Domain.Service.Authuser.Interfaces;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,8 +13,7 @@ namespace Domain.Service.Authuser
     {
         protected readonly DbHireMeNowWebApiContext _context;
         IMapper mapper;
-        private readonly IConfiguration _configuration;
-        public AuthUserRepository(DbHireMeNowWebApiContext dbContext,IMapper _mapper, IConfiguration configuration)
+        public AuthUserRepository(DbHireMeNowWebApiContext dbContext,IMapper _mapper)
         {
             _context = dbContext;
             mapper = _mapper;

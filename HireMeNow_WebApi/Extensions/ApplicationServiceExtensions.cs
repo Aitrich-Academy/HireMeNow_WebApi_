@@ -24,6 +24,7 @@ using Domain.Service.Profile.Interface;
 using Domain.Service.Admin.Interfaces;
 using Domain.Service.Admin;
 
+
 namespace HireMeNow_WebApi.Extensions
 {
     public static class ApplicationServiceExtensions

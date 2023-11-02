@@ -132,10 +132,10 @@ public partial class DbHireMeNowWebApiContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_JobPost_Location");
 
-            //entity.HasOne(d => d.PostedByNavigation).WithMany(p => p.JobPosts)
-            //    .HasForeignKey(d => d.PostedBy)
-            //    .OnDelete(DeleteBehavior.ClientSetNull)
-            //    .HasConstraintName("FK_JobPost_Industry");
+            entity.HasOne(d => d.PostedByNavigation).WithMany(p => p.JobPosts)
+                .HasForeignKey(d => d.PostedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_JobPost_Industry");
         });
 
         modelBuilder.Entity<JobProviderCompany>(entity =>
