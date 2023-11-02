@@ -1,5 +1,7 @@
-﻿using Domain.Models;
+﻿using AutoMapper;
+using Domain.Models;
 using Domain.Service.SignUp.DTOs;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +17,17 @@ namespace Domain.Service.SignUp.Interfaces
         //Task<Guid> AddJobseekerSignUpRequest(JobSeekerSignupRequest jobseekerCreateRequest);
         void CreateSignupRequest(JobSeekerSignupRequestDto data);
         Task<bool> VerifyEmailAsync(Guid jobSeekerSignupRequestId);
+
+        Task<Guid> addResume(string title, byte[] fileData);
+
+        Task addResumeToProfile(Guid profileId, Guid resumeId, Guid jobSeekerId,string profileName,string profileSummary);
+
+        public Task<Guid> getResumeId(Guid profileId);
+
+        public Task<byte[]> getResumeFile(Guid resumeId);
+
+        Task UpdateResume(Guid resumeId, byte[] fileData);
+
+        Task DeleteResume(Guid resumeId);
     }
 }
