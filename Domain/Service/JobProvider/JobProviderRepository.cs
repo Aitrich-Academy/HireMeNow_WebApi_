@@ -39,25 +39,25 @@ namespace Domain.Service.JobProvider
             _context.SaveChanges();
         }
 
-        /*     public async Task<List<JobPost>> GetJobById(Guid jobId)
-             {
-                 return await _context.JobPosts.Where(j => j.Id == jobId).ToListAsync();
-             }*/
+   /*     public async Task<List<JobPost>> GetJobById(Guid jobId)
+        {
+            return await _context.JobPosts.Where(j => j.Id == jobId).ToListAsync();
+        }*/
 
         public async Task<JobPost> UpdateAsync(JobPost Updatedjob)
         {
             var jobToUpdate = _context.JobPosts.Find(Updatedjob.Id);
-
+            
             jobToUpdate.Id = Updatedjob.Id;
-            jobToUpdate.JobTitle = Updatedjob.JobTitle;
-            jobToUpdate.JobSummary = Updatedjob.JobSummary;
-            jobToUpdate.JobLocation = Updatedjob.JobLocation;
-            jobToUpdate.Company = Updatedjob.Company;
-            jobToUpdate.Category = Updatedjob.Category;
-            jobToUpdate.Industry = Updatedjob.Industry;
-            _context.JobPosts.Update(jobToUpdate);
-            await _context.SaveChangesAsync();
-
+                jobToUpdate.JobTitle = Updatedjob.JobTitle;
+                jobToUpdate.JobSummary = Updatedjob.JobSummary;
+                jobToUpdate.JobLocation = Updatedjob.JobLocation;
+                jobToUpdate.Company = Updatedjob.Company;
+                jobToUpdate.Category = Updatedjob.Category;
+                jobToUpdate.Industry = Updatedjob.Industry;
+                _context.JobPosts.Update(jobToUpdate);
+                await _context.SaveChangesAsync();
+           
             return jobToUpdate;
         }
         public void DeleteJob(Guid id)

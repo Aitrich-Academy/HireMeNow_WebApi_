@@ -47,6 +47,8 @@ public partial class DbHireMeNowWebApiContext : DbContext
 
     public virtual DbSet<Skill> Skills { get; set; }
 	public virtual DbSet<SavedJob> SavedJobs { get; set; }
+	public virtual DbSet<Interview> Interviews { get; set; }
+
 
 	//public virtual DbSet<SystemUser> SystemUsers { get; set; }
 
@@ -55,6 +57,11 @@ public partial class DbHireMeNowWebApiContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=DESKTOP-VR8C66Q;Initial Catalog=db_HireMeNow;Integrated Security=True;Persist Security Info=True;Trust Server Certificate=True");
+
+
+      => optionsBuilder.UseSqlServer("Data Source=RAZIYA;Initial Catalog=NewDB;Integrated Security=True;Persist Security Info=True;Trust Server Certificate=True;");
+
+      
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -125,10 +132,10 @@ public partial class DbHireMeNowWebApiContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_JobPost_Location");
 
-            entity.HasOne(d => d.PostedByNavigation).WithMany(p => p.JobPosts)
-                .HasForeignKey(d => d.PostedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_JobPost_Industry");
+            //entity.HasOne(d => d.PostedByNavigation).WithMany(p => p.JobPosts)
+            //    .HasForeignKey(d => d.PostedBy)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_JobPost_Industry");
         });
 
         modelBuilder.Entity<JobProviderCompany>(entity =>
@@ -251,7 +258,7 @@ public partial class DbHireMeNowWebApiContext : DbContext
         {
             entity.ToTable("Skill");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Id);
             entity.Property(e => e.Description)
                 .HasMaxLength(50)
                 .IsUnicode(false);

@@ -1,22 +1,38 @@
 ﻿using AutoMapper;
+using Domain.Helpers;
+using Domain.Models;
+using Domain.Service.Job.Interfaces;
+using Domain.Service.Login.Interfaces;
 using Domain.Service.SignUp.DTOs;
 using Domain.Service.SignUp.Interfaces;
 using HireMeNow_WebApi.API.JobSeeker.RequestObjects;
 using HireMeNow_WebApi.Controllers;
+using HireMeNow_WebApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 namespace HireMeNow_WebApi.API.JobSeeker
 {
     [ApiController]
-    public class JobSeekerController : BaseApiController<JobSeekerController>
+	
+        
+
+	public class JobSeekerController : BaseApiController<JobSeekerController>
     {
         public ISignUpRequestService jobSeekerService { get; set; }
+
+        public ILoginRequestService loginRequestService { get; set; }
+        public IJobServices jobServices { get; set; }
         public IMapper mapper { get; set; }
-        public JobSeekerController(ISignUpRequestService _jobSeekerService, IMapper _mapper) {
+        public JobSeekerController(ISignUpRequestService _jobSeekerService, IMapper _mapper,ILoginRequestService _loginRequestService,IJobServices _jobService) {
             jobSeekerService=_jobSeekerService;
-            mapper=_mapper;
+            loginRequestService=_loginRequestService;
+            mapper = _mapper;
+
+			jobServices = _jobService;
+
         }
         [HttpPost]
         [Route("job-seeker/signup")]

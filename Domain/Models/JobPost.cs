@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models;
 
@@ -13,13 +14,14 @@ public partial class JobPost
 
     public Guid JobLocation { get; set; }
 
+ 
     public Guid Company { get; set; }
 
     public Guid Category { get; set; }
 
     public Guid Industry { get; set; }
-
-    public Guid PostedBy { get; set; }
+	[ForeignKey(nameof(PostedByNavigation))]
+	public Guid PostedBy { get; set; }
 
     public DateTime PostedDate { get; set; }
 
@@ -27,7 +29,7 @@ public partial class JobPost
 
     public virtual ICollection<JobResponsibility> JobResponsibilities { get; set; } = new List<JobResponsibility>();
 
-    public virtual CompanyUser PostedByNavigation { get; set; } = null!;
+	public virtual CompanyUser PostedByNavigation { get; set; } = null!;
 
     //public virtual ICollection<Skill> Skills { get; set; } = new List<Skill>();
 }

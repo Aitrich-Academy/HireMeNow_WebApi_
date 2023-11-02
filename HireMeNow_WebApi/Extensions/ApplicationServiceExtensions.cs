@@ -8,12 +8,19 @@ using Domain.Service.Authuser;
 using Domain.Service.SignUp.Interfaces;
 using Domain.Service.SignUp;
 using Domain.Models;
+
 using Domain.Service.Job.Interfaces;
 using Domain.Service.Job;
+
+using Domain.Service.Login.Interfaces;
+using Domain.Service.Login;
+using Domain.Service.Job;
+using Domain.Service.Job.Interfaces;
 using Domain.Service.JobProvider.Interfaces;
 using Domain.Service.JobProvider;
-using Domain.Service.Admin.Interfaces;
-using Domain.Service.Admin;
+using Domain.Service.Profile;
+using Domain.Service.JobSeeker.Interfaces;
+using Domain.Service.Profile.Interface;
 
 namespace HireMeNow_WebApi.Extensions
 {
@@ -26,9 +33,33 @@ namespace HireMeNow_WebApi.Extensions
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection"))
             );
             services.AddTransient<IEmailService, EmailService>();
+            services.AddScoped<ILoginRequestService, LoginRequestService>();
+            services.AddScoped<ILoginRequestRepository, LoginRequestRepository>();
             services.AddScoped<ISignUpRequestRepository, SignUpRequestRepository>();
             services.AddScoped<ISignUpRequestService, SignUpRequestService>();
             services.AddScoped<IAuthUserRepository, AuthUserRepository>();
+            services.AddScoped<IAuthUserService,AuthUserService>(); 
+
+            services.AddScoped<IJobProviderService, JobProviderService>();
+            services.AddScoped<IJobProviderRepository, JobProviderRepository>();
+
+			services.AddScoped<IJobRepository, JobRepository>();
+			services.AddScoped<IJobServices, JobServices>();
+			services.AddScoped<IAuthUserService, AuthUserService>();
+            services.AddScoped<ICompanyRepository, Companyrepository>();
+            services.AddScoped<ICompanyService,Companyservice>();
+			services.AddHttpContextAccessor();
+            services.AddScoped<IInterviewService,InterviewService>();   
+            services.AddScoped<IInterviewRepository,InterviewRepository>();
+
+            services.AddScoped<IJobSeekerProfileService, ProfileService>();
+          
+            services.AddScoped<IJobSeekerProfileRepository, ProfileRepository>();
+
+            services.AddScoped<ICompanyRepository, Companyrepository>();
+            services.AddScoped<ICompanyService,Companyservice>();   
+
+
 			services.AddScoped<IJobRepository,JobRepository>();
             services.AddScoped<IJobServices, JobServices>();
 

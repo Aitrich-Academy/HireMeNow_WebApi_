@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HireMeNow_WebApi.JobSeeker
+namespace HireMeNow_WebApi.API.JobProvider
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class JobSeekerController : ControllerBase
+	public class AddCompanyController : ControllerBase
 	{
+
 	}
 }
