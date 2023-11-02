@@ -54,7 +54,15 @@ namespace HireMeNow_WebApi.Extensions
             services.AddScoped<IInterviewService,InterviewService>();   
             services.AddScoped<IInterviewRepository,InterviewRepository>();
 
-			return services;
+            services.AddScoped<IJobSeekerProfileService, ProfileService>();
+          
+            services.AddScoped<IJobSeekerProfileRepository, ProfileRepository>();
+
+            services.AddScoped<ICompanyRepository, Companyrepository>();
+            services.AddScoped<ICompanyService,Companyservice>();   
+
+
+            return services;
         }
     }
 }

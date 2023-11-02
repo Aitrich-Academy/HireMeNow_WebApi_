@@ -22,10 +22,10 @@ namespace Domain.Service.JobProvider
 		companyRepository = _companyRepository;
 		}
 
-		public async Task AddCompany(CompanyRegistrationDtos data)
+		public async Task AddCompany(CompanyRegistrationDtos data, Guid UserId)
 		{
 			var jobproviderCompany=mapper.Map<JobProviderCompany>(data);
-			 companyRepository.AddCompany(jobproviderCompany);
+			 await companyRepository.AddCompany(jobproviderCompany,UserId);
 
 			
 		}

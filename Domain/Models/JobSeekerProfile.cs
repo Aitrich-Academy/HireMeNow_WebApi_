@@ -14,6 +14,7 @@ public partial class JobSeekerProfile
     public Guid Id { get; set; }
 
     public Guid ResumeId { get; set; }
+    [ForeignKey(nameof(JobSeeker))]
     public Guid JobSeekerId { get; set; }
 
     public string? ProfileName { get; set; }

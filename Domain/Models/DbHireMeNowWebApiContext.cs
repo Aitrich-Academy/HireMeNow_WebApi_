@@ -256,7 +256,7 @@ public partial class DbHireMeNowWebApiContext : DbContext
         {
             entity.ToTable("Skill");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Id);
             entity.Property(e => e.Description)
                 .HasMaxLength(50)
                 .IsUnicode(false);

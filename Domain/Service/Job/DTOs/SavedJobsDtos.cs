@@ -10,18 +10,19 @@ namespace Domain.Service.Job.DTOs
 {
 	public class SavedJobsDtos
 	{
-		public SavedJobsDtos( DateTime dateSaved,JobPost jobpost)
+
+		public SavedJobsDtos(Guid job, DateTime dateSaved, JobPost jobPost)
 		{
 			
 			DateSaved = dateSaved;
-			JobPost = jobpost;
+			JobPost = jobPost;
 			
 		}
 
 	
 		public DateTime DateSaved { get; set; }
 		public virtual JobPost JobPost { get; set; }
-
+		
 
 
 

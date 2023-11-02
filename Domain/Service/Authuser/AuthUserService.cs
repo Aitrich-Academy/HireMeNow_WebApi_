@@ -28,7 +28,7 @@ namespace Domain.Service.Authuser
 			var result = string.Empty;
 			if (_httpContextAccessor.HttpContext != null)
 			{
-				result = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid).ToString();
+				result = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid).Value.ToString();
 			}
 			return result;
 		}

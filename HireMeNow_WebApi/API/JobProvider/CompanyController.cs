@@ -31,7 +31,7 @@ namespace HireMeNow_WebApi.API.JobProvider
 		public IMapper mapper { get; set; }
 		public ICompanyService companyService { get; set; }
 		public IAuthUserService	authUserService { get; set; }
-		[AllowAnonymous]
+		
 		[HttpPost]
 		[Route("job-provider/{jobproviderId}/company")]
 		
@@ -39,7 +39,7 @@ namespace HireMeNow_WebApi.API.JobProvider
 		{
 			var UserId = authUserService.GetUserId();
 			var companyRegistrationDtos = mapper.Map<CompanyRegistrationDtos>(data);
-			await companyService.AddCompany(companyRegistrationDtos);
+			await companyService.AddCompany(companyRegistrationDtos,new Guid( UserId));
 			return Ok();
 		}
 		[AllowAnonymous]
@@ -119,7 +119,7 @@ namespace HireMeNow_WebApi.API.JobProvider
 			{
 				return Ok("Success fully remove the companyMember");
 
-			}
+		}
 			else
 			{
 				return BadRequest();
