@@ -3,7 +3,8 @@ using Domain.Models;
 using Domain.Service.JobProvider.Dtos;
 using Domain.Service.JobProvider.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using SendGrid.Helpers.Errors.Model;
+using OpenQA.Selenium;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -42,7 +42,7 @@ namespace HireMeNow_WebApi.JobSeeker
                 return StatusCode(500, ex.Message);
             }
         }
-       
+
         [HttpPost("{jobseekerId}/profile/{profileId}/skills")]
         public async Task<IActionResult> AddSkillsToProfile(Guid jobseekerId, Guid profileId, [FromBody] List<Guid> skills)
         {
@@ -74,6 +74,19 @@ namespace HireMeNow_WebApi.JobSeeker
             _profileService.AddQualificationToProfileAsync(jobseekerId, profileId, JobseekerQualificationDTo);
             return Ok(data);
         }
+        [HttpGet("{jobseekerId}/profiledetails")]
+        public ActionResult<List<JobSeekerProfileDTo>> GetProfile(Guid jobseekerId)
+        {
+            var Profile = _profileService.GetProfile(jobseekerId);
+
+            if (Profile == null || !Profile.Any())
+                return NotFound();
+
+            return Ok(Profile);
+
+
+        }
+
         [HttpGet]
         [Route("/profile/{profileId}/Qualification")]
         public ActionResult<List<JobseekerQualificationDTo>> GetQualification( Guid profileId)
@@ -111,10 +124,30 @@ namespace HireMeNow_WebApi.JobSeeker
             return Ok(Experience);
         }
 
-       
+        [HttpGet]
+        [Route("skills")]
+        public ActionResult<List<SkillDto>> GetSkills()
+        {
+            var skills = _profileService.GetSkillsForJobSeekerProfile();
+
+            if (skills == null || !skills.Any())
+                return NotFound();
+
+            return Ok(skills);
+        }
 
 
-        
+        //[HttpGet]
+        //[Route("{jobseekerId}/profile/{profileId}/Experice")]
+        //public ActionResult<List<ExperienceDto>> GetExperience(Guid jobseekerId, Guid profileId)
+        //{
+        //    var Experience = _profileService.GetExperience(jobseekerId, profileId);
+
+        //    if (Experience == null || !Experience.Any())
+        //        return NotFound();
+
+        //    return Ok(Experience);
+        //}
 
 
     }

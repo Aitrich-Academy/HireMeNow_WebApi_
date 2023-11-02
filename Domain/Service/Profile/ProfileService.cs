@@ -23,17 +23,7 @@ namespace Domain.Service.Profile
             _profileRepository = profileRepository;
         }
 
-        //public async Task AddQualificationToProfile(Guid jobseekerId, Guid profileId, List<Guid> qualification)
-        //{
-        //   var profile = await _profileRepository.GetJobSeekerProfileByIds(jobseekerId, profileId);
-        //    if (profile != null)
-        //    {
-
-        //    }else
-        //    {
-        //        throw new Exception("Profile not found");
-        //    }
-        //}
+      
 
         public void AddQualificationToProfile(Guid jobseekerId, Guid profileId, Qualification qualification)
         {
@@ -48,19 +38,8 @@ namespace Domain.Service.Profile
             {
                 throw new Exception("Profile not found");
             }
-
-            //public async Task AddQualificationToProfile(Guid jobseekerId, Guid profileId, List<Guid> qualification)
-            //{
-            //   var profile = await _profileRepository.GetJobSeekerProfileByIds(jobseekerId, profileId);
-            //    if (profile != null)
-            //    {
-
-            //    }else
-            //    {
-            //        throw new Exception("Profile not found");
-            //    }
-            //}
         }
+
 
         public Task AddQualificationToProfileAsync(Guid jobseekerId, Guid profileId, JobseekerQualificationDTo jobseekerQualificationDTo)
         {
@@ -110,19 +89,7 @@ namespace Domain.Service.Profile
             var Experience = mapper.Map<WorkExperience>(data);
             await _profileRepository.AddWorkExperienceToProfile(profileId, Experience);
 
-            //}
-            //else
-            //{
-            //    throw new Exception("Profile not found");
-            //}
-
-            //var signUpRequest = mapper.Map<SignUpRequest>(data);
-            //var signUpId = jobSeekerRepository.AddSignupRequest(signUpRequest);
-            //MailRequest mailRequest = new MailRequest();
-            //mailRequest.Subject = "HireMeNow SignUp Verification";
-            //mailRequest.Body = signUpId.ToString();
-            //mailRequest.ToEmail = signUpRequest.Email;
-            //await emailService.SendEmailAsync(mailRequest);
+     
 
 
 
@@ -139,9 +106,19 @@ namespace Domain.Service.Profile
 
         }
 
+        public List<JobSeekerProfileDTo> GetProfile(Guid jobseekerId)
+        {
+            return _profileRepository.GetProfile(jobseekerId);
+        }
+
         public Task<JobSeekerProfile> GetProfileAsync(Guid jobSeekerId)
         {
             return _profileRepository.GetProfileAsync(jobSeekerId);
+        }
+
+        public Task GetProfileDetailsAsync(Guid jobseekerId)
+        {
+            throw new NotImplementedException();
         }
 
         public List<JobseekerQualificationDTo> GetQualification(Guid profileId)
@@ -157,6 +134,15 @@ namespace Domain.Service.Profile
         public List<SkillDto> GetSkillsForJobSeekerProfile(Guid jobseekerId, Guid profileId)
         {
             return _profileRepository.GetSkillsForProfile(jobseekerId, profileId);
+        }
+
+        public List<SkillDto> GetSkillsForJobSeekerProfile()
+        {
+            var Skills = _profileRepository.GetSkillsForProfile();
+            var SkillDtos = mapper.Map<List<SkillDto>>(Skills);
+
+            return SkillDtos;
+          
         }
     }
 }
