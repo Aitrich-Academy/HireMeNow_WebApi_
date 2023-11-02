@@ -144,53 +144,10 @@ namespace HireMeNow_WebApi.API.Job
 				return NoContent();
 			}
 		}
-      [HttpGet]
-        [Route("company/{companyId}/jobs/{jobId}")]
-
-        public async Task<IActionResult> GetJobsById(Guid companyId, Guid jobId)
-        {
-            try
-            {
-                List<JobPost> jobposts = await _jobService.GetJobsById(companyId,jobId);
-                return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
-         [HttpGet]
-        [Route("jobs/{companyId}")]
-     
-        public async Task<IActionResult> GetJobsByCompany(Guid companyId)
-        {
-            try
-            {
-                List<JobPost> jobposts = await _jobService.GetJobsByCompany(companyId);
-                return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
-          [HttpGet]
-        [Route("jobs")]
-        public async Task<IActionResult>  GetJob()
-        {
-            try
-            {
-                List<JobPost> jobposts = await _jobService.GetJobs();
-                return Ok(_mapper.Map<List<JobPostsDtos> >(jobposts));
-            }
-            catch(Exception ex)
-            {
-                return BadRequest();
-            }
-       
-        }
+    
+      
     }
 
 	}
 
-}
+
