@@ -70,5 +70,10 @@ namespace Domain.Service.Authuser
 
             return jwt;
         }
-    }
+        public CompanyUser GetUser(Guid userid)
+        {
+            return _context.CompanyUsers.Where(e => e.Id == userid).FirstOrDefault();
+        }
+
+	}
 }

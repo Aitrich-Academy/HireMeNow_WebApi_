@@ -50,13 +50,10 @@ namespace Domain.Service.Job
         {
 
 			var query = _context.SavedJobs
-			   .OrderByDescending(c => c.DateSaved).Where(e=>e.SavedBy==jobseekerId).Include(e=>e.JobPost)
-			   //.ProjectTo<Job>(_mapper.ConfigurationProvider)
-			   .AsQueryable();
+			   .OrderByDescending(c => c.DateSaved).Where(e=>e.SavedBy==jobseekerId).Include(e=>e.JobPost).AsQueryable();
 			return await PagedList<SavedJob>.CreateAsync(query,
 				param.PageNumber, param.PageSize);
 		}
-
 
         public async Task<List<JobPost>> GetJobs()
         {
@@ -74,7 +71,6 @@ namespace Domain.Service.Job
         {
             return await _context.JobPosts.Where(e => e.Company == companyId && e.Id == jobId).ToListAsync();
         }
-
 
 			
 	
@@ -136,7 +132,6 @@ namespace Domain.Service.Job
 	//}
 
 }
-
 
 
 

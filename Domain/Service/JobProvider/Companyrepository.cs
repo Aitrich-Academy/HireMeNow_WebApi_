@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Helpers;
+using Domain.Models;
 using Domain.Service.JobProvider.Dtos;
 using Domain.Service.JobProvider.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -21,12 +22,32 @@ namespace Domain.Service.JobProvider
 			_context = context;
 		}
 	
-		public async Task AddCompany(JobProviderCompany data)
+		public async Task AddCompany(JobProviderCompany data, Guid UserId)
 		{
 			try
 			{
 				_context.JobProviderCompanies.AddAsync(data);
-				_context.SaveChanges();
+				await _context.SaveChangesAsync();
+				var CmpanyId = data.Id;
+				AuthUser user = _context.AuthUsers.Where(e => e.Id == UserId).FirstOrDefault();
+				CompanyUser companyUser = new CompanyUser();
+				var cmp=_context.CompanyUsers.Where(e=>e.Id == UserId).FirstOrDefault();
+				if(cmp==null)
+				{
+					companyUser.Id = UserId;
+					companyUser.UserName = user.UserName;
+					companyUser.Email = user.Email;
+					companyUser.FirstName = user.FirstName;
+					companyUser.LastName = user.LastName;
+					companyUser.Phone = user.Phone;
+					companyUser.Role = Enums.Role.COMPANY_USER;
+					companyUser.Company = CmpanyId;
+					_context.CompanyUsers.AddAsync(companyUser);
+					await _context.SaveChangesAsync();
+				}
+				
+
+				
 			}
 			catch (Exception ex)
 			{
@@ -41,7 +62,7 @@ namespace Domain.Service.JobProvider
 
 		}
 		public async Task<JobProviderCompany> updateCompanyAsync(JobProviderCompany company)
-		{
+				{
 			var companyToUpdate = await _context.JobProviderCompanies.Where(e => e.Id == company.Id).FirstOrDefaultAsync();
 			if (companyToUpdate != null)
 			{
@@ -64,8 +85,35 @@ namespace Domain.Service.JobProvider
 			}
 			return companyToUpdate;
 		}
+		public async Task<PagedList<CompanyUser>> memberListing(Guid companyId,CompanyMemberListParam param)
+		{
+			var query =   _context.CompanyUsers.Where(e => e.Company == companyId)
+		   .AsQueryable();
 
-		//}
+
+			return await PagedList<CompanyUser>.CreateAsync(query,
+				param.PageNumber, param.PageSize);
+		}
+		public bool memberDeleteById(Guid id)
+		{
+			CompanyUser user = _context.CompanyUsers.Where(e => e.Id == id).FirstOrDefault();
+			if (user != null)
+			{
+				_context.CompanyUsers.Remove(user);
+				_context.SaveChanges();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+	
+	
+
+		
+
 	}
 }
 

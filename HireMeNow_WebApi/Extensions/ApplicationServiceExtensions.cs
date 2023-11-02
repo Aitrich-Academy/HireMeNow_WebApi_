@@ -40,7 +40,7 @@ namespace HireMeNow_WebApi.Extensions
             services.AddScoped<ISignUpRequestRepository, SignUpRequestRepository>();
             services.AddScoped<ISignUpRequestService, SignUpRequestService>();
             services.AddScoped<IAuthUserRepository, AuthUserRepository>();
-
+            services.AddScoped<IAuthUserService,AuthUserService>(); 
 
             services.AddScoped<IJobProviderService, JobProviderService>();
             services.AddScoped<IJobProviderRepository, JobProviderRepository>();
@@ -48,6 +48,11 @@ namespace HireMeNow_WebApi.Extensions
 			services.AddScoped<IJobRepository, JobRepository>();
 			services.AddScoped<IJobServices, JobServices>();
 			services.AddScoped<IAuthUserService, AuthUserService>();
+            services.AddScoped<ICompanyRepository, Companyrepository>();
+            services.AddScoped<ICompanyService,Companyservice>();
+			services.AddHttpContextAccessor();
+            services.AddScoped<IInterviewService,InterviewService>();   
+            services.AddScoped<IInterviewRepository,InterviewRepository>();
 
             services.AddScoped<IJobSeekerProfileService, ProfileService>();
           

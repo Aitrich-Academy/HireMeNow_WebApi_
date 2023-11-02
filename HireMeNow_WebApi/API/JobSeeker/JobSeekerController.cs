@@ -8,6 +8,7 @@ using Domain.Service.SignUp.Interfaces;
 using HireMeNow_WebApi.API.JobSeeker.RequestObjects;
 using HireMeNow_WebApi.Controllers;
 using HireMeNow_WebApi.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
@@ -16,8 +17,10 @@ namespace HireMeNow_WebApi.API.JobSeeker
 {
     //[Route("api/[controller]")]
     [ApiController]
+	
+        
 
-    public class JobSeekerController : BaseApiController<JobSeekerController>
+	public class JobSeekerController : BaseApiController<JobSeekerController>
     {
         public ISignUpRequestService jobSeekerService { get; set; }
 
@@ -27,8 +30,9 @@ namespace HireMeNow_WebApi.API.JobSeeker
         public JobSeekerController(ISignUpRequestService _jobSeekerService, IMapper _mapper,ILoginRequestService _loginRequestService,IJobServices _jobService) {
             jobSeekerService=_jobSeekerService;
             loginRequestService=_loginRequestService;
-            mapper=_mapper;
-            jobServices=_jobService;
+            mapper = _mapper;
+
+			jobServices = _jobService;
 
         }
         [HttpPost]

@@ -86,12 +86,12 @@ namespace Domain.Service.Profile
             //var profile = _profileRepository.GetJobSeekerProfileByIds(jobseekerId, profileId);
             //if (profile != null)
             //{
-                var Experience = mapper.Map<WorkExperience>(data);
-                await _profileRepository.AddWorkExperienceToProfile(profileId,Experience);
+            var Experience = mapper.Map<WorkExperience>(data);
+            await _profileRepository.AddWorkExperienceToProfile(profileId, Experience);
 
      
 
-            
+
 
 
         }
@@ -128,7 +128,7 @@ namespace Domain.Service.Profile
             var QualificationDtos = mapper.Map<List<JobseekerQualificationDTo>>(Qualifications);
 
             return QualificationDtos;
-            
+
         }
 
         public List<SkillDto> GetSkillsForJobSeekerProfile(Guid jobseekerId, Guid profileId)
@@ -146,3 +146,4 @@ namespace Domain.Service.Profile
         }
     }
 }
+
