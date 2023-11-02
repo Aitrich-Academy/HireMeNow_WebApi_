@@ -118,8 +118,21 @@ namespace HireMeNow_WebApi.API.JobSeeker
             }
         }
 
+        [HttpPost]
+        [Route("job-seeker/login")]
+        public async Task<ActionResult> Login(JobSeekerLoginRequest logdata)
+        {
+            //var user = _mapper.Map<User>(userDto);
+            var user = loginRequestService.login(logdata.Email, logdata.Password);
+
+            if (user == null)
+            {
+                return BadRequest("Login Failed");
+            }
+            return Ok(user);
+        }
         [HttpDelete]
-        [Route("job-seeker/update-resume")]
+        [Route("job-seeker/delete-resume")]
         public async Task<ActionResult> DeleteResume(Guid profileId)
         {
 
