@@ -11,7 +11,7 @@ using Domain.Service.Job.Interfaces;
 using Domain.Service.JobSeeker.Interfaces;
 using Domain.Service.Login.DTOs;
 using Domain.Service.SignUp.Interfaces;
-using MassTransit.Util;
+
 using Microsoft.EntityFrameworkCore;
 
 

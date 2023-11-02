@@ -5,22 +5,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models;
 
-public partial class Qualification
-{
-    [Key]
-    [Required]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public partial class Qualification
+    {
+        [Key]
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-    public Guid Id { get; set; }
+        public Guid Id { get; set; }
 
-    public string Name { get; set; } = null!;
+        public string Name { get; set; } = null!;
 
-    public string Description { get; set; } = null!;
+        public string Description { get; set; } = null!;
 
-    public Guid? JobseekerProfileId { get; set; }
+        public Guid? JobseekerProfileId { get; set; }
 
-    public Guid? JobPostId { get; set; }
+        public Guid? JobPostId { get; set; }
 
-    public virtual JobPost? JobPost { get; set; }
-    public JobSeekerProfile JobSeekerProfile { get; set; }  
-}
+        public virtual JobPost? JobPost { get; set; }
+        public JobSeekerProfile JobSeekerProfile { get; set; }  
+    }

@@ -24,9 +24,9 @@ namespace Domain.Service.Profile
         {
 
             qualification.JobseekerProfileId = profileId;
-         _context.Qualifications.Add(qualification);
-         await  _context.SaveChangesAsync();
-           
+            _context.Qualifications.Add(qualification);
+            await _context.SaveChangesAsync();
+
         }
 
         //public void AddQualificationToProfile(Guid profileId, Qualification qualification)
@@ -36,7 +36,7 @@ namespace Domain.Service.Profile
         //     _context.Qualifications.AddAsync(qualification);
         //    _context.SaveChangesAsync();
         //}
-        
+
 
         public async Task AddSkillsToProfile(JobSeekerProfile profile)
         {
@@ -49,16 +49,16 @@ namespace Domain.Service.Profile
                 //}
 
                 _context.JobSeekerProfiles.Update(profile);
-                 _context.SaveChanges();
+                _context.SaveChanges();
             }
         }
 
         public async Task AddWorkExperienceToProfile(Guid profileId, WorkExperience experience)
         {
             experience.JobSeekerProfileId = profileId;
-            experience.Id=Guid.NewGuid();
+            experience.Id = Guid.NewGuid();
             await _context.WorkExperiences.AddAsync(experience);
-           await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
         }
 
@@ -68,12 +68,7 @@ namespace Domain.Service.Profile
                .Where(experience => experience.JobSeekerProfileId == profileId)
                .ToList();
 
-            //       .SelectMany(profile => profile.JobSeekerProfileSkills.Select(skill => new SkillDto
-            //       {
-            //           Name = skill.Skill.Name,
-            //           Description = skill.Skill.Description
-            //       }))
-            //       .ToList();
+
         }
 
         //public async Task AddWorkExperienceToProfile(Guid profileId, WorkExperience experience)
@@ -84,6 +79,37 @@ namespace Domain.Service.Profile
             return await _context.JobSeekerProfiles
              .FirstOrDefaultAsync(profile => profile.JobSeekerId == jobseekerId && profile.Id == profileId);
         }
+
+        public List<JobSeekerProfileDTo> GetProfile(Guid jobseekerId)
+        {
+            var jobSeekerProfile = _context.JobSeekerProfiles
+           .Include(profile => profile.Qualifications)
+           .Include(profile => profile.JobSeekerProfileSkills)
+           .Include(profile => profile.JobSeeker)
+           .FirstOrDefault(profile => profile.JobSeekerId == jobseekerId);
+
+            if (jobSeekerProfile == null)
+            {
+                // Handle case when the profile is not found
+                return new List<JobSeekerProfileDTo>(); // or return null, depending on your handling
+            }
+
+            var jobSeekerProfileDTO = new JobSeekerProfileDTo
+            {
+                UserName = jobSeekerProfile.JobSeeker.UserName,
+                FirstName = jobSeekerProfile.JobSeeker.FirstName,
+                LastName = jobSeekerProfile.JobSeeker.LastName,
+                Phone = jobSeekerProfile.JobSeeker.Phone,
+                Email = jobSeekerProfile.JobSeeker.Email,
+                Qualification = jobSeekerProfile.Qualifications.ToList(),
+                JobSeekerProfileSkills = jobSeekerProfile.JobSeekerProfileSkills.Select(s => s.Skill).ToList(),
+                Role = jobSeekerProfile.JobSeeker.Role
+            };
+
+            // Return a list with a single item (your DTO)
+            return new List<JobSeekerProfileDTo> { jobSeekerProfileDTO };
+        }
+    
 
         public async Task<JobSeekerProfile> GetProfileAsync(Guid jobSeekerId)
         {
@@ -122,5 +148,12 @@ namespace Domain.Service.Profile
                    }))
                    .ToList();
         }
+
+        public List<Skill> GetSkillsForProfile()
+        {
+            return _context.Skills.ToList();
+        }
+
+        
     }
 }
