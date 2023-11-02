@@ -73,6 +73,9 @@ namespace HireMeNow_WebApi.API.JobSeeker
             }
             return Ok(user);
         }
+
+      
+        
         [HttpGet]
         [Route("job-seeker/{jobseekerId}/job-application")]
         public async Task<ActionResult> getAllJobApplicationsOfUser(Guid jobseekerId, [FromQuery] JobListParams param)

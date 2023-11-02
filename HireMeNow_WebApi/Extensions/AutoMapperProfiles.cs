@@ -31,13 +31,13 @@ namespace HireMeNow_WebApi.Extensions
             CreateMap<Qualification,QualificationsRequestDto>().ReverseMap();
             CreateMap<QualificationRequest, JobseekerQualificationDTo>();
             CreateMap<Qualification,JobseekerQualificationDTo>();
-           
+            CreateMap<Skill, SkillDto>();
             CreateMap<JobseekerQualificationDTo, Qualification>();
             CreateMap<WorkExperieceRequest, JobseekerWorkExperienceDTo>();
             CreateMap<JobseekerWorkExperienceDTo, WorkExperience>();
             CreateMap<WorkExperience, ExperienceDto>();
             CreateMap<AuthUser, JobSeekerLoginDto>();
-
+            CreateMap<JobSeekerProfileDTo, Domain.Models.JobSeeker>();
             CreateMap<ApplyJobRequest, JobApplication>();
             CreateMap<JobApplication, AppliedJobsDtos>();
             CreateMap<CompanyRegistrationDtos, JobProviderCompany>().ReverseMap();
