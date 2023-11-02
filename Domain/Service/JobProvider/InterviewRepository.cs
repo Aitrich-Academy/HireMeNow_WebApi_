@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Domain.Enums;
 using Domain.Helpers;
 using HireMeNow_WebApi.Helpers;
-using SendGrid.Helpers.Mail;
+
 
 namespace Domain.Service.JobProvider
 {

@@ -22,14 +22,16 @@ namespace Domain.Service.Job.Interfaces
 
   
 		Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(Guid jobseekerId, JobListParams param);
-		
+
+        Task<PagedList<AppliedJobsDtos>> GetAllAppliedJobs(Guid jobseekerId, JobListParams param);
+        bool ApplyJob(JobApplication applyJob);
+        bool CancelAppliedJob(Guid jobseekerId, Guid JobApplicationId);
+        SavedJobsDtos GetsavedJobById(Guid jobseekerId, Guid SavedJobId);
 
 
-        public Task<List<JobPost>> GetJobs();
+        SavedJob RemoveSavedJob(Guid seekerId, Guid jobid);
 
-        public Task<List<JobPost>> GetJobsByCompany(Guid companyId);
 
-        public Task<List<JobPost>> GetJobsById(Guid companyId, Guid jobId);
 
     }
 }

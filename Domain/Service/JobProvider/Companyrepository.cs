@@ -3,7 +3,7 @@ using Domain.Models;
 using Domain.Service.JobProvider.Dtos;
 using Domain.Service.JobProvider.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using OpenQA.Selenium;
+
 
 using System;
 using System.Collections.Generic;
@@ -81,7 +81,7 @@ namespace Domain.Service.JobProvider
 			}
 			else
 			{
-				throw new NotFoundException("Company Not Found");
+				throw new FileNotFoundException("Company Not Found");
 			}
 			return companyToUpdate;
 		}

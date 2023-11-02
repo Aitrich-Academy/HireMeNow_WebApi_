@@ -59,7 +59,7 @@ public partial class DbHireMeNowWebApiContext : DbContext
         => optionsBuilder.UseSqlServer("Data Source=DESKTOP-VR8C66Q;Initial Catalog=db_HireMeNow;Integrated Security=True;Persist Security Info=True;Trust Server Certificate=True");
 
 
-      => optionsBuilder.UseSqlServer("Data Source=RAZIYA;Initial Catalog=NewDB;Integrated Security=True;Persist Security Info=True;Trust Server Certificate=True;");
+    
 
       
 
