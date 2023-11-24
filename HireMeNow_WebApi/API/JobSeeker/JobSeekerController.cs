@@ -50,7 +50,7 @@ namespace HireMeNow_WebApi.API.JobSeeker
             var isVerified=await jobSeekerService.VerifyEmailAsync(jobSeekerSignupRequestId);
             if (isVerified)
             {
-                return Ok("Verified");
+                return Ok();
             }
             return BadRequest();
         }

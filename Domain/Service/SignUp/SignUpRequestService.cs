@@ -33,18 +33,24 @@ namespace Domain.Service.SignUp
             {
                 SignUpRequest signUpRequest = await jobSeekerRepository.GetSignupRequestByIdAsync(jobSeekerSignupRequestId);
                 //AuthUser authUser = mapper.Map<AuthUser>(signUpRequest);
-
-                //need to change this code by using Automapper 
                 AuthUser authUser = new();
-           
-                authUser.UserName=signUpRequest.UserName;
-                authUser.Role=Enums.Role.JOB_SEEKER;
-                authUser.FirstName=signUpRequest.FirstName;
-                authUser.LastName=signUpRequest.LastName;
-                authUser.Email=signUpRequest.Email;
-                authUser.Password= password;
-                authUser.Phone=signUpRequest.Phone;
-                authUser =await authUserRepository.AddAuthUser(authUser);
+                if (signUpRequest.Status==Enums.Status.VERIFIED)
+                {
+                    //need to change this code by using Automapper 
+
+                  
+
+                    authUser.UserName=signUpRequest.UserName;
+                    authUser.Role=Enums.Role.JOB_SEEKER;
+                    authUser.FirstName=signUpRequest.FirstName;
+                    authUser.LastName=signUpRequest.LastName;
+                    authUser.Email=signUpRequest.Email;
+                    authUser.Password= password;
+                    authUser.Phone=signUpRequest.Phone;
+                    authUser =await authUserRepository.AddAuthUser(authUser);
+                    signUpRequest.Status=Enums.Status.CREATED;
+                    jobSeekerRepository.UpdateSignupRequest(signUpRequest);
+                }
 
                 Models.JobSeeker jobseeker = mapper.Map<Models.JobSeeker>(authUser);
 
@@ -62,7 +68,7 @@ namespace Domain.Service.SignUp
           var signUpId=  jobSeekerRepository.AddSignupRequest(signUpRequest);
             MailRequest mailRequest= new MailRequest();
             mailRequest.Subject="HireMeNow SignUp Verification";
-            mailRequest.Body=signUpId.ToString();
+            mailRequest.Body="http://localhost:4200/set-password?signupid="+signUpId.ToString();
             mailRequest.ToEmail=signUpRequest.Email;
            await emailService.SendEmailAsync(mailRequest);
         }
@@ -70,7 +76,7 @@ namespace Domain.Service.SignUp
         public async Task<bool> VerifyEmailAsync(Guid jobSeekerSignupRequestId)
         {
             SignUpRequest signUpRequest= await jobSeekerRepository.GetSignupRequestByIdAsync(jobSeekerSignupRequestId);
-            if(signUpRequest != null && signUpRequest.Status==Enums.Status.PENDING)
+            if(signUpRequest != null )
             {
                 signUpRequest.Status=Enums.Status.VERIFIED;
                  jobSeekerRepository.UpdateSignupRequest(signUpRequest);
@@ -78,5 +84,7 @@ namespace Domain.Service.SignUp
             }
             return false;
         }
+
+        
     }
 }
