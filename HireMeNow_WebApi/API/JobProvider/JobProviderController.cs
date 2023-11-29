@@ -41,7 +41,7 @@ namespace HireMeNow_WebApi.API.JobProvider
             try
             {
                 List<JobPost> jobposts = await _jobProviderService.GetJobs(companyId);
-                return Ok(_mapper.Map<List<JobProviderDto>>(jobposts));
+                return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
             }
             catch (Exception ex)
             {
@@ -58,7 +58,7 @@ namespace HireMeNow_WebApi.API.JobProvider
             try
             {
                 List<JobPost> jobposts = await _jobProviderService.GetAllJobsByProvider(companyId, jobproviderId);
-                return Ok(_mapper.Map<List<JobProviderDto>>(jobposts));
+                return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
             }
             catch (Exception ex)
             {
@@ -99,28 +99,24 @@ namespace HireMeNow_WebApi.API.JobProvider
         }
 
 
+        [AllowAnonymous]
+        [HttpDelete]
+        [Route("company/{companyId}/job-provider/{jobproviderId}/job/{id}")]
+
+        public async Task<IActionResult> DeleteJob(Guid id)
+        {
+            try
+            {
+                _jobProviderService.DeleteJob(id);
+                return NoContent();
+    }
+            catch (Exception ex)
+            {
+                return BadRequest();
+}
+        }
+
     }
 }
 
-/*{
-    "id": "2E4329CE-455B-421D-F945-08DBD45838C9",
-  "jobTitle": "JavaDeveloper",
-  "jobSummary": "Mid-Level",
-  "jobLocation": "2E4329CE-455B-421D-F945-07DBD45838C9",
-  "company": "58F8C10F-59A9-4A0B-8C94-39D01C2565AC",
-  "industry": "58F8C10F-59A9-4A0B-8C94-39D01C2565AC",
-  "postedBy": "58F8C10F-59A9-4A0B-8C94-39D01C2565AC",
-  "postedDate": "2023-10-28T04:26:27.626Z"
-}*/
 
-/*{
-    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "jobTitle": "Flutter",
-  "jobSummary": "developer",
-  "jobLocation": "B18A7C3C-62F8-490B-9FB8-7CFE49D09A6E",
-  "company": "C9E968B8-0C11-4B11-9736-0CC9183F8E1C",
-  "category": "64891B9B-12E2-4B4C-8A71-3A7A596A352F",
-  "industry": "A5EC3040-31D2-4FB8-8EF4-7D93D857C86A",
-  "postedBy": "58f8c10f-59a9-4a0b-8c94-39d01c2565ac",
-  "postedDate": "2023-10-28T05:28:37.623Z"
-}*/

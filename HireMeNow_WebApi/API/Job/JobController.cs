@@ -24,48 +24,97 @@ using HireMeNow_WebApi.Extensions;
 using Domain.Service.Job.DTOs;
 using Domain.Service.Job;
 using Domain.Service.JobProvider.Dtos;
+using Domain.Helpers;
 
 namespace HireMeNow_WebApi.API.Job
 {
+   /* [Route("api/[controller]")]*/
+    [ApiController]
+    public class JobController : BaseApiController<JobController>
+    {
+        private readonly IJobServices _jobService;
+        private readonly IMapper _mapper;
+        IJobRepository _jobRepository;
 
-	[ApiController]
-	//[Authorize(Roles = "JOB_SEEKER")]
-	public class JobController : BaseApiController<JobController>
-	{
-		protected IJobServices _jobservice;
-		protected IAuthUserService _authUserService;
-		protected IMapper _mapper;
-		
-  
- public JobController(IMapper mapper, IJobServices jobService, IJobRepository jobRepostory)
+        private IMapper mapper;
+
+
+        public JobController(IMapper mapper, IJobServices jobService, IJobRepository jobRepostory)
         {
             _mapper = mapper;
-            _jobservice = jobService;
-           
+            _jobService = jobService;
+            _jobRepository = jobRepostory;
         }
 
-	
-		[HttpGet]
-		[Route("job-seeker/{jobseekerId}/savedjobs")]
-		public async Task<IActionResult> savedjobs(Guid jobseekerId, [FromQuery]JobListParams param)
-		{
+        [HttpGet]
+        [Route("jobs")]
+        public async Task<IActionResult>  GetJob()
+        {
+            try
+            {
+                List<JobPost> jobposts = await _jobService.GetJobs();
+                return Ok(_mapper.Map<List<JobPostsDtos> >(jobposts));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest();
+            }
+       
+        }
+
+        [HttpGet]
+        [Route("jobs/{companyId}")]
+     
+        public async Task<IActionResult> GetJobsByCompany(Guid companyId)
+        {
+            try
+            {
+                List<JobPost> jobposts = await _jobService.GetJobsByCompany(companyId);
+                return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [Route("company/{companyId}/jobs/{jobId}")]
+
+        public async Task<IActionResult> GetJobsById(Guid companyId, Guid jobId)
+        {
+            try
+            {
+                List<JobPost> jobposts = await _jobService.GetJobsById(companyId,jobId);
+                return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+        [HttpGet]
+        [Route("job-seeker/{jobseekerId}/savedjobs")]
+        public async Task<IActionResult> savedjobs(Guid jobseekerId, [FromQuery] JobListParams param)
+        {
 
 
-			//var UserId = _authUserService.GetUserId();
-			var savedJobs =  await _jobservice.GetAllSavedJobsOfSeeker(jobseekerId, param);
-			Response.AddPaginationHeader(savedJobs.CurrentPage, savedJobs.PageSize, savedJobs.TotalCount, savedJobs.TotalPages);
-			PagedList<SavedJobsDtos> savedjoblistdtos = _mapper.Map<PagedList<SavedJobsDtos>>(savedJobs);
+            //var UserId = _authUserService.GetUserId();
+            var savedJobs = await _jobService.GetAllSavedJobsOfSeeker(jobseekerId, param);
+            Response.AddPaginationHeader(savedJobs.CurrentPage, savedJobs.PageSize, savedJobs.TotalCount, savedJobs.TotalPages);
+            PagedList<SavedJobsDtos> savedjoblistdtos = _mapper.Map<PagedList<SavedJobsDtos>>(savedJobs);
 
 
-			if (savedjoblistdtos != null)
-			{
-				return Ok(savedjoblistdtos);
-			}
-			else
-			{
-				return BadRequest("Not Found");
-			}
-		}
+            if (savedjoblistdtos != null)
+            {
+                return Ok(savedjoblistdtos);
+            }
+            else
+            {
+                return BadRequest("Not Found");
+            }
+        }
+		
 		//[HttpGet]
 		//[Route("job-seeker/{jobseekerId}/savedjobs/{savedJobId}")]
 		//public ActionResult GetSavedJobs(Guid jobseekerId,Guid savedJobId)
@@ -85,7 +134,7 @@ namespace HireMeNow_WebApi.API.Job
 		[Route("job-seeker/{jobseekerId}/savedjobs/{savedJobId}")]
 		public async Task<ActionResult> RemoveSavedJob(Guid jobseekerId, Guid savedJobId)
 		{
-			SavedJob savedJob = _jobservice.RemoveSavedJob(jobseekerId, savedJobId);
+			SavedJob savedJob = _jobService.RemoveSavedJob(jobseekerId, savedJobId);
 			if (savedJob != null)
 			{
 				return Ok("Deleted");
@@ -95,51 +144,8 @@ namespace HireMeNow_WebApi.API.Job
 				return NoContent();
 			}
 		}
-      [HttpGet]
-        [Route("company/{companyId}/jobs/{jobId}")]
-
-        public async Task<IActionResult> GetJobsById(Guid companyId, Guid jobId)
-        {
-            try
-            {
-                List<JobPost> jobposts = await _jobservice.GetJobsById(companyId,jobId);
-                return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
-         [HttpGet]
-        [Route("jobs/{companyId}")]
-     
-        public async Task<IActionResult> GetJobsByCompany(Guid companyId)
-        {
-            try
-            {
-                List<JobPost> jobposts = await _jobservice.GetJobsByCompany(companyId);
-                return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
-          [HttpGet]
-        [Route("jobs")]
-        public async Task<IActionResult>  GetJob()
-        {
-            try
-            {
-                List<JobPost> jobposts = await _jobservice.GetJobs();
-                return Ok(_mapper.Map<List<JobPostsDtos> >(jobposts));
-            }
-            catch(Exception ex)
-            {
-                return BadRequest();
-            }
-       
-        }
+    
+      
     }
 
 	}

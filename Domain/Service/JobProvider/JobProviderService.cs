@@ -43,5 +43,10 @@ namespace Domain.Service.JobProvider
             var updatedjob = await _jobProviderRepository.UpdateAsync(job);
             return updatedjob;
         }
+
+        public void DeleteJob(Guid id)
+        {
+            _jobProviderRepository.DeleteJob(id);
+        }
     }
 }
