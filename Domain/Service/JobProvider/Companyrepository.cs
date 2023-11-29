@@ -80,7 +80,7 @@ namespace Domain.Service.JobProvider
 			}
 			else
 			{
-				throw new NotFoundException("Company Not Found");
+				throw new FileNotFoundException("Company Not Found");
 			}
 			return companyToUpdate;
 		}

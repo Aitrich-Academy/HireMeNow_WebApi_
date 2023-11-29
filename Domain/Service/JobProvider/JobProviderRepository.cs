@@ -48,7 +48,7 @@ namespace Domain.Service.JobProvider
         {
             var jobToUpdate = _context.JobPosts.Find(Updatedjob.Id);
             
-                jobToUpdate.Id = Updatedjob.Id ;
+            jobToUpdate.Id = Updatedjob.Id;
                 jobToUpdate.JobTitle = Updatedjob.JobTitle;
                 jobToUpdate.JobSummary = Updatedjob.JobSummary;
                 jobToUpdate.LocationId = Updatedjob.LocationId;
@@ -60,7 +60,15 @@ namespace Domain.Service.JobProvider
            
             return jobToUpdate;
         }
-
+        public void DeleteJob(Guid id)
+        {
+            var item = _context.JobPosts.Where(e => e.Id == id).FirstOrDefault();
+            if (item != null)
+            {
+                _context.JobPosts.Remove(item);
+                _context.SaveChanges();
+            }
+        }
         public Task<JobPost> GetJobById(Guid jobId)
         {
             throw new NotImplementedException();

@@ -1,5 +1,7 @@
 using System.Text;
 using Domain.Helpers;
+using Domain.Service.Admin.Interfaces;
+using Domain.Service.Admin;
 using HireMeNow_WebApi.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
@@ -56,6 +58,7 @@ builder.Services.AddHttpLogging(logging =>
     logging.ResponseBodyLogLimit = 4096;
 
 });
+
 
 var app = builder.Build();
 

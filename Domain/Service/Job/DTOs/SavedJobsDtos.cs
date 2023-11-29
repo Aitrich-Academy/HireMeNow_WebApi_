@@ -21,9 +21,9 @@ namespace Domain.Service.Job.DTOs
 
 	
 		public DateTime DateSaved { get; set; }
-		public virtual JobPost JobPost { get; set; }
-		
-
+		[JsonIgnore]
+		public  JobPost JobPost { get; set; }
+ 
 
 
 	}

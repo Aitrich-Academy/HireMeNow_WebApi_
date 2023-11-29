@@ -16,8 +16,6 @@ namespace Domain.Service.Job
     public class JobRepository : IJobRepository
     {
        
-
-       
         DbHireMeNowWebApiContext _context;
         IMapper _mapper;
 
@@ -27,9 +25,10 @@ namespace Domain.Service.Job
             _mapper = mapper;
         }
 
-       
-			public async Task<PagedList<JobApplication>> GetAllAppliedJobs(Guid jobseekerId, JobListParams param)
-			{
+
+
+		public async Task<PagedList<JobApplication>> GetAllAppliedJobs(Guid jobseekerId, JobListParams param)
+		{
 			try
 			{
 				var query = _context.JobApplications.AsQueryable().Where(e => e.Applicant == jobseekerId).Include(e => e.JobPost);
@@ -38,22 +37,12 @@ namespace Domain.Service.Job
 				return await PagedList<JobApplication>.CreateAsync(query,
 					param.PageNumber, param.PageSize);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				throw ex;
 			}
-				
-			}
-		
-
-        public async  Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(Guid jobseekerId,JobListParams param)
-        {
-
-			var query = _context.SavedJobs
-			   .OrderByDescending(c => c.DateSaved).Where(e=>e.SavedBy==jobseekerId).Include(e=>e.JobPost).AsQueryable();
-			return await PagedList<SavedJob>.CreateAsync(query,
-				param.PageNumber, param.PageSize);
 		}
+
 
         public async Task<List<JobPost>> GetJobs()
         {
@@ -68,6 +57,7 @@ namespace Domain.Service.Job
 			}
         }
 
+
         public async Task<List<JobPost>> GetJobsByCompany(Guid companyId)
         {
             /*   return await _context.JobPosts.Include(j => j.Company== companyId).ToListAsync();*/
@@ -78,6 +68,17 @@ namespace Domain.Service.Job
         public async Task<List<JobPost>> GetJobsById(Guid companyId, Guid jobId)
         {
             return await _context.JobPosts.Where(e => e.CompanyId == companyId && e.Id == jobId).ToListAsync();
+        }
+
+
+
+        public async Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(Guid jobseekerId, JobListParams param)
+        {
+
+            var query = _context.SavedJobs
+              .OrderByDescending(c => c.DateSaved).Where(e => e.SavedBy == jobseekerId).Include(e => e.JobPost).AsQueryable();
+            return await PagedList<SavedJob>.CreateAsync(query,
+            param.PageNumber, param.PageSize);
         }
 
 			
@@ -127,19 +128,5 @@ namespace Domain.Service.Job
 		}
 	}
 
-
-
-	//public SavedJob RemoveSavedJob(Guid seekerId,Guid jobid)
-	//{
-
-	//	SavedJob savedjob= _context.SavedJobs.Where(e => e.SavedBy == seekerId && e.Job==jobid).FirstOrDefault();
-	//	_context.Remove(savedjob);
-	//	_context.SaveChanges();
-	//	return savedjob;
-	//	//return _context.SavedJobs.Where(e => e.SavedBy == seekerId).Include(e => e.JobPost).Include(e => e.JobSeeker).ToListAsync();
-	//}
-
 }
-
-
 

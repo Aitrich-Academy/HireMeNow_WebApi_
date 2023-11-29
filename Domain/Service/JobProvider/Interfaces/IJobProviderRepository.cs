@@ -18,5 +18,7 @@ namespace Domain.Service.JobProvider.Interfaces
         public Task<JobPost> UpdateAsync(JobPost Updatedjob);
 
         public Task<JobPost> GetJobById(Guid jobId);
+
+        public void DeleteJob(Guid id);
     }
 }
