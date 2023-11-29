@@ -25,12 +25,12 @@ namespace Domain.Service.JobProvider
         }
         public async Task<List<JobPost>> GetJobs(Guid companyId)
         {
-            return await _context.JobPosts.Where(e => e.Company == companyId).ToListAsync();
+            return await _context.JobPosts.Where(e => e.CompanyId == companyId).ToListAsync();
         }
 
         public async Task<List<JobPost>> GetAllJobsByProvider(Guid companyId, Guid jobproviderId)
         {
-            return await _context.JobPosts.Where(e => e.Company == companyId && e.PostedBy == jobproviderId).ToListAsync();
+            return await _context.JobPosts.Where(e => e.CompanyId == companyId && e.PostedBy == jobproviderId).ToListAsync();
         }
 
         public async void Create(JobPost job)
@@ -51,9 +51,9 @@ namespace Domain.Service.JobProvider
                 jobToUpdate.Id = Updatedjob.Id ;
                 jobToUpdate.JobTitle = Updatedjob.JobTitle;
                 jobToUpdate.JobSummary = Updatedjob.JobSummary;
-                jobToUpdate.JobLocation = Updatedjob.JobLocation;
+                jobToUpdate.LocationId = Updatedjob.LocationId;
                 jobToUpdate.Company = Updatedjob.Company;
-                jobToUpdate.Category = Updatedjob.Category;
+                jobToUpdate.JobCategory = Updatedjob.JobCategory;
                 jobToUpdate.Industry = Updatedjob.Industry;
                 _context.JobPosts.Update(jobToUpdate);
                 await _context.SaveChangesAsync();
