@@ -57,19 +57,27 @@ namespace Domain.Service.Job
 
         public async Task<List<JobPost>> GetJobs()
         {
-            return await _context.JobPosts.ToListAsync();
+			try
+			{
+				return await _context.JobPosts.Include(e => e.Location).Include(e=>e.Company).Include(e=>e.PostedByNavigation).Include(e => e.Industry).Include(e=>e.JobCategory).ToListAsync();
+			}
+			catch(Exception ex)
+			{
+				throw ex;
+
+			}
         }
 
         public async Task<List<JobPost>> GetJobsByCompany(Guid companyId)
         {
             /*   return await _context.JobPosts.Include(j => j.Company== companyId).ToListAsync();*/
-            return await _context.JobPosts.Where(e => e.Company == companyId).ToListAsync();
+            return await _context.JobPosts.Where(e => e.CompanyId == companyId).ToListAsync();
         }
 
 
         public async Task<List<JobPost>> GetJobsById(Guid companyId, Guid jobId)
         {
-            return await _context.JobPosts.Where(e => e.Company == companyId && e.Id == jobId).ToListAsync();
+            return await _context.JobPosts.Where(e => e.CompanyId == companyId && e.Id == jobId).ToListAsync();
         }
 
 			
