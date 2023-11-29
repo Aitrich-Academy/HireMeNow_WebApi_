@@ -34,10 +34,13 @@ namespace Domain.Service.Login
             }
             else
             {
-
-                var userReturn = mapper.Map<JobSeekerLoginDto>(user);
-                userReturn.Token = authUserRepository.CreateToken(user);
-                return userReturn;
+                if ((password == user.Password))
+                {
+                    var userReturn = mapper.Map<JobSeekerLoginDto>(user);
+                    userReturn.Token = authUserRepository.CreateToken(user);
+                    return userReturn;
+                }
+                return null;
             }
            
         }

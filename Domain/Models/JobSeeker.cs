@@ -23,7 +23,11 @@ public partial class JobSeeker
 
     public string Email { get; set; } = null!;
 
+    //public string? ImageUrl { get; set; }
+
     public int Role { get; set; }
+
+    
 
 	//public virtual SystemUser IdNavigation { get; set; } = null!;
 

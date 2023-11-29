@@ -11,25 +11,28 @@ public partial class JobPost
     public string JobTitle { get; set; } = null!;
 
     public string JobSummary { get; set; } = null!;
+	[ForeignKey(nameof(Location))]
+	public Guid LocationId { get; set; }
 
-    public Guid JobLocation { get; set; }
-
- 
-    public Guid Company { get; set; }
-
-    public Guid Category { get; set; }
-
-    public Guid Industry { get; set; }
+	[ForeignKey(nameof(Company))]
+	public Guid CompanyId { get; set; }
+	[ForeignKey(nameof(JobCategory))]
+	public Guid CategoryId { get; set; }
+	[ForeignKey(nameof(Industry))]
+	public Guid IndustryId { get; set; }
 	[ForeignKey(nameof(PostedByNavigation))]
 	public Guid PostedBy { get; set; }
 
     public DateTime PostedDate { get; set; }
 
-    public virtual Location JobLocationNavigation { get; set; } = null!;
+    public virtual Location Location { get; set; } = null!;
+	public virtual Industry Industry { get; set; } = null!;
+	public virtual JobProviderCompany Company { get; set; } = null!; 
 
     public virtual ICollection<JobResponsibility> JobResponsibilities { get; set; } = new List<JobResponsibility>();
 
 	public virtual CompanyUser PostedByNavigation { get; set; } = null!;
+	public virtual JobCategory JobCategory { get;set; } = null!;	
 
     //public virtual ICollection<Skill> Skills { get; set; } = new List<Skill>();
 }

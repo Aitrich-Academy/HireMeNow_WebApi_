@@ -8,6 +8,6 @@ namespace Domain.Enums
 {
     public enum Status
     {
-        PENDING ,VERIFIED,SHEDULED
+        PENDING ,VERIFIED,SHEDULED,CREATED
     }
 }

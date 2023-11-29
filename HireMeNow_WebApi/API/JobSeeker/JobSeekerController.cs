@@ -49,7 +49,7 @@ namespace HireMeNow_WebApi.API.JobSeeker
             var isVerified=await jobSeekerService.VerifyEmailAsync(jobSeekerSignupRequestId);
             if (isVerified)
             {
-                return Ok("Verified");
+                return Ok();
             }
             return BadRequest();
         }
@@ -60,7 +60,7 @@ namespace HireMeNow_WebApi.API.JobSeeker
         {
             //var jobSeekerSignupRequestDto = mapper.Map<JobSeekerSignupRequestDto>(data);
             await jobSeekerService.CreateJobseeker(jobSeekerSignupRequestId, password);
-            return Ok();
+            return Ok("Password Set Successfully");
         }
 
 
