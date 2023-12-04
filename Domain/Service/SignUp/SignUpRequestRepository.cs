@@ -72,14 +72,14 @@ namespace Domain.Service.SignUp
                 ProfileSummary = profileSummary
             };
 
-            _context.JobSeekerProfiles.Add(newjobSeekerProfile);
+            _context.JobSeekerProfiles.Update(newjobSeekerProfile);
             await _context.SaveChangesAsync();
         }
 
         public async Task<Guid> getResumeId(Guid profileId)
         {
             var jobSeekerProfile = _context.JobSeekerProfiles.FirstOrDefault(s => s.Id == profileId);
-            Guid resumeId = jobSeekerProfile.ResumeId;
+            Guid resumeId = jobSeekerProfile.ResumeId.Value;
             return resumeId;
         }
 
@@ -101,7 +101,11 @@ namespace Domain.Service.SignUp
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteResume(Guid resumeId)
+		public async Task<List<Resume>> getResume(Guid resumeId)
+        {
+			return await _context.Resumes.Where(e => e.Id == resumeId).ToListAsync();
+		}
+		public async Task DeleteResume(Guid resumeId)
         {
             var resume = await _context.Resumes.FindAsync(resumeId);
 

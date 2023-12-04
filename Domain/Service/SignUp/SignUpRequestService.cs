@@ -118,7 +118,11 @@ namespace Domain.Service.SignUp
             await jobSeekerRepository.UpdateResume(resumeId, fileData);
         }
 
-        public async Task DeleteResume(Guid resumeId)
+		public async Task<List<Resume>> getResumeById(Guid resumeId)
+        {
+			return await jobSeekerRepository.getResume(resumeId);
+		}
+		public async Task DeleteResume(Guid resumeId)
         {
             await jobSeekerRepository.DeleteResume(resumeId);
         }

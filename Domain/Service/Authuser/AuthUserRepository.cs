@@ -28,9 +28,15 @@ namespace Domain.Service.Authuser
         public async Task<AuthUser> AddAuthUser(AuthUser authUser)
         {
             //await _context.SystemUsers.AddAsync(authUser);
+            authUser.Role = Enums.Role.JOB_SEEKER;
             await  _context.AuthUsers.AddAsync(authUser);
             Models.JobSeeker jobSeeker = mapper.Map<Models.JobSeeker>(authUser);
             await _context.JobSeekers.AddAsync(jobSeeker);
+            JobSeekerProfile jp = new();
+            jp.JobSeekerId = jobSeeker.Id;
+
+
+           await  _context.JobSeekerProfiles.AddAsync(jp);
             _context.SaveChanges();
             return authUser;
         }

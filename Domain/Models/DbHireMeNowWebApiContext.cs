@@ -59,10 +59,7 @@ public partial class DbHireMeNowWebApiContext : DbContext
         => optionsBuilder.UseSqlServer("Data Source=DESKTOP-VR8C66Q;Initial Catalog=db_HireMeNow;Integrated Security=True;Persist Security Info=True;Trust Server Certificate=True");
 
 
-    
-
-      
-
+      => optionsBuilder.UseSqlServer("Data Source=RAZIYA;Initial Catalog=NewDB;Persist Security Info=True;User ID=sa;Password=root;Encrypt=True;Trust Server Certificate=True");
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         //modelBuilder.Entity<AuthUser>(entity =>
@@ -105,7 +102,7 @@ public partial class DbHireMeNowWebApiContext : DbContext
         modelBuilder.Entity<JobCategory>(entity =>
         {
             entity
-                .HasNoKey()
+               
                 .ToTable("JobCategory");
 
             entity.Property(e => e.Description)
@@ -127,8 +124,8 @@ public partial class DbHireMeNowWebApiContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.PostedDate).HasColumnType("datetime");
 
-            entity.HasOne(d => d.JobLocationNavigation).WithMany(p => p.JobPosts)
-                .HasForeignKey(d => d.JobLocation)
+            entity.HasOne(d => d.Location).WithMany(p => p.JobPosts)
+                .HasForeignKey(d => d.LocationId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_JobPost_Location");
 

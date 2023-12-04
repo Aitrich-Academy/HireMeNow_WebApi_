@@ -22,6 +22,8 @@ namespace Domain.Service.SignUp.Interfaces
         public Task<Guid> getResumeId(Guid profileId);
 
         public Task UpdateResume(Guid resumeId, byte[] fileData);
+
+        public Task<List<Resume>> getResume(Guid resumeId);
         public Task<byte[]> getResumeFile(Guid resumeId);
 
         public Task DeleteResume(Guid resumeId);
