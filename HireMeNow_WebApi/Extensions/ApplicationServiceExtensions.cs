@@ -23,6 +23,8 @@ using Domain.Service.JobSeeker.Interfaces;
 using Domain.Service.Profile.Interface;
 using Domain.Service.Admin.Interfaces;
 using Domain.Service.Admin;
+using Domain.Service.User.Interface;
+using Domain.Service.User;
 
 
 namespace HireMeNow_WebApi.Extensions
@@ -70,6 +72,10 @@ namespace HireMeNow_WebApi.Extensions
             services.AddScoped<IJobProviderRepository, JobProviderRepository>();
             services.AddScoped<IAdminServices, AdminServices>();
             services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService,UserServices>();    
+
+
 
             return services;
         }

@@ -11,9 +11,9 @@ public partial class JobSeekerProfile
     [Key]
     [Required]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
+    public Guid Id { get; set; }=Guid.NewGuid();
 
-    public Guid ResumeId { get; set; }
+    public Guid? ResumeId { get; set; }
     [ForeignKey(nameof(JobSeeker))]
     public Guid JobSeekerId { get; set; }
 
@@ -21,7 +21,7 @@ public partial class JobSeekerProfile
 
     public string? ProfileSummary { get; set; }
     [JsonIgnore]
-    public virtual Resume Resume { get; set; } = null!;
+    public virtual Resume? Resume { get; set; } = null!;
 
     public virtual JobSeeker JobSeeker { get; set; }
     [JsonIgnore]

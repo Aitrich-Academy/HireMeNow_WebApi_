@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Domain.Helpers;
 using Domain.Models;
+using Domain.Service.Job.DTOs;
 using Domain.Service.Job.Interfaces;
+using Domain.Service.JobSeeker.DTOs;
 using Domain.Service.Login.Interfaces;
 using Domain.Service.SignUp.DTOs;
 using Domain.Service.SignUp.Interfaces;
@@ -12,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 
 namespace HireMeNow_WebApi.API.JobSeeker
 {
@@ -75,7 +78,7 @@ namespace HireMeNow_WebApi.API.JobSeeker
             Guid resumeId = await jobSeekerService.addResume(title, fileData);
 
             await jobSeekerService.addResumeToProfile(profileId, resumeId, jobSeekerId, profileName, profileSummary);
-            return Ok();
+            return Ok(resumeId);
         }
 
         [HttpPut]
@@ -103,15 +106,18 @@ namespace HireMeNow_WebApi.API.JobSeeker
             {
                 Guid resumeId = await jobSeekerService.getResumeId(profileId);
 
-                byte[] byteArray = await jobSeekerService.getResumeFile(resumeId);
+				/* byte[] byteArray = await jobSeekerService.getResumeFile(resumeId);
 
-                if (byteArray == null)
-                {
-                    return NotFound(); // Or any appropriate status code if the file doesn't exist.
-                }
+				 if (byteArray == null)
+				 {
+					 return NotFound(); // Or any appropriate status code if the file doesn't exist.
+				 }
 
-                return byteArray;
-            }
+				 return byteArray;*/
+
+				List<Resume> resume = await jobSeekerService.getResumeById(resumeId);
+				return Ok(mapper.Map<List<resumeDto>>(resume));
+			}
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -143,6 +149,11 @@ namespace HireMeNow_WebApi.API.JobSeeker
 
             return Ok();
         }
-
-    }
+		[HttpPost]
+        [Route("SavedJobs")]
+        public async Task<ActionResult> saveJob()
+        {
+            throw new NotImplementedException();
+        }
+	}
 }

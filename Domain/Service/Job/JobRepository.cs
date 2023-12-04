@@ -18,6 +18,7 @@ namespace Domain.Service.Job
        
         DbHireMeNowWebApiContext _context;
         IMapper _mapper;
+		static List<JobPost> joblist;
 
         public JobRepository(DbHireMeNowWebApiContext context, IMapper mapper)
         {
@@ -31,7 +32,7 @@ namespace Domain.Service.Job
 		{
 			try
 			{
-				var query = _context.JobApplications.AsQueryable().Where(e => e.Applicant == jobseekerId).Include(e => e.JobPost);
+				var query = _context.JobApplications.AsQueryable().Where(e => e.Applicant == jobseekerId).Include(e => e.JobPost).Include(e=>e.JobPost.Company);
 
 
 				return await PagedList<JobApplication>.CreateAsync(query,
@@ -44,8 +45,19 @@ namespace Domain.Service.Job
 		}
 
 
-        public async Task<List<JobPost>> GetJobs()
+        public async Task<List<JobPost>> GetJobs(Guid userId)
         {
+			List<JobPost> jobs= await _context.JobPosts.ToListAsync();
+			foreach(var job in jobs) {
+				if(_context.JobApplications.Where(e => e.JobPost_id == job.Id && e.Applicant == userId).FirstOrDefault()==null)
+				{
+					joblist.Add(job);
+
+				}
+
+			}
+			return joblist;
+
 			try
 			{
 				return await _context.JobPosts.Include(e => e.Location).Include(e=>e.Company).Include(e=>e.PostedByNavigation).Include(e => e.Industry).Include(e=>e.JobCategory).ToListAsync();
@@ -81,8 +93,13 @@ namespace Domain.Service.Job
             param.PageNumber, param.PageSize);
         }
 
-			
-	
+
+		public async Task<SavedJob> saveJob(SavedJob savedJob)
+		{
+			await _context.SavedJobs.AddAsync(savedJob);
+			await _context.SaveChangesAsync();
+			return savedJob;
+		}
 		public bool applyjob(JobApplication applyjob)
 		{
 			applyjob.status = Enums.Status.PENDING;
