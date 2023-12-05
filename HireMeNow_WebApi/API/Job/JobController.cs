@@ -63,8 +63,8 @@ namespace HireMeNow_WebApi.API.Job
             {
 				var UserId = new Guid(_userService.GetUserId());
 
-				List<JobPost> jobposts = await _jobService.GetJobs(UserId);
-                return Ok(_mapper.Map<List<JobPostsDtos> >(jobposts));
+				List<JobPostsDtos> jobposts = await _jobService.GetJobs(UserId);
+                return Ok(jobposts);
             }
             catch(Exception ex)
             {

@@ -1,7 +1,8 @@
 
-﻿using AutoMapper;
+using AutoMapper;
 using Domain.Helpers;
 using Domain.Models;
+using Domain.Service.Job.DTOs;
 using Domain.Service.Job.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,10 +16,10 @@ namespace Domain.Service.Job
 {
     public class JobRepository : IJobRepository
     {
-       
+
         DbHireMeNowWebApiContext _context;
         IMapper _mapper;
-		static List<JobPost> joblist;
+        static List<JobPost> joblist;
 
         public JobRepository(DbHireMeNowWebApiContext context, IMapper mapper)
         {
@@ -28,45 +29,51 @@ namespace Domain.Service.Job
 
 
 
-		public async Task<PagedList<JobApplication>> GetAllAppliedJobs(Guid jobseekerId, JobListParams param)
-		{
-			try
-			{
-				var query = _context.JobApplications.AsQueryable().Where(e => e.Applicant == jobseekerId).Include(e => e.JobPost).Include(e=>e.JobPost.Company);
+        public async Task<PagedList<JobApplication>> GetAllAppliedJobs(Guid jobseekerId, JobListParams param)
+        {
+            try
+            {
+                var query = _context.JobApplications.AsQueryable().Where(e => e.Applicant == jobseekerId).Include(e => e.JobPost).Include(e => e.JobPost.Company);
 
 
-				return await PagedList<JobApplication>.CreateAsync(query,
-					param.PageNumber, param.PageSize);
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-		}
+                return await PagedList<JobApplication>.CreateAsync(query,
+                    param.PageNumber, param.PageSize);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
         public async Task<List<JobPost>> GetJobs(Guid userId)
         {
-			List<JobPost> jobs= await _context.JobPosts.ToListAsync();
-			foreach(var job in jobs) {
-				if(_context.JobApplications.Where(e => e.JobPost_id == job.Id && e.Applicant == userId).FirstOrDefault()==null)
-				{
-					joblist.Add(job);
 
-				}
+            try
+            {
 
-			}
-			return joblist;
+                List<JobPost> jobs = await _context.JobPosts.Include(e => e.Location).Include(e => e.Company).Include(e => e.PostedByNavigation).Include(e => e.Industry).Include(e => e.JobCategory).ToListAsync();
 
-			try
-			{
-				return await _context.JobPosts.Include(e => e.Location).Include(e=>e.Company).Include(e=>e.PostedByNavigation).Include(e => e.Industry).Include(e=>e.JobCategory).ToListAsync();
-			}
-			catch(Exception ex)
-			{
-				throw ex;
+                List<JobPost> applied = await _context.JobApplications.Where(e => e.Applicant == userId).Select(e => e.JobPost).ToListAsync();
 
-			}
+                List<JobPost> notApplied = jobs.Except(applied).ToList();
+
+                return notApplied;
+                
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
+        public bool SavedJobs(JobPostsDtos job, Guid userId)
+        {
+            // Assuming JobPostsDtos has an Id property
+            bool isJobSaved = _context.SavedJobs.Any(e => e.Job == job.Id && e.SavedBy == userId);
+            return isJobSaved;
         }
 
 
@@ -94,56 +101,57 @@ namespace Domain.Service.Job
         }
 
 
-		public async Task<SavedJob> saveJob(SavedJob savedJob)
-		{
-			await _context.SavedJobs.AddAsync(savedJob);
-			await _context.SaveChangesAsync();
-			return savedJob;
-		}
-		public bool applyjob(JobApplication applyjob)
-		{
-			applyjob.status = Enums.Status.PENDING;
-		_context.JobApplications.Add(applyjob);
-			_context.SaveChanges();
-			return true;
+        public async Task<SavedJob> saveJob(SavedJob savedJob)
+        {
+            await _context.SavedJobs.AddAsync(savedJob);
+            await _context.SaveChangesAsync();
+            return savedJob;
+        }
+        public bool applyjob(JobApplication applyjob)
+        {
+            applyjob.status = Enums.Status.PENDING;
+            _context.JobApplications.Add(applyjob);
+            _context.SaveChanges();
+            return true;
 
-		}
-		public bool CancelAppliedJob(Guid jobseekerId, Guid JobApplicationId)
-		{
-			try
-			{
-				var AppliedJob = _context.JobApplications.Where(e=> e.Id == JobApplicationId).FirstOrDefault();
-				if (AppliedJob != null)
-				{
-					_context.JobApplications.Remove(AppliedJob);
-					_context.SaveChanges();
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-			catch (Exception ex) {
-				throw (ex);
-			}
-			}
-			
-	
+        }
+        public bool CancelAppliedJob(Guid jobseekerId, Guid JobApplicationId)
+        {
+            try
+            {
+                var AppliedJob = _context.JobApplications.Where(e => e.Id == JobApplicationId).FirstOrDefault();
+                if (AppliedJob != null)
+                {
+                    _context.JobApplications.Remove(AppliedJob);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
 
         public SavedJob RemoveSavedJob(Guid seekerId, Guid jobid)
         {
-			var savedjob = _context.SavedJobs.Where(e => e.SavedBy == seekerId && e.Id == jobid).FirstOrDefault();
-			_context.SavedJobs.Remove(savedjob); 
-			_context.SaveChanges();
-			return savedjob;
+            var savedjob = _context.SavedJobs.Where(e => e.SavedBy == seekerId && e.Id == jobid).FirstOrDefault();
+            _context.SavedJobs.Remove(savedjob);
+            _context.SaveChanges();
+            return savedjob;
         }
 
-		public SavedJob GetsavedJobById(Guid jobseekerId, Guid SavedJobId)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public SavedJob GetsavedJobById(Guid jobseekerId, Guid SavedJobId)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 }
 

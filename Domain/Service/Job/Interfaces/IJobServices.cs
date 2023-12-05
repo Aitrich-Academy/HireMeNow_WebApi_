@@ -14,7 +14,7 @@ namespace Domain.Service.Job.Interfaces
     public interface IJobServices
 	{
 
-        public Task<List<JobPost>> GetJobs(Guid userId);
+        public Task<List<JobPostsDtos>> GetJobs(Guid userId);
 
         public Task<List<JobPost>> GetJobsByCompany(Guid companyId);
 
