@@ -62,43 +62,43 @@ namespace Domain.Service.Job
 
         public async Task<List<JobPost>> GetJobsById(Guid companyId, Guid jobId)
         {
-            return await _jobrepository.GetJobsById(companyId, jobId);
+            return await _jobrepository.GetJobsById(companyId,jobId);
         }
-        public async Task<PagedList<AppliedJobsDtos>> GetAllAppliedJobs(Guid jobseekerId, JobListParams param)
-        {
-            var appliedjobs = await _jobrepository.GetAllAppliedJobs(jobseekerId, param);
+		public async Task<PagedList<AppliedJobsDtos>> GetAllAppliedJobs(Guid jobseekerId, JobListParams param)
+		{
+			var appliedjobs= await _jobrepository.GetAllAppliedJobs(jobseekerId, param);
 
-            var appliedjobsDto = _mapper.Map<PagedList<AppliedJobsDtos>>(appliedjobs);
-            return appliedjobsDto;
-        }
-        public SavedJob RemoveSavedJob(Guid seekerId, Guid jobid)
-        {
+			var appliedjobsDto = _mapper.Map<PagedList<AppliedJobsDtos>>(appliedjobs);
+			return appliedjobsDto;
+		}
+		public  SavedJob RemoveSavedJob(Guid seekerId, Guid jobid)
+		{
 
-            return _jobrepository.RemoveSavedJob(seekerId, jobid);
-        }
+			return _jobrepository.RemoveSavedJob(seekerId, jobid);	
+		}
+		
 
+		public bool ApplyJob(JobApplication applyJob)
 
-        public bool ApplyJob(JobApplication applyJob)
+		{
+			
+			return _jobrepository.applyjob(applyJob);
+		}
+		public async Task<SavedJob> saveJob(SavedJob savedJob)
+		{
+			return await _jobrepository.saveJob(savedJob);
+		}
+		public  bool CancelAppliedJob(Guid jobseekerId, Guid JobApplicationId)
+		{
+			return _jobrepository.CancelAppliedJob(jobseekerId, JobApplicationId);
+		}
+		public SavedJobsDtos GetsavedJobById(Guid jobseekerId, Guid SavedJobId)
+		{
+			var savedJob=_jobrepository.GetsavedJobById(jobseekerId, SavedJobId);
 
-        {
-
-            return _jobrepository.applyjob(applyJob);
-        }
-        public async Task<SavedJob> saveJob(SavedJob savedJob)
-        {
-            return await _jobrepository.saveJob(savedJob);
-        }
-        public bool CancelAppliedJob(Guid jobseekerId, Guid JobApplicationId)
-        {
-            return _jobrepository.CancelAppliedJob(jobseekerId, JobApplicationId);
-        }
-        public SavedJobsDtos GetsavedJobById(Guid jobseekerId, Guid SavedJobId)
-        {
-            var savedJob = _jobrepository.GetsavedJobById(jobseekerId, SavedJobId);
-
-            var SavedJobsDto = _mapper.Map<SavedJobsDtos>(savedJob);
-            return SavedJobsDto;
-        }
+			var SavedJobsDto = _mapper.Map<SavedJobsDtos>(savedJob);
+			return SavedJobsDto;	
+		}
 
 
     }
