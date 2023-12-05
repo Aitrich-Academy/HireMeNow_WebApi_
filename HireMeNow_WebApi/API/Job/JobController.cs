@@ -56,7 +56,7 @@ namespace HireMeNow_WebApi.API.Job
 
         [HttpGet]
         [Route("jobs")]
-	
+		
         public async Task<IActionResult>  GetJobs()
         {
             try

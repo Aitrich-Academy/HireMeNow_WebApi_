@@ -48,7 +48,7 @@ namespace Domain.Service.JobProvider
         {
             var jobToUpdate = _context.JobPosts.Find(Updatedjob.Id);
             
-            jobToUpdate.Id = Updatedjob.Id;
+                jobToUpdate.Id = Updatedjob.Id;
                 jobToUpdate.JobTitle = Updatedjob.JobTitle;
                 jobToUpdate.JobSummary = Updatedjob.JobSummary;
                 jobToUpdate.LocationId = Updatedjob.LocationId;
