@@ -2,7 +2,7 @@
 
 using Domain.Helpers;
 using Domain.Models;
-
+using Domain.Service.Job.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +27,8 @@ namespace Domain.Service.Job.Interfaces
 		bool CancelAppliedJob(Guid jobseekerId, Guid JobApplicationId);
 		 SavedJob GetsavedJobById(Guid jobseekerId, Guid SavedJobId);
 		Task<SavedJob> saveJob(SavedJob savedJob);
-	}
+		bool SavedJobs(JobPostsDtos job, Guid userId);
+
+    }
 
 }

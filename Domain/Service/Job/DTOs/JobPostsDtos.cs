@@ -21,14 +21,10 @@ namespace Domain.Service.Job.DTOs
 
 		public string PostedByNavigationFirstName { get; set;}
 
-		//public Guid Company { get; set; }
-
-        //public Guid Category { get; set; }
-        //public Guid Industry { get; set; }
-
-        //public Guid PostedBy { get; set; }
-
         public DateTime PostedDate { get; set; }
+
+        public bool Saved { get; set; }
+
     }
 }
 

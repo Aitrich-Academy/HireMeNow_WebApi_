@@ -1,9 +1,9 @@
 
-﻿using Domain.Models;
+using Domain.Models;
 using Domain.Service.Job.Interfaces;
 using Domain.Service.JobSeeker.Interfaces;
 
-﻿using AutoMapper;
+using AutoMapper;
 using Domain.Helpers;
 using Domain.Models;
 using Domain.Service.Job.DTOs;
@@ -21,28 +21,38 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SendGrid.Helpers.Mail;
 
 namespace Domain.Service.Job
 {
-	public class JobServices:IJobServices
-	{
-		private IJobRepository _jobrepository;
-		private IMapper _mapper;
+    public class JobServices : IJobServices
+    {
+        private IJobRepository _jobrepository;
+        private IMapper _mapper;
 
-		public JobServices(IJobRepository jobrepository,IMapper mapper)
-		{
-			_jobrepository = jobrepository;
-			_mapper = mapper;	
-		}
-		public async Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(Guid jobseekerId,JobListParams param)
-		{
-			var savedJobs = await _jobrepository.GetAllSavedJobsOfSeeker(jobseekerId,param);
-			//var savedjobsDto = _mapper.Map<PagedList<SavedJob>>(savedJobs);
-			return savedJobs;
-		}
-   public async Task<List<JobPost>> GetJobs(Guid userId)
+        public JobServices(IJobRepository jobrepository, IMapper mapper)
         {
-            return await _jobrepository.GetJobs(userId);
+            _jobrepository = jobrepository;
+            _mapper = mapper;
+        }
+        public async Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(Guid jobseekerId, JobListParams param)
+        {
+            var savedJobs = await _jobrepository.GetAllSavedJobsOfSeeker(jobseekerId, param);
+            //var savedjobsDto = _mapper.Map<PagedList<SavedJob>>(savedJobs);
+            return savedJobs;
+        }
+
+        public async Task<List<JobPostsDtos>> GetJobs(Guid userId)
+        {
+            var notApplied = await _jobrepository.GetJobs(userId);
+            var dtoList = _mapper.Map<List<JobPost>, List<JobPostsDtos>>(notApplied);
+
+            foreach (var job in dtoList)
+            {
+                job.Saved = _jobrepository.SavedJobs(job, userId);
+            }
+
+            return dtoList;
         }
 
         public async Task<List<JobPost>> GetJobsByCompany(Guid companyId)
@@ -90,7 +100,7 @@ namespace Domain.Service.Job
 			return SavedJobsDto;	
 		}
 
-	
-	}
+
+    }
 
 }
