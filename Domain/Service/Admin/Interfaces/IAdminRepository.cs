@@ -21,6 +21,8 @@ namespace Domain.Service.Admin.Interfaces
         public int GetCompanyCount();
 
         public int GetJobProviderCount();
+
+        public int GetJobCount();
     }
     
 }

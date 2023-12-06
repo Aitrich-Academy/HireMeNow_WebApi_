@@ -1,4 +1,4 @@
-﻿using Domain.Migrations;
+﻿
 using Domain.Models;
 using System;
 using System.Collections.Generic;

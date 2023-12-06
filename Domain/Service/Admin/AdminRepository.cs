@@ -68,6 +68,12 @@ namespace Domain.Service.Admin
             int count = _context.CompanyUsers.Count();
             return count;
         }
+
+        public int GetJobCount()
+        {
+            int count = _context.JobPosts.Count();
+            return count;
+        }
     }
 
 }

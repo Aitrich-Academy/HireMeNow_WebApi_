@@ -8,11 +8,12 @@ namespace Domain.Service.Admin.DTOs
 {
     public class JobProviderDto
     {
+        public Guid Id { get; set; }
         public string LegalName { get; set; } = null!;
 
         public string Summary { get; set; } = null!;
 
-        public Guid Industry { get; set; }
+        public Guid IndustryId { get; set; }
 
         public string Email { get; set; } = null!;
 
