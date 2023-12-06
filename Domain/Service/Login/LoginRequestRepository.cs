@@ -19,7 +19,8 @@ namespace Domain.Service.Login
 
         public AuthUser GetUserByEmail(string email)
         {
-            return _context.AuthUsers.FirstOrDefault(e => e.Email == email);
+            var user= _context.AuthUsers.FirstOrDefault(e => e.Email == email);
+            return user;
         }
     }
 }
