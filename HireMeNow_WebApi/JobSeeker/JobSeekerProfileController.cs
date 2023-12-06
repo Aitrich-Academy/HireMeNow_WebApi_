@@ -5,7 +5,10 @@ using Domain.Service.Profile;
 using Domain.Service.Profile.DTOs;
 using Domain.Service.Profile.Interface;
 using Domain.Service.SignUp.DTOs;
+using HireMeNow_WebApi.API.JobProvider;
 using HireMeNow_WebApi.API.JobSeeker.RequestObjects;
+using HireMeNow_WebApi.Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,9 +16,10 @@ namespace HireMeNow_WebApi.JobSeeker
 {
 	
 	[ApiController]
-	public class JobSeekerProfileController : ControllerBase
+    [Authorize(Roles = "JOB_SEEKER")]
+    public class JobSeekerProfileController : BaseApiController<JobSeekerProfileController>
 
-	{
+    {
         private readonly IJobSeekerProfileService _profileService;
         public IMapper mapper { get; set; }
         public JobSeekerProfileController(IJobSeekerProfileService profileService, IMapper _mapper)
@@ -86,6 +90,19 @@ namespace HireMeNow_WebApi.JobSeeker
 
 
         }
+        [HttpGet("{jobseekerId}/compleateprofile")]
+        public async Task<IActionResult> GetcompleateProfile(Guid jobseekerId)
+        {
+            var Profile = _profileService.GetcompleateProfile(jobseekerId);
+
+            if (Profile == null)
+            {
+                return NotFound(); // or return an appropriate response
+            }
+            return Ok(Profile);
+        
+
+        }
 
         [HttpGet]
         [Route("/profile/{profileId}/Qualification")]
@@ -136,7 +153,23 @@ namespace HireMeNow_WebApi.JobSeeker
             return Ok(skills);
         }
 
-
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateJobSeekerProfile(Guid id, JobSeekerProfileDTo updatedProfile)
+        {
+            try
+            {
+                var result = _profileService.UpdateJobSeekerProfile(id, updatedProfile);
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
         //[HttpGet]
         //[Route("{jobseekerId}/profile/{profileId}/Experice")]
         //public ActionResult<List<ExperienceDto>> GetExperience(Guid jobseekerId, Guid profileId)
