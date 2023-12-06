@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Enums
+namespace Domain.Service.User.Interface
 {
-    public enum Status
-    {
-        PENDING ,VERIFIED,SHEDULED,CREATED
-    }
+	public interface IUserRepository
+	{
+	}
 }

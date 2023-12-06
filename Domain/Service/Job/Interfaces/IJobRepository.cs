@@ -1,6 +1,6 @@
 
 
-﻿using Domain.Helpers;
+using Domain.Helpers;
 using Domain.Models;
 
 using System;
@@ -14,7 +14,7 @@ namespace Domain.Service.Job.Interfaces
 	public interface IJobRepository
 	{
 
-        Task<List<JobPost>> GetJobs();
+        Task<List<JobPost>> GetJobs(Guid userId);
         Task<List<JobPost>> GetJobsByCompany(Guid companyId);
 
         Task<List<JobPost>> GetJobsById(Guid companyId, Guid jobId);
@@ -26,6 +26,7 @@ namespace Domain.Service.Job.Interfaces
 		bool applyjob(JobApplication applyjob);
 		bool CancelAppliedJob(Guid jobseekerId, Guid JobApplicationId);
 		 SavedJob GetsavedJobById(Guid jobseekerId, Guid SavedJobId);
+		Task<SavedJob> saveJob(SavedJob savedJob);
 	}
 
 }

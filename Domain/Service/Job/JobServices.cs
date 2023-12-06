@@ -40,9 +40,9 @@ namespace Domain.Service.Job
 			//var savedjobsDto = _mapper.Map<PagedList<SavedJob>>(savedJobs);
 			return savedJobs;
 		}
-   public async Task<List<JobPost>> GetJobs()
+   public async Task<List<JobPost>> GetJobs(Guid userId)
         {
-            return await _jobrepository.GetJobs();
+            return await _jobrepository.GetJobs(userId);
         }
 
         public async Task<List<JobPost>> GetJobsByCompany(Guid companyId)
@@ -73,6 +73,10 @@ namespace Domain.Service.Job
 		{
 			
 			return _jobrepository.applyjob(applyJob);
+		}
+		public async Task<SavedJob> saveJob(SavedJob savedJob)
+		{
+			return await _jobrepository.saveJob(savedJob);
 		}
 		public  bool CancelAppliedJob(Guid jobseekerId, Guid JobApplicationId)
 		{

@@ -14,7 +14,7 @@ namespace Domain.Service.Job.Interfaces
     public interface IJobServices
 	{
 
-        public Task<List<JobPost>> GetJobs();
+        public Task<List<JobPost>> GetJobs(Guid userId);
 
         public Task<List<JobPost>> GetJobsByCompany(Guid companyId);
 
@@ -22,13 +22,17 @@ namespace Domain.Service.Job.Interfaces
 
   
 		Task<PagedList<SavedJob>> GetAllSavedJobsOfSeeker(Guid jobseekerId, JobListParams param);
-		
 
-		SavedJob RemoveSavedJob(Guid seekerId, Guid jobid);
-		Task<PagedList<AppliedJobsDtos>> GetAllAppliedJobs(Guid jobseekerId,JobListParams param);
-		bool ApplyJob(JobApplication applyJob);
-		 bool CancelAppliedJob(Guid jobseekerId,Guid JobApplicationId);
-		SavedJobsDtos GetsavedJobById(Guid jobseekerId, Guid SavedJobId);
+        Task<PagedList<AppliedJobsDtos>> GetAllAppliedJobs(Guid jobseekerId, JobListParams param);
+        bool ApplyJob(JobApplication applyJob);
+        bool CancelAppliedJob(Guid jobseekerId, Guid JobApplicationId);
+        SavedJobsDtos GetsavedJobById(Guid jobseekerId, Guid SavedJobId);
+
+
+        SavedJob RemoveSavedJob(Guid seekerId, Guid jobid);
+		Task<SavedJob> saveJob(SavedJob savedJob);
+
+
 
 	}
 

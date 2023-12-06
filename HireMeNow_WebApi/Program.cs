@@ -1,6 +1,8 @@
 using System.Text;
 using AutoMapper;
 using Domain.Helpers;
+using Domain.Service.Admin.Interfaces;
+using Domain.Service.Admin;
 using HireMeNow_WebApi.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
@@ -58,15 +60,17 @@ builder.Services.AddHttpLogging(logging =>
 
 });
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
 	app.UseSwagger();
 	app.UseSwaggerUI();
-}
-app.UseCors();
+//}
+app.UseCors("NgOrigins");
+//app.UseCors();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();

@@ -13,16 +13,20 @@ namespace Domain.Service.Job.DTOs
 		{
 		}
 
-		public AppliedJobsDtos(Guid id, JobPost jobPost)
+		public AppliedJobsDtos(Guid id, string title)
 		{
 			Id = id;
-			JobPost = jobPost;
+			JobPostJobTitle = title;
 		}
 
 		public Guid Id { get; set; }
-		public virtual JobPost JobPost { get; set; }
-		
-		
+		public string JobPostJobTitle { get; set; }
+		public string JobPostJobSummary { get; set; }
+		public string JobPostCompanyLegalName { get;set; }
+
+
+
+
 
 	}
 }

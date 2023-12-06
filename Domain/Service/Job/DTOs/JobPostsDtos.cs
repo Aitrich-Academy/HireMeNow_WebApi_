@@ -15,14 +15,18 @@ namespace Domain.Service.Job.DTOs
 
         public string JobSummary { get; set; } = null!;
 
-        public Guid JobLocation { get; set; }
+        public string LocationName { get; set; }
+        public string IndustryName { get;set; }
+        public string JobCategoryName { get; set; }    
 
-        public Guid Company { get; set; }
+		public string PostedByNavigationFirstName { get; set;}
 
-        public Guid Category { get; set; }
-        public Guid Industry { get; set; }
+		//public Guid Company { get; set; }
 
-        public Guid PostedBy { get; set; }
+        //public Guid Category { get; set; }
+        //public Guid Industry { get; set; }
+
+        //public Guid PostedBy { get; set; }
 
         public DateTime PostedDate { get; set; }
     }
