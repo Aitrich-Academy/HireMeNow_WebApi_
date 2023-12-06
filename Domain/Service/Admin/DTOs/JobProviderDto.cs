@@ -8,7 +8,7 @@ namespace Domain.Service.Admin.DTOs
 {
     public class JobProviderDto
     {
-        public Guid Id { get; set; }  
+        public Guid Id { get; set; }
         public string LegalName { get; set; } = null!;
 
         public string Summary { get; set; } = null!;
