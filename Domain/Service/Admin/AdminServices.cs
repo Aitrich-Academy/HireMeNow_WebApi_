@@ -50,5 +50,10 @@ namespace Domain.Service.Admin
         {
             return _adminRepository.GetJobProviderCount();
         }
+
+        public int GetJobCount()
+        {
+            return _adminRepository.GetJobCount();
+        }
     }
 }
