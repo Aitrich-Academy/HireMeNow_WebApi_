@@ -1,4 +1,5 @@
 using System.Text;
+using AutoMapper;
 using Domain.Helpers;
 using HireMeNow_WebApi.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

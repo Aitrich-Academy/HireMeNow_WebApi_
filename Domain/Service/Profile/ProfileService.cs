@@ -96,6 +96,32 @@ namespace Domain.Service.Profile
 
         }
 
+        public async Task<JobSeekerProfileDTo> GetcompleateProfile(Guid jobseekerId)
+        {
+            var jobSeekerProfile = await _profileRepository.GetProfiledetailAsync(jobseekerId);
+
+            if (jobSeekerProfile == null)
+            {
+                // Handle case when the profile is not found
+                return null; // or throw an exception or handle it according to your application logic
+            }
+
+            var jobSeekerProfileDTO = new JobSeekerProfileDTo
+            {
+                UserName = jobSeekerProfile.JobSeeker.UserName,
+                FirstName = jobSeekerProfile.JobSeeker.FirstName,
+                LastName = jobSeekerProfile.JobSeeker.LastName,
+                Phone = jobSeekerProfile.JobSeeker.Phone,
+                Email = jobSeekerProfile.JobSeeker.Email,
+                Qualification = jobSeekerProfile.Qualifications.ToList(),
+                JobSeekerProfileSkills = jobSeekerProfile.JobSeekerProfileSkills.Select(s => s.Skill).ToList(),
+                Role = jobSeekerProfile.JobSeeker.Role,
+ 
+            };
+
+            return jobSeekerProfileDTO;
+        }
+
         public List<ExperienceDto> GetExperience(Guid jobseekerId, Guid profileId)
         {
 
@@ -114,6 +140,8 @@ namespace Domain.Service.Profile
         public Task<JobSeekerProfile> GetProfileAsync(Guid jobSeekerId)
         {
             return _profileRepository.GetProfileAsync(jobSeekerId);
+
+
         }
 
         public Task GetProfileDetailsAsync(Guid jobseekerId)
@@ -136,7 +164,7 @@ namespace Domain.Service.Profile
             return _profileRepository.GetSkillsForProfile(jobseekerId, profileId);
         }
 
-        public List<SkillDto> GetSkillsForJobSeekerProfile()
+        public List<SkillDto>  GetSkillsForJobSeekerProfile()
         {
             var Skills = _profileRepository.GetSkillsForProfile();
             var SkillDtos = mapper.Map<List<SkillDto>>(Skills);
@@ -144,6 +172,19 @@ namespace Domain.Service.Profile
             return SkillDtos;
           
         }
+
+
+        public async Task<JobSeekerProfileDTo> UpdateJobSeekerProfile(Guid id, JobSeekerProfileDTo updatedProfile)
+        {
+            // Perform validation, mapping, and update logic if needed
+
+            // Call the repository to update the JobSeeker's profile
+            var result = await _profileRepository.UpdateProfile(id, updatedProfile);
+
+            return result;
+        }
+
+        
     }
 }
 

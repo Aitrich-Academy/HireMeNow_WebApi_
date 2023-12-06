@@ -22,5 +22,7 @@ namespace Domain.Service.Profile.Interface
         List<Qualification> GetQualification( Guid profileId);
         List<Skill> GetSkillsForProfile();
         List<JobSeekerProfileDTo> GetProfile(Guid jobseekerId);
+        Task<JobSeekerProfileDTo> UpdateProfile(Guid id, JobSeekerProfileDTo updatedProfile);
+        Task<JobSeekerProfile> GetProfiledetailAsync(Guid jobseekerId);
     }
 }

@@ -15,12 +15,15 @@ namespace Domain.Service.Profile.Interface
         Task AddSkillsToProfile(Guid jobseekerId, Guid profileId, List<Guid> skills);
 
         Task AddWorkExpericeToProfileAsync(Guid jobseekerId, Guid profileId, JobseekerWorkExperienceDTo jobseekerWorkExperienceDTo);
+        Task<JobSeekerProfileDTo> GetcompleateProfile(Guid jobseekerId);
         List<ExperienceDto> GetExperience(Guid jobseekerId, Guid profileId);
         List<JobSeekerProfileDTo> GetProfile(Guid jobseekerId);
+
         Task<JobSeekerProfile> GetProfileAsync(Guid jobSeekerId);
         Task GetProfileDetailsAsync(Guid jobseekerId);
         List<JobseekerQualificationDTo> GetQualification(Guid profileId);
         List<SkillDto> GetSkillsForJobSeekerProfile(Guid jobseekerId, Guid profileId);
         List<SkillDto> GetSkillsForJobSeekerProfile();
+        Task <JobSeekerProfileDTo>UpdateJobSeekerProfile(Guid id, JobSeekerProfileDTo updatedProfile);
     }
 }
