@@ -12,7 +12,7 @@ namespace HireMeNow_WebApi.API.Admin
 {
     /* [Route("api/[controller]")]*/
     [ApiController]
-    public class AdminController : BaseApiController<AdminController> 
+    public class AdminController : BaseApiController<AdminController>
     {
         private readonly IAdminServices _adminService;
         private readonly IMapper _mapper;
@@ -26,7 +26,7 @@ namespace HireMeNow_WebApi.API.Admin
             _adminService = adminService;
             _adminRepository = adminRepostory;
         }
-   
+
         [HttpGet]
         [Route("admin/GetJobSeekers")]
         public async Task<IActionResult> GetJobSeekers()
@@ -34,7 +34,7 @@ namespace HireMeNow_WebApi.API.Admin
 
             try
             {
-               var jobSeekers = await _adminService.GetJobSeekers();
+                var jobSeekers = await _adminService.GetJobSeekers();
                 return Ok(_mapper.Map<List<JobSeekerDto>>(jobSeekers));
             }
             catch (Exception ex)
@@ -92,7 +92,7 @@ namespace HireMeNow_WebApi.API.Admin
             {
                 return BadRequest();
             }
-        
+
         }
 
         [HttpDelete]
@@ -144,6 +144,21 @@ namespace HireMeNow_WebApi.API.Admin
 
         }
 
+        [HttpGet]
+        [Route("admin/GetJobCount")]
+        public IActionResult GetJobCount()
+        {
+            try
+            {
+                var count = _adminService.GetJobCount();
+                return Ok(new { Count = count });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
     }
 
 }
