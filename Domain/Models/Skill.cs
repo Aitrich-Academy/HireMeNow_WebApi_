@@ -5,7 +5,7 @@ namespace Domain.Models;
 
 public partial class Skill
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = new Guid();
 
     public string Name { get; set; } = null!;
 
