@@ -123,6 +123,17 @@ namespace Domain.Service.Profile
                         .FirstOrDefaultAsync();
         }
 
+        public  Task<JobSeekerProfile> GetProfiledetailAsync(Guid jobseekerId)
+        {
+            return _context.JobSeekerProfiles
+          .Where(profile => profile.JobSeekerId == jobseekerId)
+          .Include(profile => profile.Resume)
+          .Include(profile => profile.JobSeekerProfileSkills)
+          .Include(profile => profile.Qualifications)
+          .Include(profile => profile.WorkExperiences)
+          .FirstOrDefaultAsync();
+        }
+
         public List<Qualification> GetQualification(Guid jobseekerId, Guid profileId)
         {
             return _context.Qualifications
@@ -154,6 +165,34 @@ namespace Domain.Service.Profile
             return _context.Skills.ToList();
         }
 
-        
+        public async Task<JobSeekerProfileDTo> UpdateProfile(Guid id, JobSeekerProfileDTo updatedProfile)
+        {
+            var existingProfile = _context.JobSeekerProfiles
+           .Include(profile => profile.Qualifications)
+           .Include(profile => profile.JobSeekerProfileSkills)
+           .Include(profile => profile.JobSeeker)
+           .FirstOrDefault(profile => profile.Id == id);
+
+            //var existingProfile = await _context.JobSeekerProfiles.FindAsync(id);
+
+            if (existingProfile == null)
+            {
+                // Handle case when the profile is not found
+                return null;
+            }
+            existingProfile.JobSeeker.FirstName = updatedProfile.FirstName;
+            existingProfile.JobSeeker.LastName = updatedProfile.LastName;
+            existingProfile.JobSeeker.Phone = updatedProfile.Phone;
+            existingProfile.JobSeeker.Email = updatedProfile.Email;
+            existingProfile.JobSeeker.Phone =updatedProfile.Phone;
+            existingProfile.JobSeeker.UserName = updatedProfile.UserName;
+           // existingProfile.JobSeeker.ImageUrl = updatedProfile.ImageUrl;
+            // ... update other properties accordingly
+
+            // Save changes to the database
+            await _context.SaveChangesAsync();
+
+            return updatedProfile;
+        }
     }
 }
