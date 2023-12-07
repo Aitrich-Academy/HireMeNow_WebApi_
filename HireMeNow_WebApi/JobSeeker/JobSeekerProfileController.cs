@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Models;
+using Domain.Service.Admin.DTOs;
+using Domain.Service.Authuser.DTOs;
 using Domain.Service.JobSeeker;
 using Domain.Service.Profile;
 using Domain.Service.Profile.DTOs;
@@ -14,8 +16,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HireMeNow_WebApi.JobSeeker
 {
-	
-	[ApiController]
+
+    [ApiController]
     [Authorize(Roles = "JOB_SEEKER")]
     public class JobSeekerProfileController : BaseApiController<JobSeekerProfileController>
 
@@ -63,10 +65,10 @@ namespace HireMeNow_WebApi.JobSeeker
 
         [HttpPost]
         [Route("{jobseekerId}/profile/{profileId}/Experience")]
-        public async Task<ActionResult> AddExperienceToProfile(Guid jobseekerId, Guid profileId,WorkExperieceRequest data)
+        public async Task<ActionResult> AddExperienceToProfile(Guid jobseekerId, Guid profileId, WorkExperieceRequest data)
         {
             var JobseekerWorkExperienceDTo = mapper.Map<JobseekerWorkExperienceDTo>(data);
-            await _profileService.AddWorkExpericeToProfileAsync(jobseekerId,  profileId, JobseekerWorkExperienceDTo);
+            await _profileService.AddWorkExpericeToProfileAsync(jobseekerId, profileId, JobseekerWorkExperienceDTo);
             return Ok(data);
         }
 
@@ -100,13 +102,13 @@ namespace HireMeNow_WebApi.JobSeeker
                 return NotFound(); // or return an appropriate response
             }
             return Ok(Profile);
-        
+
 
         }
 
         [HttpGet]
         [Route("/profile/{profileId}/Qualification")]
-        public ActionResult<List<JobseekerQualificationDTo>> GetQualification( Guid profileId)
+        public ActionResult<List<JobseekerQualificationDTo>> GetQualification(Guid profileId)
         {
             var Qualification = _profileService.GetQualification(profileId);
 
@@ -153,12 +155,13 @@ namespace HireMeNow_WebApi.JobSeeker
             return Ok(skills);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateJobSeekerProfile(Guid id, JobSeekerProfileDTo updatedProfile)
+        [HttpPut("{jobseekerId}/UpdateJobSeekerProfile")]
+
+        public async Task<IActionResult> UpdateJobSeekerProfile(Guid id, AuthUserDTO updatedProfile)
         {
             try
             {
-                var result = _profileService.UpdateJobSeekerProfile(id, updatedProfile);
+                var result =await _profileService.UpdateJobSeekerProfile(id, updatedProfile);
                 if (result != null)
                 {
                     return Ok(result);
@@ -170,17 +173,6 @@ namespace HireMeNow_WebApi.JobSeeker
                 return StatusCode(500, ex.Message);
             }
         }
-        //[HttpGet]
-        //[Route("{jobseekerId}/profile/{profileId}/Experice")]
-        //public ActionResult<List<ExperienceDto>> GetExperience(Guid jobseekerId, Guid profileId)
-        //{
-        //    var Experience = _profileService.GetExperience(jobseekerId, profileId);
-
-        //    if (Experience == null || !Experience.Any())
-        //        return NotFound();
-
-        //    return Ok(Experience);
-        //}
 
 
     }

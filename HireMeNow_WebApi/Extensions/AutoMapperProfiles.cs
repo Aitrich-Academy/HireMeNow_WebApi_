@@ -42,6 +42,8 @@ namespace HireMeNow_WebApi.Extensions
 
             CreateMap<AuthUser, JobSeekerLoginDto>();
 
+            CreateMap<AuthUser, AdminLoginDTO>();
+
             CreateMap<JobSeekerProfileDTo, Domain.Models.JobSeeker>();
             CreateMap<ApplyJobRequest, JobApplication>();
             CreateMap<JobApplication, AppliedJobsDtos>();
