@@ -11,5 +11,7 @@ namespace Domain.Service.Login.Interfaces
     {
 
         JobSeekerLoginDto login(string email, string password);
+
+        AdminLoginDTO Adminlogin(string email, string password);
     }
 }

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Domain.Helpers;
 using Domain.Models;
+using Domain.Service.Admin.DTOs;
+using Domain.Service.Authuser.DTOs;
 using Domain.Service.JobSeeker;
 using Domain.Service.Profile.DTOs;
 using Domain.Service.Profile.Interface;
@@ -174,10 +176,9 @@ namespace Domain.Service.Profile
         }
 
 
-        public async Task<JobSeekerProfileDTo> UpdateJobSeekerProfile(Guid id, JobSeekerProfileDTo updatedProfile)
+        public async Task<AuthUserDTO> UpdateJobSeekerProfile(Guid id, AuthUserDTO updatedProfile)
         {
             // Perform validation, mapping, and update logic if needed
-
             // Call the repository to update the JobSeeker's profile
             var result = await _profileRepository.UpdateProfile(id, updatedProfile);
 

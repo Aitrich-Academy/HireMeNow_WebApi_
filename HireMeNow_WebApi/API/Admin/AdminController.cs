@@ -3,6 +3,10 @@ using Domain.Models;
 using Domain.Service.Admin.DTOs;
 using Domain.Service.Admin.Interfaces;
 using Domain.Service.Job.DTOs;
+using Domain.Service.Login;
+using Domain.Service.Login.Interfaces;
+using HireMeNow_WebApi.API.Admin.RequestObjects;
+using HireMeNow_WebApi.API.JobSeeker.RequestObjects;
 using HireMeNow_WebApi.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,14 +22,32 @@ namespace HireMeNow_WebApi.API.Admin
         private readonly IMapper _mapper;
         IAdminRepository _adminRepository;
         private IMapper mapper;
+        public ILoginRequestService _loginRequestService;
 
-
-        public AdminController(IMapper mapper, IAdminServices adminService, IAdminRepository adminRepostory)
+        public AdminController(IMapper mapper, IAdminServices adminService, IAdminRepository adminRepostory, ILoginRequestService loginRequestService)
         {
             _mapper = mapper;
             _adminService = adminService;
             _adminRepository = adminRepostory;
+            _loginRequestService = loginRequestService;
         }
+
+
+
+        [HttpPost]
+        [Route("Admin/login")]
+        public async Task<ActionResult> Login(AdminLoginRequests logdata)
+        {
+            //var user = _mapper.Map<User>(userDto);
+            var user = _loginRequestService.Adminlogin(logdata.Email, logdata.Password);
+
+            if (user == null)
+            {
+                return BadRequest("Login Failed");
+            }
+            return Ok(user);
+        }
+
 
         [HttpGet]
         [Route("admin/GetJobSeekers")]

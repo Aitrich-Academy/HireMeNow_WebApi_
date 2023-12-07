@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Models;
+using Domain.Service.Admin.DTOs;
+using Domain.Service.Authuser.DTOs;
 using Domain.Service.Profile.DTOs;
 
 namespace Domain.Service.Profile.Interface
@@ -22,7 +24,7 @@ namespace Domain.Service.Profile.Interface
         List<Qualification> GetQualification( Guid profileId);
         List<Skill> GetSkillsForProfile();
         List<JobSeekerProfileDTo> GetProfile(Guid jobseekerId);
-        Task<JobSeekerProfileDTo> UpdateProfile(Guid id, JobSeekerProfileDTo updatedProfile);
+        Task<AuthUserDTO> UpdateProfile(Guid id, AuthUserDTO updatedProfile);
         Task<JobSeekerProfile> GetProfiledetailAsync(Guid jobseekerId);
     }
 }

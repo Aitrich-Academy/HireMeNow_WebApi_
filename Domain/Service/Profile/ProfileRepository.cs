@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Domain.Models;
+using Domain.Service.Admin.DTOs;
+using Domain.Service.Authuser.DTOs;
 using Domain.Service.Profile.DTOs;
 using Domain.Service.Profile.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -165,13 +167,13 @@ namespace Domain.Service.Profile
             return _context.Skills.ToList();
         }
 
-        public async Task<JobSeekerProfileDTo> UpdateProfile(Guid id, JobSeekerProfileDTo updatedProfile)
+        public async Task<AuthUserDTO> UpdateProfile(Guid id, AuthUserDTO updatedProfile)
         {
-            var existingProfile = _context.JobSeekerProfiles
-           .Include(profile => profile.Qualifications)
-           .Include(profile => profile.JobSeekerProfileSkills)
-           .Include(profile => profile.JobSeeker)
-           .FirstOrDefault(profile => profile.Id == id);
+            var existingProfile2 = _context.JobSeekers
+                                .FirstOrDefault(e => e.Id == id);
+
+            var existingProfile = _context.AuthUsers
+                             .FirstOrDefault(e => e.Id == id);
 
             //var existingProfile = await _context.JobSeekerProfiles.FindAsync(id);
 
@@ -180,13 +182,19 @@ namespace Domain.Service.Profile
                 // Handle case when the profile is not found
                 return null;
             }
-            existingProfile.JobSeeker.FirstName = updatedProfile.FirstName;
-            existingProfile.JobSeeker.LastName = updatedProfile.LastName;
-            existingProfile.JobSeeker.Phone = updatedProfile.Phone;
-            existingProfile.JobSeeker.Email = updatedProfile.Email;
-            existingProfile.JobSeeker.Phone =updatedProfile.Phone;
-            existingProfile.JobSeeker.UserName = updatedProfile.UserName;
-           // existingProfile.JobSeeker.ImageUrl = updatedProfile.ImageUrl;
+            existingProfile.FirstName = updatedProfile.FirstName;
+            existingProfile.LastName = updatedProfile.LastName;
+            existingProfile.Phone = updatedProfile.Phone;
+            existingProfile.Password = updatedProfile.Password;
+            existingProfile.Phone =updatedProfile.Phone;
+            existingProfile.UserName = updatedProfile.UserName;
+
+            existingProfile2.FirstName = updatedProfile.FirstName;
+            existingProfile2.LastName = updatedProfile.LastName;
+            existingProfile2.Phone = updatedProfile.Phone;
+            existingProfile2.Phone = updatedProfile.Phone;
+            existingProfile2.UserName = updatedProfile.UserName;
+            // existingProfile.JobSeeker.ImageUrl = updatedProfile.ImageUrl;
             // ... update other properties accordingly
 
             // Save changes to the database

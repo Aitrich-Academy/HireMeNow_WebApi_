@@ -44,6 +44,26 @@ namespace Domain.Service.Login
             }
            
         }
+
+        public AdminLoginDTO Adminlogin(string email, string password)
+        {
+            var user = jobSeekerRepository.GetUserByEmail(email);
+            if (user == null)
+            {
+                return null;
+            }
+            else
+            {
+                if ((password == user.Password))
+                {
+                    var userReturn = mapper.Map<AdminLoginDTO>(user);
+                    userReturn.Token = authUserRepository.CreateToken(user);
+                    return userReturn;
+                }
+                return null;
+            }
+
+        }
     }
        
     }

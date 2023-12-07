@@ -21,7 +21,8 @@ namespace Domain.Service.SignUp
         IAuthUserRepository authUserRepository;
         IMapper mapper;
         IEmailService emailService;
-        public SignUpRequestService(ISignUpRequestRepository _jobSeekerRepository, IMapper _mapper, IEmailService _emailService, IAuthUserRepository _authUserRepository) {
+        public SignUpRequestService(ISignUpRequestRepository _jobSeekerRepository, IMapper _mapper, IEmailService _emailService, IAuthUserRepository _authUserRepository)
+        {
             jobSeekerRepository = _jobSeekerRepository;
             mapper = _mapper;
             emailService = _emailService;
@@ -35,28 +36,29 @@ namespace Domain.Service.SignUp
                 SignUpRequest signUpRequest = await jobSeekerRepository.GetSignupRequestByIdAsync(jobSeekerSignupRequestId);
                 //AuthUser authUser = mapper.Map<AuthUser>(signUpRequest);
                 AuthUser authUser = new();
-                if (signUpRequest.Status==Enums.Status.VERIFIED)
+                if (signUpRequest.Status == Enums.Status.VERIFIED)
                 {
                     //need to change this code by using Automapper 
 
-                  
 
-                    authUser.UserName=signUpRequest.UserName;
-                    authUser.Role=Enums.Role.JOB_SEEKER;
-                    authUser.FirstName=signUpRequest.FirstName;
-                    authUser.LastName=signUpRequest.LastName;
-                    authUser.Email=signUpRequest.Email;
-                    authUser.Password= password;
-                    authUser.Phone=signUpRequest.Phone;
-                    authUser =await authUserRepository.AddAuthUser(authUser);
-                    signUpRequest.Status=Enums.Status.CREATED;
+
+                    authUser.UserName = signUpRequest.UserName;
+                    authUser.Role = Enums.Role.JOB_SEEKER;
+                    authUser.FirstName = signUpRequest.FirstName;
+                    authUser.LastName = signUpRequest.LastName;
+                    authUser.Email = signUpRequest.Email;
+                    authUser.Password = password;
+                    authUser.Phone = signUpRequest.Phone;
+                    authUser = await authUserRepository.AddAuthUser(authUser);
+                    signUpRequest.Status = Enums.Status.CREATED;
                     jobSeekerRepository.UpdateSignupRequest(signUpRequest);
                 }
 
                 Models.JobSeeker jobseeker = mapper.Map<Models.JobSeeker>(authUser);
 
                 //await jobSeekerRepository.AddJobSeekerAsync(jobseeker);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -66,20 +68,20 @@ namespace Domain.Service.SignUp
         public async void CreateSignupRequest(JobSeekerSignupRequestDto data)
         {
 
-            var signUpRequest= mapper.Map<SignUpRequest>(data);
-          var signUpId=  jobSeekerRepository.AddSignupRequest(signUpRequest);
-            MailRequest mailRequest= new MailRequest();
-            mailRequest.Subject="HireMeNow SignUp Verification";
-            mailRequest.Body="http://localhost:4200/set-password?signupid="+signUpId.ToString();
-            mailRequest.ToEmail=signUpRequest.Email;
-           await emailService.SendEmailAsync(mailRequest);
+            var signUpRequest = mapper.Map<SignUpRequest>(data);
+            var signUpId = jobSeekerRepository.AddSignupRequest(signUpRequest);
+            MailRequest mailRequest = new MailRequest();
+            mailRequest.Subject = "HireMeNow SignUp Verification";
+            mailRequest.Body = "http://localhost:4200/set-password?signupid=" + signUpId.ToString();
+            mailRequest.ToEmail = signUpRequest.Email;
+            await emailService.SendEmailAsync(mailRequest);
         }
 
         public async Task<bool> VerifyEmailAsync(Guid jobSeekerSignupRequestId)
         {
 
-            SignUpRequest signUpRequest= await jobSeekerRepository.GetSignupRequestByIdAsync(jobSeekerSignupRequestId);
-            if(signUpRequest != null )
+            SignUpRequest signUpRequest = await jobSeekerRepository.GetSignupRequestByIdAsync(jobSeekerSignupRequestId);
+            if (signUpRequest != null)
             {
                 signUpRequest.Status = Enums.Status.VERIFIED;
                 jobSeekerRepository.UpdateSignupRequest(signUpRequest);
@@ -99,7 +101,7 @@ namespace Domain.Service.SignUp
 
         public async Task addResumeToProfile(Guid profileId, Guid resumeId, Guid jobSeekerId, string profileName, string profileSummary)
         {
-            await jobSeekerRepository.addResumeToProfile(profileId,resumeId, jobSeekerId, profileName, profileSummary);
+            await jobSeekerRepository.addResumeToProfile(profileId, resumeId, jobSeekerId, profileName, profileSummary);
         }
         public async Task<Guid> getResumeId(Guid profileId)
         {
@@ -118,11 +120,11 @@ namespace Domain.Service.SignUp
             await jobSeekerRepository.UpdateResume(resumeId, fileData);
         }
 
-		public async Task<List<Resume>> getResumeById(Guid resumeId)
+        public async Task<List<Resume>> getResumeById(Guid resumeId)
         {
-			return await jobSeekerRepository.getResume(resumeId);
-		}
-		public async Task DeleteResume(Guid resumeId)
+            return await jobSeekerRepository.getResume(resumeId);
+        }
+        public async Task DeleteResume(Guid resumeId)
         {
             await jobSeekerRepository.DeleteResume(resumeId);
         }
