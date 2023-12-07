@@ -48,7 +48,6 @@ namespace HireMeNow_WebApi.API.Admin
             return Ok(user);
         }
 
-
         [HttpGet]
         [Route("admin/GetJobSeekers")]
         public async Task<IActionResult> GetJobSeekers()
