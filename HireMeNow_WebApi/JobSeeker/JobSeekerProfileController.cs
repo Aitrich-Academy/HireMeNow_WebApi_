@@ -144,6 +144,7 @@ namespace HireMeNow_WebApi.JobSeeker
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("skills")]
         public ActionResult<List<SkillDto>> GetSkills()
         {
@@ -156,12 +157,12 @@ namespace HireMeNow_WebApi.JobSeeker
         }
 
         [HttpPut("{jobseekerId}/UpdateJobSeekerProfile")]
-
-        public async Task<IActionResult> UpdateJobSeekerProfile(Guid id, AuthUserDTO updatedProfile)
+        
+        public async Task<IActionResult> UpdateJobSeekerProfile(Guid jobseekerId, AuthUserDTO updatedProfile)
         {
             try
             {
-                var result =await _profileService.UpdateJobSeekerProfile(id, updatedProfile);
+                var result =await _profileService.UpdateJobSeekerProfile(jobseekerId, updatedProfile);
                 if (result != null)
                 {
                     return Ok(result);
