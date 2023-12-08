@@ -20,5 +20,12 @@ namespace Domain.Service.JobProvider.Interfaces
         public Task<JobPost> GetJobById(Guid jobId);
 
         public void DeleteJob(Guid id);
+
+        Guid AddSignupRequest(SignUpRequest signUpRequest);
+
+        Task<SignUpRequest> GetSignupRequestByIdAsync(Guid jobProviderSignupRequestId);
+
+        void UpdateSignupRequest(SignUpRequest signUpRequest);
+
     }
 }
