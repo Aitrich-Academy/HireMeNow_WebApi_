@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Domain.Service.SignUp.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,11 @@ namespace Domain.Service.JobProvider.Interfaces
         public Task<JobPost> GetJobById(Guid jobId);
 
         public void DeleteJob(Guid id);
+
+        void CreateSignupRequest(JobProviderSignupRequestDto data);
+
+        Task<bool> VerifyEmailAsync(Guid jobProviderSignupRequestId);
+
+        Task CreateJobProvider(Guid jobSeekerSignupRequestId, string password);
     }
 }
