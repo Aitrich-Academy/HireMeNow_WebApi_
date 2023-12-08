@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Helpers;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace Domain.Service.Admin.Interfaces
         public int GetCompanyCount();
 
         public int GetJobProviderCount();
+        public List<JobPost> GetJobs(JobListParams param);
 
         public int GetJobCount();
     }
