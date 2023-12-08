@@ -73,6 +73,11 @@ namespace HireMeNow_WebApi.Extensions
             CreateMap<JobProviderCompany, Domain.Service.Admin.DTOs.JobProviderDto>().ReverseMap();
             CreateMap<CompanyUser, CompanyUsersDto>().ReverseMap();
 			CreateMap<Resume, resumeDto>();
-		}
+            CreateMap<JobSeekerProfile, ProfileDTO>();
+            CreateMap<ProfileDTO,JobseekerProfileRequest>();
+            CreateMap<JobseekerProfileRequest, ProfileDTO>();
+            CreateMap<ProfileDTO, JobSeekerProfile>();
+
+        }
     }
 }
