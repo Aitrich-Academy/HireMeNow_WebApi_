@@ -24,6 +24,7 @@ namespace Domain.Service.Profile.Interface
 
         Task<JobSeekerProfile> GetProfileAsync(Guid jobSeekerId);
         Task GetProfileDetailsAsync(Guid jobseekerId);
+        Task<List<JobSeekerProfile>> GetProfilesByJobSeekerIdAsync(Guid jobSeekerId);
         List<JobseekerQualificationDTo> GetQualification(Guid profileId);
         List<SkillDto> GetSkillsForJobSeekerProfile(Guid jobseekerId, Guid profileId);
         List<SkillDto> GetSkillsForJobSeekerProfile();
