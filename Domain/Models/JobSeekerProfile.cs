@@ -11,7 +11,7 @@ public partial class JobSeekerProfile
     [Key]
     [Required]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }=Guid.NewGuid();
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     public Guid? ResumeId { get; set; }
     [ForeignKey(nameof(JobSeeker))]

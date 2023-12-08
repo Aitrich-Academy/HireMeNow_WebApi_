@@ -12,6 +12,7 @@ namespace Domain.Service.Profile.Interface
 {
     public interface IJobSeekerProfileService
     {
+        Task<bool> AddProfileAsync(ProfileDTO addProfileDto);
         Task AddQualificationToProfileAsync(Guid jobseekerId, Guid profileId, JobseekerQualificationDTo jobseekerQualificationDTo);
 
         Task AddSkillsToProfile(Guid jobseekerId, Guid profileId, List<Guid> skills);
@@ -23,9 +24,12 @@ namespace Domain.Service.Profile.Interface
 
         Task<JobSeekerProfile> GetProfileAsync(Guid jobSeekerId);
         Task GetProfileDetailsAsync(Guid jobseekerId);
+        Task<List<JobSeekerProfile>> GetProfilesByJobSeekerIdAsync(Guid jobSeekerId);
         List<JobseekerQualificationDTo> GetQualification(Guid profileId);
         List<SkillDto> GetSkillsForJobSeekerProfile(Guid jobseekerId, Guid profileId);
         List<SkillDto> GetSkillsForJobSeekerProfile();
+
         Task <AuthUserDTO> UpdateJobSeekerProfile(Guid jobseekerId, AuthUserDTO updatedProfile);
+
     }
 }

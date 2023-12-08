@@ -24,10 +24,14 @@ namespace HireMeNow_WebApi.Extensions
           
             CreateMap<JobSeekerSignupRequestDto, SignUpRequest>().ReverseMap();
 			CreateMap<JobSeekerSignupRequest, JobSeekerSignupRequestDto>().ReverseMap();
-			CreateMap<SignUpRequest, SystemUser>().ReverseMap();
+
+            CreateMap<JobProviderSignupRequestDto, SignUpRequest>().ReverseMap();
+            CreateMap<JobProviderSignupRequest, JobProviderSignupRequestDto>().ReverseMap();
+
+            CreateMap<SignUpRequest, SystemUser>().ReverseMap();
             CreateMap<AuthUser, Domain.Models.JobSeeker>().ReverseMap();
             CreateMap<AuthUser, SystemUser>().ReverseMap();
-
+            CreateMap<AuthUser, Domain.Models.CompanyUser>().ReverseMap();
             CreateMap<JobPost, JobPostsDtos>().ReverseMap();
             CreateMap<JobPost, Domain.Service.Admin.DTOs.JobProviderDto>().ReverseMap();
             CreateMap<Qualification,QualificationsRequestDto>().ReverseMap();
@@ -69,6 +73,11 @@ namespace HireMeNow_WebApi.Extensions
             CreateMap<JobProviderCompany, Domain.Service.Admin.DTOs.JobProviderDto>().ReverseMap();
             CreateMap<CompanyUser, CompanyUsersDto>().ReverseMap();
 			CreateMap<Resume, resumeDto>();
-		}
+            CreateMap<JobSeekerProfile, ProfileDTO>();
+            CreateMap<ProfileDTO,JobseekerProfileRequest>();
+            CreateMap<JobseekerProfileRequest, ProfileDTO>();
+            CreateMap<ProfileDTO, JobSeekerProfile>();
+
+        }
     }
 }
