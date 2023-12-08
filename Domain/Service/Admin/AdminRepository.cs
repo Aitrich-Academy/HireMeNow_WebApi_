@@ -9,6 +9,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Domain.Service.Admin
 {
@@ -76,17 +77,10 @@ namespace Domain.Service.Admin
             int count = _context.JobPosts.Count();
             return count;
         }
-        public List<JobPost> GetJobs(JobListParams param)
+        public async Task<List<JobPost>> GetJobs(string JobLitle)
         {
-
-            return _context.JobPosts.ToList();
-
-
-
-
-
-
-
+			var jobs= await _context.JobPosts.Where(e=>e.JobTitle == JobLitle).Include(e=>e.Industry).Include(e=>e.Company).Include(e=>e.PostedByNavigation).Include(e=>e.JobCategory).Include(e=>e.Location).ToListAsync();
+            return jobs;
 
         }
 
