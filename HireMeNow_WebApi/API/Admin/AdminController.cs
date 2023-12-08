@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Helpers;
 using Domain.Models;
 using Domain.Service.Admin.DTOs;
 using Domain.Service.Admin.Interfaces;
@@ -100,7 +101,25 @@ namespace HireMeNow_WebApi.API.Admin
 
         }
 
-        [HttpDelete]
+		[HttpGet]
+		[Route("admin/getJobs")]
+		public async Task<IActionResult> GetAllJobs(JobListParams param)
+		{
+
+			try
+			{
+				var companyUsers = await _adminService.GetCompanyUsers();
+				return Ok(_mapper.Map<List<CompanyUsersDto>>(companyUsers));
+			}
+			catch (Exception ex)
+			{
+				return BadRequest();
+			}
+
+		}
+
+
+		[HttpDelete]
         [Route("admin/RemoveCompanyUsers/{id}")]
         public IActionResult Remove(Guid id)
         {

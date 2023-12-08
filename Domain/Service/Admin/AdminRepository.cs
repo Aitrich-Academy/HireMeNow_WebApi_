@@ -1,16 +1,18 @@
 ﻿using AutoMapper;
+using Domain.Helpers;
 using Domain.Models;
 using Domain.Service.Admin.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Service.Admin
 {
-    public class AdminRepository:IAdminRepository
+    public class AdminRepository : IAdminRepository
     {
         private readonly List<Domain.Models.JobSeeker> _jobSeeker;
         DbHireMeNowWebApiContext _context;
@@ -59,7 +61,7 @@ namespace Domain.Service.Admin
 
         public int GetCompanyCount()
         {
-            int count =  _context.JobProviderCompanies.Count();
+            int count = _context.JobProviderCompanies.Count();
             return count;
         }
 
@@ -74,6 +76,19 @@ namespace Domain.Service.Admin
             int count = _context.JobPosts.Count();
             return count;
         }
-    }
+        public List<JobPost> GetJobs(JobListParams param)
+        {
 
+            return _context.JobPosts.ToList();
+
+
+
+
+
+
+
+
+        }
+
+    }
 }

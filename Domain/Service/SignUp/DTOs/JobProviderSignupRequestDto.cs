@@ -7,18 +7,16 @@ using System.Threading.Tasks;
 
 namespace Domain.Service.SignUp.DTOs
 {
-    public class JobSeekerSignupRequestDto
+    public class JobProviderSignupRequestDto
     {
-        public string? UserName { get; set; }
-        [Required]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = null!;
         public string? LastName { get; set; }
         [Required]
-        [Phone]
-        public string Phone { get; set; }
+        public string? UserName { get; set; }
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
-
+        public string Email { get; set; } = null!;
+        [Required]
+        public string Phone { get; set; } = null!;
     }
 }

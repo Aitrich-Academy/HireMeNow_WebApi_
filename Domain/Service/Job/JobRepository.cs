@@ -46,6 +46,7 @@ namespace Domain.Service.Job
         }
 
 
+
         public async Task<List<JobPost>> GetJobs(Guid userId)
         {
 
@@ -99,6 +100,7 @@ namespace Domain.Service.Job
             return await PagedList<SavedJob>.CreateAsync(query,
             param.PageNumber, param.PageSize);
         }
+
 
 
         public async Task<SavedJob> saveJob(SavedJob savedJob)

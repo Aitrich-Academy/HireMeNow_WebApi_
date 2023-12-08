@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Helpers;
+using Domain.Models;
 using Domain.Service.Admin.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -55,5 +56,9 @@ namespace Domain.Service.Admin
         {
             return _adminRepository.GetJobCount();
         }
-    }
+		public List<JobPost> GetJobs(JobListParams param)
+        {
+            return _adminRepository.GetJobs(param);
+        }
+	}
 }
