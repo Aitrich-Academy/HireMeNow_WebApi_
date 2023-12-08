@@ -26,5 +26,6 @@ namespace Domain.Service.Profile.Interface
         List<JobSeekerProfileDTo> GetProfile(Guid jobseekerId);
         Task<AuthUserDTO> UpdateProfile(Guid id, AuthUserDTO updatedProfile);
         Task<JobSeekerProfile> GetProfiledetailAsync(Guid jobseekerId);
+        Task AddProfileAsync(JobSeekerProfile profile);
     }
 }

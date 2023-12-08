@@ -25,7 +25,12 @@ namespace Domain.Service.Profile
             _profileRepository = profileRepository;
         }
 
-      
+        public async Task<bool> AddProfileAsync(ProfileDTO addProfileDto)
+        {
+            var profile = mapper.Map<JobSeekerProfile>(addProfileDto);
+            await _profileRepository.AddProfileAsync(profile);
+            return true;
+        }
 
         public void AddQualificationToProfile(Guid jobseekerId, Guid profileId, Qualification qualification)
         {
