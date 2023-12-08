@@ -22,6 +22,13 @@ namespace Domain.Service.Profile
             _context = context;
         }
 
+        public async Task AddProfileAsync(JobSeekerProfile profile)
+        {
+            profile.Id = Guid.NewGuid();
+            _context.JobSeekerProfiles.Add(profile);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task AddQualificationsToProfile(Guid profileId, Qualification qualification)
         {
 

@@ -13,6 +13,7 @@ using HireMeNow_WebApi.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static MassTransit.ValidationResultExtensions;
 
 namespace HireMeNow_WebApi.JobSeeker
 {
@@ -177,7 +178,16 @@ namespace HireMeNow_WebApi.JobSeeker
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpPost("AddProfile")]
+        public async Task<IActionResult> AddProfile(JobseekerProfileRequest profileRequest)
+        {
+            var AddProfileDto = mapper.Map<ProfileDTO>(profileRequest);
+            var addedProfile = await _profileService.AddProfileAsync(AddProfileDto);
+            if (addedProfile)
+                return Ok("Profile Added successfully");
 
+            return BadRequest("Failed to Add Profile");
+        }
 
     }
 }
