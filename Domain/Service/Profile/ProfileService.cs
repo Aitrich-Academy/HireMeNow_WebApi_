@@ -156,6 +156,11 @@ namespace Domain.Service.Profile
             throw new NotImplementedException();
         }
 
+        public async Task<List<JobSeekerProfile>> GetProfilesByJobSeekerIdAsync(Guid jobSeekerId)
+        {
+            return await _profileRepository.GetProfilesByJobSeekerIdAsync(jobSeekerId);
+        }
+
         public List<JobseekerQualificationDTo> GetQualification(Guid profileId)
         {
 

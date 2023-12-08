@@ -143,6 +143,13 @@ namespace Domain.Service.Profile
           .FirstOrDefaultAsync();
         }
 
+        public async Task<List<JobSeekerProfile>> GetProfilesByJobSeekerIdAsync(Guid jobSeekerId)
+        {
+            return await _context.JobSeekerProfiles
+                .Where(profile => profile.JobSeekerId == jobSeekerId)
+                .ToListAsync();
+        }
+
         public List<Qualification> GetQualification(Guid jobseekerId, Guid profileId)
         {
             return _context.Qualifications
