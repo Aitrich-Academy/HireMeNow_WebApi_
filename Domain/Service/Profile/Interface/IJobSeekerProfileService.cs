@@ -26,6 +26,8 @@ namespace Domain.Service.Profile.Interface
         List<JobseekerQualificationDTo> GetQualification(Guid profileId);
         List<SkillDto> GetSkillsForJobSeekerProfile(Guid jobseekerId, Guid profileId);
         List<SkillDto> GetSkillsForJobSeekerProfile();
+
         Task <AuthUserDTO> UpdateJobSeekerProfile(Guid jobseekerId, AuthUserDTO updatedProfile);
+
     }
 }

@@ -157,12 +157,15 @@ namespace HireMeNow_WebApi.JobSeeker
         }
 
         [HttpPut("{jobseekerId}/UpdateJobSeekerProfile")]
+
         
         public async Task<IActionResult> UpdateJobSeekerProfile(Guid jobseekerId, AuthUserDTO updatedProfile)
         {
             try
             {
                 var result =await _profileService.UpdateJobSeekerProfile(jobseekerId, updatedProfile);
+
+     
                 if (result != null)
                 {
                     return Ok(result);
