@@ -1,6 +1,8 @@
-﻿using Domain.Helpers;
+﻿using AutoMapper;
+using Domain.Helpers;
 using Domain.Models;
 using Domain.Service.Admin.Interfaces;
+using Domain.Service.Job.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,7 @@ namespace Domain.Service.Admin
     public class AdminServices : IAdminServices
     {
         IAdminRepository _adminRepository;
+        IMapper _mapper;
 
         public AdminServices(IAdminRepository adminRepository)
         {
@@ -58,7 +61,11 @@ namespace Domain.Service.Admin
         }
 		public async Task<List<JobPost>> GetJobs(string JobLitle)
         {
-            return  await _adminRepository.GetJobs(JobLitle);
+           var jobs= await _adminRepository.GetJobs(JobLitle);
+		
+			return jobs;
+
+
         }
 
 
