@@ -15,8 +15,8 @@ namespace Domain.Service.Job.Interfaces
 	{
 
         public Task<List<JobPostsDtos>> GetJobs(Guid userId);
-
-        public Task<List<JobPost>> GetJobsByCompany(Guid companyId);
+		public Task<List<JobPostsDtos>> GetJobs();
+		public Task<List<JobPost>> GetJobsByCompany(Guid companyId);
 
         public Task<List<JobPost>> GetJobsById(Guid companyId, Guid jobId);
 

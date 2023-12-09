@@ -27,7 +27,7 @@ namespace Domain.Service.Login
 
         public JobSeekerLoginDto login(string email, string password)
         {
-            var user = jobSeekerRepository.GetUserByEmail(email);
+            var user = jobSeekerRepository.GetUserByEmailpassword(email,password);
             if (user == null)
             {
                 return null;
