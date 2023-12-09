@@ -90,5 +90,18 @@ namespace Domain.Service.Admin
 
         }
 
+        public async Task<bool> AddAsync(Skill skill)
+        {
+            if (skill == null)
+                throw new ArgumentNullException(nameof(skill));
+            if (_context.Skills.Any(s => s.Name == skill.Name))
+            {
+                return false; // Skill with the same name already exists
+            }
+            skill.Id = Guid.NewGuid();
+            _context.Skills.Add(skill);
+            await _context.SaveChangesAsync();
+            return true; // Skill added successfully
+        }
     }
 }

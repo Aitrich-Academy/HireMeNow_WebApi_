@@ -14,6 +14,7 @@ using Domain.Service.Profile.DTOs;
 using HireMeNow_WebApi.JobSeeker;
 using Domain.Service.Admin.DTOs;
 using Domain.Service.JobSeeker.DTOs;
+using HireMeNow_WebApi.API.Admin.RequestObjects;
 
 namespace HireMeNow_WebApi.Extensions
 {
@@ -73,7 +74,8 @@ namespace HireMeNow_WebApi.Extensions
             CreateMap<ProfileDTO,JobseekerProfileRequest>();
             CreateMap<JobseekerProfileRequest, ProfileDTO>();
             CreateMap<ProfileDTO, JobSeekerProfile>();
-
+            CreateMap<SkillRequest, SkillDto>();
+            CreateMap<SkillDto, Skill>();
         }
     }
 }

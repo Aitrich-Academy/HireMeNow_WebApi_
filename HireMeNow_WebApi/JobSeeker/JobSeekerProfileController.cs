@@ -188,7 +188,7 @@ namespace HireMeNow_WebApi.JobSeeker
 
             return BadRequest("Failed to Add Profile");
         }
-        [HttpGet("{jobSeekerId}")]
+        [HttpGet("GetJobSeekerProfile/{jobSeekerId}")]
         public async Task<IActionResult> GetProfilesByJobSeekerId(Guid jobSeekerId)
         {
             var profiles = await _profileService.GetProfilesByJobSeekerIdAsync(jobSeekerId);

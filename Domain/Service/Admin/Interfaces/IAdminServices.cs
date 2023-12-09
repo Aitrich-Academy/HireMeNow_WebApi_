@@ -1,5 +1,6 @@
 ﻿using Domain.Helpers;
 using Domain.Models;
+using Domain.Service.Profile.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace Domain.Service.Admin.Interfaces
         public int GetJobProviderCount();
         public int GetJobCount();
         public List<JobPost> GetJobs(JobListParams param);
+        Task<bool> AddSkillAsync(SkillDto skill);
     }
     
 }
