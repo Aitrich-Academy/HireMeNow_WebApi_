@@ -84,6 +84,28 @@ namespace HireMeNow_WebApi.API.Admin
 
         }
 
+        //New-Code
+
+        [HttpGet]
+        [Route("admin/SearchCompanies")]
+        public async Task<IActionResult> SearchCompanies(string name)
+        {
+
+            try
+            {
+
+                var companies = await _adminService.SearchCompanies(name);
+                return Ok(_mapper.Map<List<JobProviderDto>>(companies));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+
+        //New-Code Ends
+
         [HttpGet]
         [Route("admin/GetCompanyUsers")]
         public async Task<IActionResult> GetCompanyUsers()

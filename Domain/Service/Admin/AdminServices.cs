@@ -60,5 +60,11 @@ namespace Domain.Service.Admin
         {
             return _adminRepository.GetJobs(param);
         }
-	}
+
+
+        public Task<List<JobProviderCompany>> SearchCompanies(string name)
+        {
+            return _adminRepository.SearchCompanies(name);
+        }
+    }
 }

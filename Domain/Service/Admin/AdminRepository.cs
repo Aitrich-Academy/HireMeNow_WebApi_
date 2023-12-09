@@ -81,13 +81,15 @@ namespace Domain.Service.Admin
 
             return _context.JobPosts.ToList();
 
+        }
 
+        public async Task<List<JobProviderCompany>> SearchCompanies(string name)
+        {
+            var filteredCompanies = await _context.JobProviderCompanies
+           .Where(company => company.LegalName.Contains(name))
+           .ToListAsync();
 
-
-
-
-
-
+            return filteredCompanies;
         }
 
     }

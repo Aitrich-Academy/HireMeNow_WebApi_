@@ -25,6 +25,8 @@ namespace Domain.Service.Admin.Interfaces
         public List<JobPost> GetJobs(JobListParams param);
 
         public int GetJobCount();
+
+        Task<List<JobProviderCompany>> SearchCompanies(string name);
     }
     
 }
