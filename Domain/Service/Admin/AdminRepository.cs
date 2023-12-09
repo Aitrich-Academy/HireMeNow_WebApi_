@@ -80,11 +80,20 @@ namespace Domain.Service.Admin
         public async Task<List<JobPost>> GetJobs(string JobLitle)
         {
 
-            return _context.JobPosts.ToList();
+
+            return _context.JobPosts.Where(e=>e.JobTitle.Contains(JobLitle)).ToList();
 
         }
+		public async Task<List<JobPost>> GetJobs()
+		{
+
+			return _context.JobPosts.ToList();
+
+		}
+
 
         public async Task<List<JobProviderCompany>> SearchCompanies(string name)
+
         {
             var filteredCompanies = await _context.JobProviderCompanies
            .Where(company => company.LegalName.Contains(name))

@@ -1,5 +1,6 @@
 ﻿using Domain.Helpers;
 using Domain.Models;
+using Domain.Service.Job.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,16 @@ namespace Domain.Service.Admin.Interfaces
         public void DeleteCompaniesById(Guid id);
 
         public int GetCompanyCount();
-
+        public Task<List<JobPost>> GetJobs(string Title);
         public int GetJobProviderCount();
         public int GetJobCount();
+
+ 
+        public  Task<List<JobProviderCompany>> SearchCompanies(string name);
+
         public List<JobPost> GetJobs(JobListParams param);
 
-        Task<List<JobProviderCompany>> SearchCompanies(string name);
+ 
     }
     
 }
