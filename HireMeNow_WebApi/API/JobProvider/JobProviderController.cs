@@ -21,6 +21,7 @@ using Domain.Service.Login.Interfaces;
 
 namespace HireMeNow_WebApi.API.JobProvider
 {
+
 	/*  [Route("api/[controller]")]*/
 	[ApiController]
 	[Authorize(Roles = "JOB_PROVIDER")]
@@ -173,6 +174,5 @@ namespace HireMeNow_WebApi.API.JobProvider
 		}
 
 	}
+
 }
-
-
