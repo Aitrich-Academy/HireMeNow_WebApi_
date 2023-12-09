@@ -16,6 +16,8 @@ using Domain.Service.JobProvider;
 using Domain.Service.JobSeeker.Interfaces;
 using HireMeNow_WebApi.API.JobSeeker.RequestObjects;
 using HireMeNow_WebApi.API.JobProvider.RequestObjects;
+using Domain.Service.Login;
+using Domain.Service.Login.Interfaces;
 
 namespace HireMeNow_WebApi.API.JobProvider
 {
@@ -28,12 +30,13 @@ namespace HireMeNow_WebApi.API.JobProvider
         private readonly IJobProviderService _jobProviderService;
         private readonly IMapper _mapper;
         IJobProviderRepository _jobRepository;
-
-        public JobProviderController(IJobProviderService jobProviderService, IMapper mapper, IJobProviderRepository jobProviderRepository)
+        public ILoginRequestService _loginRequestService { get; set; }
+        public JobProviderController(IJobProviderService jobProviderService, IMapper mapper, IJobProviderRepository jobProviderRepository, ILoginRequestService loginRequestService)
         {
             _jobProviderService = jobProviderService;
             _mapper = mapper;
             _jobRepository = jobProviderRepository;
+            _loginRequestService = loginRequestService;
         }
 
         [HttpPost]
@@ -62,12 +65,28 @@ namespace HireMeNow_WebApi.API.JobProvider
         [HttpPost]
         [Route("job-provider/signup/{jobProviderSignupRequestId}/set-password")]
         [AllowAnonymous]
-        public async Task<ActionResult> createJobSeekerSignupRequest(Guid jobProviderSignupRequestId, [FromBody] string password)
+        public async Task<ActionResult> createJobProviderSignupRequest(Guid jobProviderSignupRequestId, [FromBody] string password)
         {
             await _jobProviderService.CreateJobProvider(jobProviderSignupRequestId, password);
             return Ok("Password Set Successfully");
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("job-provider/login")]
+        public async Task<ActionResult> Login(JobSeekerLoginRequest logdata)
+        {
+            //var user = _mapper.Map<User>(userDto);
+            var user = _loginRequestService.login(logdata.Email, logdata.Password);
+
+            if (user == null)
+            {
+                return BadRequest("Login Failed");
+            }
+            return Ok(user);
+        }
+
+     
 
 
         [AllowAnonymous]

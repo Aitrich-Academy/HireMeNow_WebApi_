@@ -107,7 +107,7 @@ namespace Domain.Service.JobProvider
                     authUser.Email = signUpRequest.Email;
                     authUser.Password = password;
                     authUser.Phone = signUpRequest.Phone;
-                    authUser = await _authUserRepository.AddAuthUser(authUser);
+                    authUser = await _authUserRepository.AddAuthUserJP(authUser);
                     signUpRequest.Status = Enums.Status.CREATED;
                     _jobProviderRepository.UpdateSignupRequest(signUpRequest);
                 }
