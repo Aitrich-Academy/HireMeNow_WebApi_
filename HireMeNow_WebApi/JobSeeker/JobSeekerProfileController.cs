@@ -194,5 +194,6 @@ namespace HireMeNow_WebApi.JobSeeker
             var profiles = await _profileService.GetProfilesByJobSeekerIdAsync(jobSeekerId);
             return Ok(profiles);
         }
+
     }
 }
