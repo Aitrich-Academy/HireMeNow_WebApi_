@@ -87,6 +87,37 @@ namespace HireMeNow_WebApi.API.JobProvider
 		}
 
 
+        [Route("job-provider/signup")]
+        [AllowAnonymous]
+        public async Task<ActionResult> createJobProviderSignupRequest(JobProviderSignupRequest data)
+        {
+            var jobSeekerSignupRequestDto = _mapper.Map<JobProviderSignupRequestDto>(data);
+            _jobProviderService.CreateSignupRequest(jobSeekerSignupRequestDto);
+            return Ok(data);
+        }
+
+        [HttpGet]
+        [Route("job-provider/signup/{signupRequestId}/verify-email")]
+        [AllowAnonymous]
+        public async Task<ActionResult> VerifyJobProviderEmail(Guid signupRequestId)
+        {
+            var isVerified = await _jobProviderService.VerifyEmailAsync(signupRequestId);
+            if (isVerified)
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("job-provider/signup/{jobProviderSignupRequestId}/set-password")]
+        [AllowAnonymous]
+        public async Task<ActionResult> createJobSeekerSignupRequest(Guid jobProviderSignupRequestId, [FromBody] string password)
+        {
+            await _jobProviderService.CreateJobProvider(jobProviderSignupRequestId, password);
+            return Ok("Password Set Successfully");
+        }
+
 
 
 		[AllowAnonymous]

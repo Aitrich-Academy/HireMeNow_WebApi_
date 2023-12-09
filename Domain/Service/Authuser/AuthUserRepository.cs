@@ -43,16 +43,11 @@ namespace Domain.Service.Authuser
 
         public async Task<AuthUser> AddAuthUserJP(AuthUser authUser)
         {
-            //await _context.SystemUsers.AddAsync(authUser);
             authUser.Role = Enums.Role.JOB_PROVIDER;
             await _context.AuthUsers.AddAsync(authUser);
             Models.CompanyUser jobProvider = mapper.Map<Models.CompanyUser>(authUser);
             await _context.CompanyUsers.AddAsync(jobProvider);
-/*            JobSeekerProfile jp = new();
-            jp.JobSeekerId = jobSeeker.Id;
 
-
-            await _context.JobSeekerProfiles.AddAsync(jp);*/
             _context.SaveChanges();
             return authUser;
         }
