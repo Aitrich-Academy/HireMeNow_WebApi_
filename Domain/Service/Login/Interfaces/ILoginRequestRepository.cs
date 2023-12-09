@@ -11,5 +11,6 @@ namespace Domain.Service.Login.Interfaces
     {
 
         AuthUser GetUserByEmail(string email);
-    }
+		AuthUser GetUserByEmailpassword(string email,string password);
+	}
 }
