@@ -8,6 +8,7 @@ using Domain.Service.Job.DTOs;
 using Domain.Service.Job.Interfaces;
 using Domain.Service.Login;
 using Domain.Service.Login.Interfaces;
+using Domain.Service.Profile.DTOs;
 using HireMeNow_WebApi.API.Admin.RequestObjects;
 using HireMeNow_WebApi.API.JobSeeker.RequestObjects;
 using HireMeNow_WebApi.Controllers;
@@ -70,8 +71,26 @@ namespace HireMeNow_WebApi.API.Admin
             }
 
         }
+        [AllowAnonymous]
+        [HttpPost("skillAdd")]
+        public async Task<IActionResult> AddSkill( SkillRequest skill)
+        {
+            // Map the request to DTO
 
+            var Skill = _mapper.Map<SkillDto>(skill);
+          
+            // Call the service
+            var result = await _adminService.AddSkillAsync(Skill);
 
+            if (result)
+            {
+                return Ok("Skill added successfully");
+            }
+            else
+            {
+                return BadRequest("Skill already exists");
+            }
+        }
         [HttpGet]
         [Route("admin/GetCompanies")]
         public async Task<IActionResult> GetCompanies()
