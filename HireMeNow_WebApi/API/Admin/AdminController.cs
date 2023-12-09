@@ -3,12 +3,15 @@ using Domain.Helpers;
 using Domain.Models;
 using Domain.Service.Admin.DTOs;
 using Domain.Service.Admin.Interfaces;
+using Domain.Service.Job;
 using Domain.Service.Job.DTOs;
+using Domain.Service.Job.Interfaces;
 using Domain.Service.Login;
 using Domain.Service.Login.Interfaces;
 using HireMeNow_WebApi.API.Admin.RequestObjects;
 using HireMeNow_WebApi.API.JobSeeker.RequestObjects;
 using HireMeNow_WebApi.Controllers;
+using HireMeNow_WebApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,13 +27,15 @@ namespace HireMeNow_WebApi.API.Admin
         IAdminRepository _adminRepository;
         private IMapper mapper;
         public ILoginRequestService _loginRequestService;
+        IJobServices _jobService;
 
-        public AdminController(IMapper mapper, IAdminServices adminService, IAdminRepository adminRepostory, ILoginRequestService loginRequestService)
+        public AdminController(IMapper mapper, IAdminServices adminService, IAdminRepository adminRepostory, ILoginRequestService loginRequestService,IJobServices jobServices)
         {
             _mapper = mapper;
             _adminService = adminService;
             _adminRepository = adminRepostory;
             _loginRequestService = loginRequestService;
+			_jobService = jobServices;
         }
 
 
@@ -84,6 +89,28 @@ namespace HireMeNow_WebApi.API.Admin
 
         }
 
+        //New-Code
+
+        [HttpGet]
+        [Route("admin/SearchCompanies")]
+        public async Task<IActionResult> SearchCompanies(string name)
+        {
+
+            try
+            {
+
+                var companies = await _adminService.SearchCompanies(name);
+                return Ok(_mapper.Map<List<JobProviderDto>>(companies));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+
+        //New-Code Ends
+
         [HttpGet]
         [Route("admin/GetCompanyUsers")]
         public async Task<IActionResult> GetCompanyUsers()
@@ -100,16 +127,15 @@ namespace HireMeNow_WebApi.API.Admin
             }
 
         }
-
 		[HttpGet]
-		[Route("admin/getJobs")]
-		public async Task<IActionResult> GetAllJobs(JobListParams param)
+		[Route("admin/jobsbyName")]
+		public async Task<IActionResult> getalljobs(string Title)
 		{
 
 			try
 			{
-				var companyUsers = await _adminService.GetCompanyUsers();
-				return Ok(_mapper.Map<List<CompanyUsersDto>>(companyUsers));
+				var jobs = await _adminService.GetJobs(Title);
+				return Ok(_mapper.Map<List<Joblist>>( jobs));
 			}
 			catch (Exception ex)
 			{
@@ -117,6 +143,26 @@ namespace HireMeNow_WebApi.API.Admin
 			}
 
 		}
+		[HttpGet]
+		[Route("alljobs")]
+
+		public async Task<IActionResult> GetJobs()
+		{
+			try
+			{
+		
+
+				List<JobPostsDtos> jobposts = await _jobService.GetJobs();
+				return Ok(jobposts);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest();
+			}
+
+		}
+
+
 
 
 		[HttpDelete]
