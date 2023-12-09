@@ -9,6 +9,7 @@ using Domain.Service.Login.Interfaces;
 using HireMeNow_WebApi.API.Admin.RequestObjects;
 using HireMeNow_WebApi.API.JobSeeker.RequestObjects;
 using HireMeNow_WebApi.Controllers;
+using HireMeNow_WebApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -122,16 +123,15 @@ namespace HireMeNow_WebApi.API.Admin
             }
 
         }
-
 		[HttpGet]
-		[Route("admin/getJobs")]
-		public async Task<IActionResult> GetAllJobs(JobListParams param)
+		[Route("admin/jobsbyName")]
+		public async Task<IActionResult> getalljobs(string Title)
 		{
 
 			try
 			{
-				var companyUsers = await _adminService.GetCompanyUsers();
-				return Ok(_mapper.Map<List<CompanyUsersDto>>(companyUsers));
+				var jobs = await _adminService.GetJobs(Title);
+				return Ok(_mapper.Map<List<Joblist>>( jobs));
 			}
 			catch (Exception ex)
 			{
@@ -139,6 +139,8 @@ namespace HireMeNow_WebApi.API.Admin
 			}
 
 		}
+
+
 
 
 		[HttpDelete]

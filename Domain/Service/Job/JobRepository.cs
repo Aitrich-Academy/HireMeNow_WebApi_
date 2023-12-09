@@ -46,7 +46,6 @@ namespace Domain.Service.Job
         }
 
 
-
         public async Task<List<JobPost>> GetJobs(Guid userId)
         {
 

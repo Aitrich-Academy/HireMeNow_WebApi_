@@ -56,9 +56,9 @@ namespace Domain.Service.Admin
         {
             return _adminRepository.GetJobCount();
         }
-		public List<JobPost> GetJobs(JobListParams param)
+		public async Task<List<JobPost>> GetJobs(string JobLitle)
         {
-            return _adminRepository.GetJobs(param);
+            return  await _adminRepository.GetJobs(JobLitle);
         }
 
 

@@ -22,7 +22,7 @@ namespace Domain.Service.Admin.Interfaces
         public int GetCompanyCount();
 
         public int GetJobProviderCount();
-        public List<JobPost> GetJobs(JobListParams param);
+        public Task<List<JobPost>> GetJobs(string JobLitle);
 
         public int GetJobCount();
 
