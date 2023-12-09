@@ -61,6 +61,7 @@ namespace Domain.Service.Admin
         }
 		public async Task<List<JobPost>> GetJobs(string JobLitle)
         {
+
            var jobs= await _adminRepository.GetJobs(JobLitle);
 		
 			return jobs;
@@ -73,5 +74,11 @@ namespace Domain.Service.Admin
         {
             return _adminRepository.SearchCompanies(name);
         }
+
+           
+        
+
+
+      
     }
 }
