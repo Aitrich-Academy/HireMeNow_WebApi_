@@ -21,189 +21,158 @@ using Domain.Service.Login.Interfaces;
 
 namespace HireMeNow_WebApi.API.JobProvider
 {
-  /*  [Route("api/[controller]")]*/
-    [ApiController]
-    [Authorize(Roles = "JOB_PROVIDER")]
+	/*  [Route("api/[controller]")]*/
+	[ApiController]
+	[Authorize(Roles = "JOB_PROVIDER")]
 
-    public class JobProviderController : BaseApiController<JobProviderController>
-    {
-        private readonly IJobProviderService _jobProviderService;
-        private readonly IMapper _mapper;
-        IJobProviderRepository _jobRepository;
-        public ILoginRequestService _loginRequestService { get; set; }
-        public JobProviderController(IJobProviderService jobProviderService, IMapper mapper, IJobProviderRepository jobProviderRepository, ILoginRequestService loginRequestService)
-        {
-            _jobProviderService = jobProviderService;
-            _mapper = mapper;
-            _jobRepository = jobProviderRepository;
-            _loginRequestService = loginRequestService;
-        }
+	public class JobProviderController : BaseApiController<JobProviderController>
+	{
+		private readonly IJobProviderService _jobProviderService;
+		private readonly IMapper _mapper;
+		IJobProviderRepository _jobRepository;
+		public ILoginRequestService _loginRequestService { get; set; }
+		public JobProviderController(IJobProviderService jobProviderService, IMapper mapper, IJobProviderRepository jobProviderRepository, ILoginRequestService loginRequestService)
+		{
+			_jobProviderService = jobProviderService;
+			_mapper = mapper;
+			_jobRepository = jobProviderRepository;
+			_loginRequestService = loginRequestService;
+		}
 
-        [HttpPost]
-        [Route("job-provider/signup")]
-        [AllowAnonymous]
-        public async Task<ActionResult> createJobProviderSignupRequest(JobProviderSignupRequest data)
-        {
-            var jobSeekerSignupRequestDto = _mapper.Map<JobProviderSignupRequestDto>(data);
-            _jobProviderService.CreateSignupRequest(jobSeekerSignupRequestDto);
-            return Ok(data);
-        }
+		[HttpPost]
+		[Route("job-provider/signup")]
+		[AllowAnonymous]
+		public async Task<ActionResult> createJobProviderSignupRequest(JobProviderSignupRequest data)
+		{
+			var jobSeekerSignupRequestDto = _mapper.Map<JobProviderSignupRequestDto>(data);
+			_jobProviderService.CreateSignupRequest(jobSeekerSignupRequestDto);
+			return Ok(data);
+		}
 
-        [HttpGet]
-        [Route("job-provider/signup/{signupRequestId}/verify-email")]
-        [AllowAnonymous]
-        public async Task<ActionResult> VerifyJobProviderEmail(Guid signupRequestId)
-        {
-            var isVerified = await _jobProviderService.VerifyEmailAsync(signupRequestId);
-            if (isVerified)
-            {
-                return Ok();
-            }
-            return BadRequest();
-        }
+		[HttpGet]
+		[Route("job-provider/signup/{signupRequestId}/verify-email")]
+		[AllowAnonymous]
+		public async Task<ActionResult> VerifyJobProviderEmail(Guid signupRequestId)
+		{
+			var isVerified = await _jobProviderService.VerifyEmailAsync(signupRequestId);
+			if (isVerified)
+			{
+				return Ok();
+			}
+			return BadRequest();
+		}
 
-        [HttpPost]
-        [Route("job-provider/signup/{jobProviderSignupRequestId}/set-password")]
-        [AllowAnonymous]
-        public async Task<ActionResult> createJobProviderSignupRequest(Guid jobProviderSignupRequestId, [FromBody] string password)
-        {
-            await _jobProviderService.CreateJobProvider(jobProviderSignupRequestId, password);
-            return Ok("Password Set Successfully");
-        }
+		[HttpPost]
+		[Route("job-provider/signup/{jobProviderSignupRequestId}/set-password")]
+		[AllowAnonymous]
+		public async Task<ActionResult> createJobProviderSignupRequest(Guid jobProviderSignupRequestId, [FromBody] string password)
+		{
+			await _jobProviderService.CreateJobProvider(jobProviderSignupRequestId, password);
+			return Ok("Password Set Successfully");
+		}
 
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("job-provider/login")]
-        public async Task<ActionResult> Login(JobSeekerLoginRequest logdata)
-        {
-            //var user = _mapper.Map<User>(userDto);
-            var user = _loginRequestService.login(logdata.Email, logdata.Password);
+		[AllowAnonymous]
+		[HttpPost]
+		[Route("job-provider/login")]
+		public async Task<ActionResult> Login(JobSeekerLoginRequest logdata)
+		{
+			//var user = _mapper.Map<User>(userDto);
+			var user = _loginRequestService.login(logdata.Email, logdata.Password);
 
-            if (user == null)
-            {
-                return BadRequest("Login Failed");
-            }
-            return Ok(user);
-        }
-
-        [HttpPost]
-        [Route("job-provider/signup")]
-        [AllowAnonymous]
-        public async Task<ActionResult> createJobProviderSignupRequest(JobProviderSignupRequest data)
-        {
-            var jobSeekerSignupRequestDto = _mapper.Map<JobProviderSignupRequestDto>(data);
-            _jobProviderService.CreateSignupRequest(jobSeekerSignupRequestDto);
-            return Ok(data);
-        }
-
-        [HttpGet]
-        [Route("job-provider/signup/{signupRequestId}/verify-email")]
-        [AllowAnonymous]
-        public async Task<ActionResult> VerifyJobProviderEmail(Guid signupRequestId)
-        {
-            var isVerified = await _jobProviderService.VerifyEmailAsync(signupRequestId);
-            if (isVerified)
-            {
-                return Ok();
-            }
-            return BadRequest();
-        }
-
-        [HttpPost]
-        [Route("job-provider/signup/{jobProviderSignupRequestId}/set-password")]
-        [AllowAnonymous]
-        public async Task<ActionResult> createJobSeekerSignupRequest(Guid jobProviderSignupRequestId, [FromBody] string password)
-        {
-            await _jobProviderService.CreateJobProvider(jobProviderSignupRequestId, password);
-            return Ok("Password Set Successfully");
-        }
+			if (user == null)
+			{
+				return BadRequest("Login Failed");
+			}
+			return Ok(user);
+		}
 
 
 
-        [AllowAnonymous]
-        [HttpGet]
-        [Route("company/companyId")]
-        public async Task<IActionResult> GetAllJobs(Guid companyId)
-        {
-            try
-            {
-                List<JobPost> jobposts = await _jobProviderService.GetJobs(companyId);
-                return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
 
-        }
+		[AllowAnonymous]
+		[HttpGet]
+		[Route("company/companyId")]
+		public async Task<IActionResult> GetAllJobs(Guid companyId)
+		{
+			try
+			{
+				List<JobPost> jobposts = await _jobProviderService.GetJobs(companyId);
+				return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
+			}
+			catch (Exception ex)
+			{
+				return BadRequest();
+			}
 
-        [AllowAnonymous]
-        [HttpGet]
-        [Route("company/{companyId}/job-provider/{jobproviderId}/job")]
-        public async Task<IActionResult> GetAllJobsByProvider(Guid companyId, Guid jobproviderId)
-        {
-            try
-            {
-                List<JobPost> jobposts = await _jobProviderService.GetAllJobsByProvider(companyId, jobproviderId);
-                return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
+		}
 
-        }
+		[AllowAnonymous]
+		[HttpGet]
+		[Route("company/{companyId}/job-provider/{jobproviderId}/job")]
+		public async Task<IActionResult> GetAllJobsByProvider(Guid companyId, Guid jobproviderId)
+		{
+			try
+			{
+				List<JobPost> jobposts = await _jobProviderService.GetAllJobsByProvider(companyId, jobproviderId);
+				return Ok(_mapper.Map<List<JobPostsDtos>>(jobposts));
+			}
+			catch (Exception ex)
+			{
+				return BadRequest();
+			}
 
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("company/{companyId}/job-provider/{jobproviderId}/job")]
+		}
 
-        public async Task<IActionResult> PostJob(JobPostsDtos jobpostDto)
-        {
-            var job = _mapper.Map<JobPost>(jobpostDto);
-            _jobProviderService.PostJob(job);
-            return Ok(jobpostDto);
+		[AllowAnonymous]
+		[HttpPost]
+		[Route("company/{companyId}/job-provider/{jobproviderId}/job")]
 
-    }
+		public async Task<IActionResult> PostJob(JobPostsDtos jobpostDto)
+		{
+			var job = _mapper.Map<JobPost>(jobpostDto);
+			_jobProviderService.PostJob(job);
+			return Ok(jobpostDto);
 
-        [AllowAnonymous]
-        [HttpPut]
-        [Route("company/{companyId}/job-provider/{jobproviderId}/job/{id}")]
+		}
 
-        public async Task<IActionResult> UpdateJob(JobPostsDtos jobpostDto, Guid id)
-        {
-            try
-            {
-                jobpostDto.Id = id;
-                var job = _mapper.Map<JobPost>(jobpostDto);
-                _jobProviderService.Update(job);
-                return Ok(_mapper.Map<JobPostsDtos>(job));
-}
-            catch(Exception ex)
-            {
-                return BadRequest();
-            }
-        }
+		[AllowAnonymous]
+		[HttpPut]
+		[Route("company/{companyId}/job-provider/{jobproviderId}/job/{id}")]
+
+		public async Task<IActionResult> UpdateJob(JobPostsDtos jobpostDto, Guid id)
+		{
+			try
+			{
+				jobpostDto.Id = id;
+				var job = _mapper.Map<JobPost>(jobpostDto);
+				_jobProviderService.Update(job);
+				return Ok(_mapper.Map<JobPostsDtos>(job));
+			}
+			catch (Exception ex)
+			{
+				return BadRequest();
+			}
+		}
 
 
-        [AllowAnonymous]
-        [HttpDelete]
-        [Route("company/{companyId}/job-provider/{jobproviderId}/job/{id}")]
+		[AllowAnonymous]
+		[HttpDelete]
+		[Route("company/{companyId}/job-provider/{jobproviderId}/job/{id}")]
 
-        public async Task<IActionResult> DeleteJob(Guid id)
-        {
-            try
-            {
-                _jobProviderService.DeleteJob(id);
-                return NoContent();
-    }
-            catch (Exception ex)
-            {
-                return BadRequest();
-}
-        }
+		public async Task<IActionResult> DeleteJob(Guid id)
+		{
+			try
+			{
+				_jobProviderService.DeleteJob(id);
+				return NoContent();
+			}
+			catch (Exception ex)
+			{
+				return BadRequest();
+			}
+		}
 
-    }
+	}
 }
 
 
