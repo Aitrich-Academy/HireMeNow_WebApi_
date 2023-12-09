@@ -52,7 +52,7 @@ namespace Domain.Service.Job
             try
             {
 
-                List<JobPost> jobs = await _context.JobPosts.Include(e => e.Location).Include(e => e.Company).Include(e => e.PostedByNavigation).Include(e => e.Industry).Include(e => e.JobCategory).ToListAsync();
+                List<JobPost> jobs = await _context.JobPosts.Include(e => e.Location).Include(e => e.Industry).Include(e => e.Company).Include(e => e.PostedByNavigation).Include(e => e.JobCategory).ToListAsync();
 
                 List<JobPost> applied = await _context.JobApplications.Where(e => e.Applicant == userId).Select(e => e.JobPost).ToListAsync();
 
@@ -68,8 +68,26 @@ namespace Domain.Service.Job
 
             }
         }
+		public async Task<List<JobPost>> GetJobs()
+		{
 
-        public bool SavedJobs(JobPostsDtos job, Guid userId)
+            try
+            {
+                var jobs=await _context.JobPosts.Include(e => e.Location).Include(e => e.Industry).Include(e => e.Company).Include(e => e.PostedByNavigation).Include(e => e.JobCategory).ToListAsync();
+                return jobs;
+            }
+
+
+			
+			catch (Exception ex)
+			{
+				throw ex;
+
+			}
+		}
+
+
+		public bool SavedJobs(JobPostsDtos job, Guid userId)
         {
             // Assuming JobPostsDtos has an Id property
             bool isJobSaved = _context.SavedJobs.Any(e => e.Job == job.Id && e.SavedBy == userId);
