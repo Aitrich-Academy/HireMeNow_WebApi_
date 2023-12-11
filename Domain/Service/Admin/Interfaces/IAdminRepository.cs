@@ -26,6 +26,7 @@ namespace Domain.Service.Admin.Interfaces
 
         public int GetJobCount();
        Task<bool> AddAsync(Skill skill);
+        Task<bool> RemoveAsync(Guid skillId);
     }
     
 }

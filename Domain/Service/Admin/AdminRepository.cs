@@ -103,5 +103,20 @@ namespace Domain.Service.Admin
             await _context.SaveChangesAsync();
             return true; // Skill added successfully
         }
+
+        public async Task<bool> RemoveAsync(Guid skillId)
+        {
+            var skillToRemove = await _context.Skills.FindAsync(skillId);
+
+            if (skillToRemove == null)
+            {
+                return false; // Skill not found
+            }
+
+            _context.Skills.Remove(skillToRemove);
+            await _context.SaveChangesAsync();
+
+            return true; // Skill removed successfully
+        }
     }
 }

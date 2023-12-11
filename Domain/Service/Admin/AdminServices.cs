@@ -71,5 +71,12 @@ namespace Domain.Service.Admin
 
             return result;
         }
+
+        public async Task<bool> RemoveSkillAsync(Guid skillId)
+        {
+            var result = await _adminRepository.RemoveAsync(skillId);
+
+            return result;
+        }
     }
 }
