@@ -54,8 +54,16 @@ namespace Domain.Service.Job
 
             return dtoList;
         }
+		public async Task<List<JobPostsDtos>> GetJobs()
+		{
+			var notApplied = await _jobrepository.GetJobs();
+			var dtoList = _mapper.Map<List<JobPostsDtos>>(notApplied);
+			return dtoList;
 
-        public async Task<List<JobPost>> GetJobsByCompany(Guid companyId)
+			
+		}
+
+		public async Task<List<JobPost>> GetJobsByCompany(Guid companyId)
         {
             return await _jobrepository.GetJobsByCompany(companyId);
         }

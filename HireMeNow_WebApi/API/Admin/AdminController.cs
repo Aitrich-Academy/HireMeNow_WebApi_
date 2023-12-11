@@ -3,7 +3,9 @@ using Domain.Helpers;
 using Domain.Models;
 using Domain.Service.Admin.DTOs;
 using Domain.Service.Admin.Interfaces;
+using Domain.Service.Job;
 using Domain.Service.Job.DTOs;
+using Domain.Service.Job.Interfaces;
 using Domain.Service.Login;
 using Domain.Service.Login.Interfaces;
 using HireMeNow_WebApi.API.Admin.RequestObjects;
@@ -25,13 +27,15 @@ namespace HireMeNow_WebApi.API.Admin
         IAdminRepository _adminRepository;
         private IMapper mapper;
         public ILoginRequestService _loginRequestService;
+        IJobServices _jobService;
 
-        public AdminController(IMapper mapper, IAdminServices adminService, IAdminRepository adminRepostory, ILoginRequestService loginRequestService)
+        public AdminController(IMapper mapper, IAdminServices adminService, IAdminRepository adminRepostory, ILoginRequestService loginRequestService,IJobServices jobServices)
         {
             _mapper = mapper;
             _adminService = adminService;
             _adminRepository = adminRepostory;
             _loginRequestService = loginRequestService;
+			_jobService = jobServices;
         }
 
 
@@ -132,6 +136,24 @@ namespace HireMeNow_WebApi.API.Admin
 			{
 				var jobs = await _adminService.GetJobs(Title);
 				return Ok(_mapper.Map<List<Joblist>>( jobs));
+			}
+			catch (Exception ex)
+			{
+				return BadRequest();
+			}
+
+		}
+		[HttpGet]
+		[Route("alljobs")]
+
+		public async Task<IActionResult> GetJobs()
+		{
+			try
+			{
+		
+
+				List<JobPostsDtos> jobposts = await _jobService.GetJobs();
+				return Ok(jobposts);
 			}
 			catch (Exception ex)
 			{
