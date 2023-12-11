@@ -157,7 +157,9 @@ namespace HireMeNow_WebApi.JobSeeker
             return Ok(skills);
         }
 
+
         [HttpPut("UpdateJobSeekerProfile")]
+
         public async Task<IActionResult> UpdateJobSeekerProfile( [FromForm]AuthUserDTO updatedProfile)
         {
             try
