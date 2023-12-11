@@ -41,6 +41,17 @@ namespace Domain.Service.Authuser
             return authUser;
         }
 
+        public async Task<AuthUser> AddAuthUserJP(AuthUser authUser)
+        {
+            authUser.Role = Enums.Role.JOB_PROVIDER;
+            await _context.AuthUsers.AddAsync(authUser);
+            Models.CompanyUser jobProvider = mapper.Map<Models.CompanyUser>(authUser);
+            await _context.CompanyUsers.AddAsync(jobProvider);
+
+            _context.SaveChanges();
+            return authUser;
+        }
+
         public string? CreateToken(AuthUser user)
         {
             if (user == null)

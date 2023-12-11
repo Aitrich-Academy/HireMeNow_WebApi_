@@ -195,5 +195,12 @@ namespace HireMeNow_WebApi.JobSeeker
             return Ok(profiles);
         }
 
+        [HttpGet("{jobSeekerId}")]
+        public async Task<IActionResult> GetProfilesByJobSeekerId(Guid jobSeekerId)
+        {
+            var profiles = await _profileService.GetProfilesByJobSeekerIdAsync(jobSeekerId);
+            return Ok(profiles);
+        }
+
     }
 }

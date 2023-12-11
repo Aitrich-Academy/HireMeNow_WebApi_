@@ -22,5 +22,12 @@ namespace Domain.Service.Login
             var user= _context.AuthUsers.FirstOrDefault(e => e.Email == email);
             return user;
         }
-    }
+	
+
+		public AuthUser GetUserByEmailpassword(string email, string password)
+		{
+			var user = _context.AuthUsers.FirstOrDefault(e => e.Email == email && e.Password == password);
+			return user;
+		}
 }
+    }
