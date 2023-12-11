@@ -9,6 +9,7 @@ using Domain.Service.Admin.DTOs;
 using Domain.Service.Authuser.DTOs;
 using Domain.Service.Profile.DTOs;
 using Domain.Service.Profile.Interface;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -110,6 +111,7 @@ namespace Domain.Service.Profile
                 LastName = jobSeekerProfile.JobSeeker.LastName,
                 Phone = jobSeekerProfile.JobSeeker.Phone,
                 Email = jobSeekerProfile.JobSeeker.Email,
+                image = jobSeekerProfile.JobSeeker.Image,
                 Qualification = jobSeekerProfile.Qualifications.ToList(),
                 JobSeekerProfileSkills = jobSeekerProfile.JobSeekerProfileSkills.Select(s => s.Skill).ToList(),
                 Role = jobSeekerProfile.JobSeeker.Role
@@ -181,14 +183,16 @@ namespace Domain.Service.Profile
             return _context.Skills.ToList();
         }
 
-        public async Task<AuthUserDTO> UpdateProfile(Guid id, AuthUserDTO updatedProfile)
+        public async Task<AuthUserDTO> UpdateProfile(AuthUserDTO updatedProfile)
         {
             var existingProfile2 = _context.JobSeekers
-                                .FirstOrDefault(e => e.Id == id);
+                                .FirstOrDefault(e => e.Id == updatedProfile.JobseekerId);
 
             var existingProfile = _context.AuthUsers
-                             .FirstOrDefault(e => e.Id == id);
-
+                             .FirstOrDefault(e => e.Id == updatedProfile.JobseekerId);
+            byte[] byteArray =ConvertImageToByteArray(updatedProfile.Image);
+            existingProfile2.Image = byteArray;
+            // Call the service
             //var existingProfile = await _context.JobSeekerProfiles.FindAsync(id);
 
             if (existingProfile == null)
@@ -216,5 +220,14 @@ namespace Domain.Service.Profile
 
             return updatedProfile;
         }
+        public byte[] ConvertImageToByteArray(IFormFile imageFile)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                imageFile.CopyTo(memoryStream);
+                return memoryStream.ToArray();
+            }
+        }
+
     }
 }

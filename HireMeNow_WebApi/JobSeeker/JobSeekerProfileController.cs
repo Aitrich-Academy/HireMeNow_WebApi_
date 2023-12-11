@@ -158,13 +158,11 @@ namespace HireMeNow_WebApi.JobSeeker
         }
 
         [HttpPut("{jobseekerId}/UpdateJobSeekerProfile")]
-
-        
-        public async Task<IActionResult> UpdateJobSeekerProfile(Guid jobseekerId, AuthUserDTO updatedProfile)
+        public async Task<IActionResult> UpdateJobSeekerProfile( [FromForm]AuthUserDTO updatedProfile)
         {
             try
             {
-                var result =await _profileService.UpdateJobSeekerProfile(jobseekerId, updatedProfile);
+                var result =await _profileService.UpdateJobSeekerProfile(updatedProfile);
 
      
                 if (result != null)
@@ -195,12 +193,6 @@ namespace HireMeNow_WebApi.JobSeeker
             return Ok(profiles);
         }
 
-        [HttpGet("{jobSeekerId}")]
-        public async Task<IActionResult> GetProfilesByJobSeekerId(Guid jobSeekerId)
-        {
-            var profiles = await _profileService.GetProfilesByJobSeekerIdAsync(jobSeekerId);
-            return Ok(profiles);
-        }
 
     }
 }

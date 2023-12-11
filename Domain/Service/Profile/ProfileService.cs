@@ -186,11 +186,11 @@ namespace Domain.Service.Profile
         }
 
 
-        public async Task<AuthUserDTO> UpdateJobSeekerProfile(Guid id, AuthUserDTO updatedProfile)
+        public async Task<AuthUserDTO> UpdateJobSeekerProfile(AuthUserDTO updatedProfile)
         {
             // Perform validation, mapping, and update logic if needed
             // Call the repository to update the JobSeeker's profile
-            var result = await _profileRepository.UpdateProfile(id, updatedProfile);
+            var result = await _profileRepository.UpdateProfile(updatedProfile);
 
             return result;
         }
