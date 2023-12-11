@@ -37,8 +37,8 @@ namespace Domain.Service.Admin.Interfaces
 
         Task<bool> AddSkillAsync(SkillDto skill);
 
+        Task<bool> RemoveSkillAsync(Guid skillId);
 
- 
 
     }
     

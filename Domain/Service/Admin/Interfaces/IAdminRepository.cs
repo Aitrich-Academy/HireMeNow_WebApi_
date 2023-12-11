@@ -28,6 +28,9 @@ namespace Domain.Service.Admin.Interfaces
 
        Task<bool> AddAsync(Skill skill);
 
+        Task<bool> RemoveAsync(Guid skillId);
+
+
 
         Task<List<JobProviderCompany>> SearchCompanies(string name);
 
