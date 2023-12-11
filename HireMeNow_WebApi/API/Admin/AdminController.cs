@@ -181,21 +181,7 @@ namespace HireMeNow_WebApi.API.Admin
 		[HttpGet]
 		[Route("alljobs")]
 
-		public async Task<IActionResult> GetJobs()
-		{
-			try
-			{
-		
-
-				List<JobPostsDtos> jobposts = await _jobService.GetJobs();
-				return Ok(jobposts);
-			}
-			catch (Exception ex)
-			{
-				return BadRequest();
-			}
-
-		}
+	
 
 
 

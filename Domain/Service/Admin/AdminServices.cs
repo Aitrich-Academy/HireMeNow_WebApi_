@@ -97,5 +97,10 @@ namespace Domain.Service.Admin
 
             return result;
         }
+
+        public List<JobPost> GetJobs(JobListParams param)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
