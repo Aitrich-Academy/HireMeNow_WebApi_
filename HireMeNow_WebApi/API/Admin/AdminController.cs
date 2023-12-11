@@ -71,7 +71,8 @@ namespace HireMeNow_WebApi.API.Admin
             }
 
         }
-       
+
+
         [HttpPost("skillAdd")]
         public async Task<IActionResult> AddSkill( SkillRequest skill)
         {
@@ -91,7 +92,7 @@ namespace HireMeNow_WebApi.API.Admin
                 return BadRequest("Skill already exists");
             }
         }
-        [AllowAnonymous]
+
         [HttpDelete("skillRemove/{skillId}")]
         public async Task<IActionResult> RemoveSkill(Guid skillId)
         {
@@ -107,6 +108,7 @@ namespace HireMeNow_WebApi.API.Admin
                 return NotFound("Skill not found or failed to delete");
             }
         }
+
         [HttpGet]
         [Route("admin/GetCompanies")]
         public async Task<IActionResult> GetCompanies()

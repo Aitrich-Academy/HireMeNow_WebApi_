@@ -91,6 +91,7 @@ namespace Domain.Service.Admin
             return result;
         }
 
+
         public async Task<bool> RemoveSkillAsync(Guid skillId)
         {
             var result = await _adminRepository.RemoveAsync(skillId);
@@ -98,9 +99,5 @@ namespace Domain.Service.Admin
             return result;
         }
 
-        public List<JobPost> GetJobs(JobListParams param)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

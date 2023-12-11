@@ -36,7 +36,10 @@ namespace Domain.Service.Admin.Interfaces
         public List<JobPost> GetJobs(JobListParams param);
 
         Task<bool> AddSkillAsync(SkillDto skill);
+
         Task<bool> RemoveSkillAsync(Guid skillId);
+
+
     }
     
 }
