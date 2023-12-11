@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using SendGrid.Helpers.Errors.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,8 +31,12 @@ namespace Domain.Service.JobProvider
 				var CmpanyId = data.Id;
 				AuthUser user = _context.AuthUsers.Where(e => e.Id == UserId).FirstOrDefault();
 				CompanyUser companyUser = new CompanyUser();
-				var cmp=_context.CompanyUsers.Where(e=>e.Id == UserId).FirstOrDefault();
-				if(cmp==null)
+				var cmp= _context.CompanyUsers.Where(e=>e.Id == UserId).FirstOrDefault();
+                cmp.Company = CmpanyId;
+                _context.CompanyUsers.Update(cmp);
+                await _context.SaveChangesAsync();
+
+                if (cmp==null)
 				{
 					companyUser.Id = UserId;
 					companyUser.UserName = user.UserName;
@@ -44,10 +49,10 @@ namespace Domain.Service.JobProvider
 					_context.CompanyUsers.AddAsync(companyUser);
 					await _context.SaveChangesAsync();
 				}
-				
+         
 
-				
-			}
+
+            }
 			catch (Exception ex)
 			{
 				

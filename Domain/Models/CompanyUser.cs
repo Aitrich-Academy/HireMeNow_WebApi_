@@ -17,7 +17,7 @@ public partial class CompanyUser
 	public string? UserName { get; set; }
 	public string Email { get; set; } = null!;
 	public string Phone { get; set; } = null!;
-	[Required]
+	//[Required]
 	[ForeignKey(nameof(CompanyNavigation))]
 
 	public Guid? Company { get; set; }
