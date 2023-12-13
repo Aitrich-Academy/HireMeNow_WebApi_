@@ -24,10 +24,10 @@ namespace Domain.Service.Admin
         IAdminRepository _adminRepository;
         IMapper _mapper;
 
-        public AdminServices(IAdminRepository adminRepository,IMapper mapper)
+        public AdminServices(IAdminRepository adminRepository, IMapper mapper)
 
 
-       {
+        {
             _adminRepository = adminRepository;
             _mapper = mapper;
         }
@@ -48,7 +48,7 @@ namespace Domain.Service.Admin
 
         public void DeleteById(Guid id)
         {
-           _adminRepository.DeleteById(id);
+            _adminRepository.DeleteById(id);
         }
 
         public void DeleteCompaniesById(Guid id)
@@ -70,12 +70,12 @@ namespace Domain.Service.Admin
         {
             return _adminRepository.GetJobCount();
         }
-		public async Task<List<JobPost>> GetJobs(string JobLitle)
+        public async Task<List<JobPost>> GetJobs(string JobLitle)
         {
 
-           var jobs= await _adminRepository.GetJobs(JobLitle);
-		
-			return jobs;
+            var jobs = await _adminRepository.GetJobs(JobLitle);
+
+            return jobs;
 
 
         }
@@ -91,7 +91,7 @@ namespace Domain.Service.Admin
         public async Task<bool> AddSkillAsync(SkillDto skill)
         {
             var Skill = _mapper.Map<Skill>(skill);
-            var result =   await _adminRepository.AddAsync(Skill);
+            var result = await _adminRepository.AddAsync(Skill);
 
             return result;
         }
@@ -102,6 +102,21 @@ namespace Domain.Service.Admin
             var result = await _adminRepository.RemoveAsync(skillId);
 
             return result;
+        }
+
+        public Task<Industry> AddIndustry(Industry industry)
+        {
+            return _adminRepository.addIndustry(industry);
+        }
+
+        public Task<JobCategory> AddCategory(JobCategory category)
+        {
+            return _adminRepository.addCategory(category);
+        }
+
+        public Task<Location> AddLocation(Location location)
+        {
+            return _adminRepository.addLocation(location);
         }
 
     }

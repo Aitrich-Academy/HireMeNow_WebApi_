@@ -268,6 +268,130 @@ namespace HireMeNow_WebApi.API.Admin
             }
 
         }
+
+        [HttpPost("AddIndustry")]
+        public async Task<IActionResult> AddIndustry(IndustryRequest Industry)
+        {
+            var industry = _mapper.Map<Industry>(Industry);
+            var result = await _adminService.AddIndustry(industry);
+
+            return Ok(result);
+        }
+
+        [HttpPost("AddCategory")]
+        public async Task<IActionResult> AddCategory(CategoryRequest category)
+        {
+            var Category = _mapper.Map<JobCategory>(category);
+            var result = await _adminService.AddCategory(Category);
+
+            return Ok(result);
+        }
+
+        [HttpPost("AddLocation")]
+        public async Task<IActionResult> AddLocation(LocationRequest location)
+        {
+            var Location = _mapper.Map<Location>(location);
+            var result = await _adminService.AddLocation(Location);
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetIndustries")]
+        public async Task<IActionResult> GetIndustries()
+        {
+
+            try
+            {
+                var industries = await _adminService.GetIndustries();
+                return Ok(_mapper.Map<List<Industry>>(industries));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpGet("GetLocations")]
+        public async Task<IActionResult> GetLocations()
+        {
+
+            try
+            {
+                var locations = await _adminService.GetLocations();
+                return Ok(_mapper.Map<List<LocationDto>>(locations));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpGet("GetCategories")]
+        public async Task<IActionResult> GetCategories()
+        {
+
+            try
+            {
+                var categories = await _adminService.GetCategories();
+                return Ok(_mapper.Map<List<JobCategory>>(categories));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpDelete]
+        [Route("RemoveLocations/{id}")]
+        public IActionResult RemoveLocation(Guid id)
+        {
+            try
+            {
+                _adminService.DeleteByLocationId(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpDelete]
+        [Route("RemoveCategory/{id}")]
+        public IActionResult RemoveCategory(Guid id)
+        {
+            try
+            {
+                _adminService.DeleteByCategoryId(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+
+
+        [HttpDelete]
+        [Route("RemoveIndustry/{id}")]
+        public IActionResult RemoveIndustry(Guid id)
+        {
+            try
+            {
+                _adminService.DeleteByIndustryId(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
     }
 
 }
