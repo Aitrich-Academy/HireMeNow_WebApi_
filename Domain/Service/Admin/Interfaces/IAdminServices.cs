@@ -32,12 +32,17 @@ namespace Domain.Service.Admin.Interfaces
         public void DeleteByIndustryId(Guid id);
         public int GetCompanyCount();
 
+
         public int GetJobProviderCount();
         public int GetJobCount();
 
         public Task<List<JobPost>> GetJobs(string JobLitle);
 
 
+
+
+
+ 
 
 
 
