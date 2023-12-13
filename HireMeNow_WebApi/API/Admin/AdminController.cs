@@ -8,6 +8,7 @@ using Domain.Service.Job.DTOs;
 using Domain.Service.Job.Interfaces;
 using Domain.Service.Login;
 using Domain.Service.Login.Interfaces;
+using Domain.Service.Profile.DTOs;
 using HireMeNow_WebApi.API.Admin.RequestObjects;
 using HireMeNow_WebApi.API.JobSeeker.RequestObjects;
 using HireMeNow_WebApi.Controllers;
@@ -71,6 +72,42 @@ namespace HireMeNow_WebApi.API.Admin
 
         }
 
+
+        [HttpPost("skillAdd")]
+        public async Task<IActionResult> AddSkill( SkillRequest skill)
+        {
+            // Map the request to DTO
+
+            var Skill = _mapper.Map<SkillDto>(skill);
+          
+            // Call the service
+            var result = await _adminService.AddSkillAsync(Skill);
+
+            if (result)
+            {
+                return Ok("Skill added successfully");
+            }
+            else
+            {
+                return BadRequest("Skill already exists");
+            }
+        }
+
+        [HttpDelete("skillRemove/{skillId}")]
+        public async Task<IActionResult> RemoveSkill(Guid skillId)
+        {
+            // Call the service
+            var result = await _adminService.RemoveSkillAsync(skillId);
+
+            if (result)
+            {
+                return Ok("Skill deleted successfully");
+            }
+            else
+            {
+                return NotFound("Skill not found or failed to delete");
+            }
+        }
 
         [HttpGet]
         [Route("admin/GetCompanies")]
@@ -146,21 +183,7 @@ namespace HireMeNow_WebApi.API.Admin
 		[HttpGet]
 		[Route("alljobs")]
 
-		public async Task<IActionResult> GetJobs()
-		{
-			try
-			{
-		
-
-				List<JobPostsDtos> jobposts = await _jobService.GetJobs();
-				return Ok(jobposts);
-			}
-			catch (Exception ex)
-			{
-				return BadRequest();
-			}
-
-		}
+	
 
 
 

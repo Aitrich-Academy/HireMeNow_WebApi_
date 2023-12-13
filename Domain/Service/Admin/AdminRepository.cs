@@ -102,5 +102,34 @@ namespace Domain.Service.Admin
             return filteredCompanies;
         }
 
+        public async Task<bool> AddAsync(Skill skill)
+        {
+            if (skill == null)
+                throw new ArgumentNullException(nameof(skill));
+            if (_context.Skills.Any(s => s.Name == skill.Name))
+            {
+                return false; // Skill with the same name already exists
+            }
+            skill.Id = Guid.NewGuid();
+            _context.Skills.Add(skill);
+            await _context.SaveChangesAsync();
+            return true; // Skill added successfully
+        }
+
+        public async Task<bool> RemoveAsync(Guid skillId)
+        {
+            var skillToRemove = await _context.Skills.FindAsync(skillId);
+
+            if (skillToRemove == null)
+            {
+                return false; // Skill not found
+            }
+
+            _context.Skills.Remove(skillToRemove);
+            await _context.SaveChangesAsync();
+
+            return true; // Skill removed successfully
+        }
+
     }
 }

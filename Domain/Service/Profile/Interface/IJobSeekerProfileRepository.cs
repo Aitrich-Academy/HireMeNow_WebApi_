@@ -24,7 +24,7 @@ namespace Domain.Service.Profile.Interface
         List<Qualification> GetQualification( Guid profileId);
         List<Skill> GetSkillsForProfile();
         List<JobSeekerProfileDTo> GetProfile(Guid jobseekerId);
-        Task<AuthUserDTO> UpdateProfile(Guid id, AuthUserDTO updatedProfile);
+        Task<AuthUserDTO> UpdateProfile(AuthUserDTO updatedProfile);
         Task<JobSeekerProfile> GetProfiledetailAsync(Guid jobseekerId);
         Task AddProfileAsync(JobSeekerProfile profile);
 

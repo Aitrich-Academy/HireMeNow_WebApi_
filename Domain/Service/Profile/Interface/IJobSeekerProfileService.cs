@@ -29,7 +29,7 @@ namespace Domain.Service.Profile.Interface
         List<SkillDto> GetSkillsForJobSeekerProfile(Guid jobseekerId, Guid profileId);
         List<SkillDto> GetSkillsForJobSeekerProfile();
 
-        Task <AuthUserDTO> UpdateJobSeekerProfile(Guid jobseekerId, AuthUserDTO updatedProfile);
+        Task <AuthUserDTO> UpdateJobSeekerProfile(AuthUserDTO updatedProfile);
 
     }
 }

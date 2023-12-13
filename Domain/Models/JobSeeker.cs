@@ -24,7 +24,7 @@ public partial class JobSeeker
     public string Email { get; set; } = null!;
 
     //public string? ImageUrl { get; set; }
-
+    public byte[]? Image { get; set; } = null!;
     public int Role { get; set; }
 
     
