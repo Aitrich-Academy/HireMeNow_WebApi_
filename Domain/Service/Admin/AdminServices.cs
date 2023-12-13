@@ -3,9 +3,13 @@ using Domain.Helpers;
 using Domain.Models;
 using Domain.Service.Admin.Interfaces;
 
+using Domain.Service.Job.DTOs;
+
+
 using Domain.Service.Profile.DTOs;
 
-using Domain.Service.Job.DTOs;
+
+
 
 using System;
 using System.Collections.Generic;
@@ -81,6 +85,7 @@ namespace Domain.Service.Admin
         {
             return _adminRepository.SearchCompanies(name);
         }
+
 
 
         public async Task<bool> AddSkillAsync(SkillDto skill)

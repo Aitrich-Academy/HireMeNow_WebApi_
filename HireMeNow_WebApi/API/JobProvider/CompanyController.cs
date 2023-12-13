@@ -34,15 +34,27 @@ namespace HireMeNow_WebApi.API.JobProvider
 		
 		[HttpPost]
 		[Route("job-provider/{jobproviderId}/company")]
-		
+	
 		public async Task<ActionResult> AddCompany(Guid jobproviderId, AddCompanyRequestobject data)
 		{
 			var UserId = authUserService.GetUserId();
 			var companyRegistrationDtos = mapper.Map<CompanyRegistrationDtos>(data);
 			await companyService.AddCompany(companyRegistrationDtos,new Guid( UserId));
 			return Ok();
-		}
-		[AllowAnonymous]
+        }
+
+/*{
+"legalName": "RasiyaTech",
+"summary": "IT",
+"industryId": "8d2056c9-3b21-4e3d-b0f8-92aef71e8c87",
+"email": "rasiyatech@gmail.com",
+"phone": 1236547890,
+"address": "WestFort",
+"website": "www.rasiya.com",
+"location": "e6b7f3a8-1d9c-4b45-ae68-7c8e2f0d6b53"
+}
+*/
+    [AllowAnonymous]
 		[HttpGet]
 		[Route("job-provider/company/{companyId}")]
 		public async Task<ActionResult> getCompany(Guid companyId)
