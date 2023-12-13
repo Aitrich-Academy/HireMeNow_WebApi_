@@ -269,6 +269,7 @@ namespace HireMeNow_WebApi.API.Admin
 
         }
 
+
         [HttpPost("AddIndustry")]
         public async Task<IActionResult> AddIndustry(IndustryRequest Industry)
         {
@@ -392,6 +393,7 @@ namespace HireMeNow_WebApi.API.Admin
             }
 
         }
+
     }
 
 }
