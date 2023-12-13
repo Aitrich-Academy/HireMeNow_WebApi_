@@ -16,6 +16,8 @@ namespace Domain.Service.Admin.Interfaces
         public Task<List<CompanyUser>> GetCompanyUsers();
 
         public void DeleteById(Guid id);
+        public void DeleteByLocationId(Guid id);
+        public void DeleteCompaniesById(Guid id);
 
         public void DeleteCompaniesById(Guid id);
         /*        public Task<int> GetCompanyCount();*/
