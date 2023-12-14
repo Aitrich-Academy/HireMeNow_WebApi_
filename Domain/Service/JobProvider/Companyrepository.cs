@@ -1,6 +1,8 @@
-﻿using Domain.Helpers;
+﻿using AutoMapper;
+using Domain.Helpers;
 using Domain.Models;
 using Domain.Service.JobProvider.Dtos;
+using Domain.Service.JobProvider.DTOs;
 using Domain.Service.JobProvider.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using SendGrid.Helpers.Errors.Model;
@@ -16,11 +18,12 @@ namespace Domain.Service.JobProvider
 	public class Companyrepository : ICompanyRepository
 	{
 		protected DbHireMeNowWebApiContext _context;
-
-		public Companyrepository(DbHireMeNowWebApiContext context)
+        public IMapper mapper { get; set; }
+        public Companyrepository(DbHireMeNowWebApiContext context, IMapper _mapper)
 		{
 			_context = context;
-		}
+            mapper = _mapper;
+        }
 	
 		public async Task AddCompany(JobProviderCompany data, Guid UserId)
 		{
@@ -113,11 +116,21 @@ namespace Domain.Service.JobProvider
 			}
 		}
 
-	
-	
+        public async Task<CompanyMemberDtos> AddMemberAsync(CompanyMemberDtos companyMember, Guid companyId)
+        {
+            companyMember.Company = companyId;
+            var companyMemberDtos = mapper.Map<CompanyUser>(companyMember);
+            _context.CompanyUsers.Add(companyMemberDtos);
+            await _context.SaveChangesAsync();
 
-		
+            return companyMember;
+        }
 
-	}
+
+
+
+
+
+    }
 }
 
