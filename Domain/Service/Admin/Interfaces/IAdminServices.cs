@@ -7,13 +7,12 @@ using Domain.Service.Job.DTOs;
 using Domain.Service.Profile.DTOs;
 
 
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Service.Admin.DTOs;
 
 namespace Domain.Service.Admin.Interfaces
 {
@@ -32,18 +31,10 @@ namespace Domain.Service.Admin.Interfaces
         public void DeleteByIndustryId(Guid id);
         public int GetCompanyCount();
 
-
         public int GetJobProviderCount();
         public int GetJobCount();
 
         public Task<List<JobPost>> GetJobs(string JobLitle);
-
-
-
-
-
- 
-
 
 
         public Task<List<JobProviderCompany>> SearchCompanies(string name);
@@ -54,7 +45,15 @@ namespace Domain.Service.Admin.Interfaces
 
         Task<bool> RemoveSkillAsync(Guid skillId);
 
+        Task<Industry> AddIndustry(Industry industry);
 
+        Task<JobCategory> AddCategory(JobCategory category);
+
+        Task<Location> AddLocation(Location location);
+
+        public Task<List<Industry>> GetIndustries();
+        public Task<List<Location>> GetLocations();
+        public Task<List<JobCategory>> GetCategories();
     }
 
 }

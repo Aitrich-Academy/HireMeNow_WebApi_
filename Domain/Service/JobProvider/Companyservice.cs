@@ -2,6 +2,7 @@
 using Domain.Helpers;
 using Domain.Models;
 using Domain.Service.JobProvider.Dtos;
+using Domain.Service.JobProvider.DTOs;
 using Domain.Service.JobProvider.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,46 +12,52 @@ using System.Threading.Tasks;
 
 namespace Domain.Service.JobProvider
 {
-	public class Companyservice:ICompanyService
-	{
-		IMapper mapper;
-		ICompanyRepository companyRepository;
+    public class Companyservice : ICompanyService
+    {
+        IMapper mapper;
+        ICompanyRepository companyRepository;
 
-		public Companyservice(IMapper _mapper, ICompanyRepository _companyRepository)
-		{
-		mapper = _mapper;
-		companyRepository = _companyRepository;
-		}
+        public Companyservice(IMapper _mapper, ICompanyRepository _companyRepository)
+        {
+            mapper = _mapper;
+            companyRepository = _companyRepository;
+        }
 
-		public async Task AddCompany(CompanyRegistrationDtos data, Guid UserId)
-		{
-			var jobproviderCompany=mapper.Map<JobProviderCompany>(data);
-			 await companyRepository.AddCompany(jobproviderCompany,UserId);
+        public async Task AddCompany(CompanyRegistrationDtos data, Guid UserId)
+        {
+            var jobproviderCompany = mapper.Map<JobProviderCompany>(data);
+            await companyRepository.AddCompany(jobproviderCompany, UserId);
 
-			
-		}
-		public GetCompanyDetailsDto GetCompany(Guid companyId)
-		{
-			var company=companyRepository.GetCompany(companyId);	
-			var getCompanyDetailsDto=mapper.Map<GetCompanyDetailsDto>(company);
-			return getCompanyDetailsDto;
-		}
-		public async Task<JobProviderCompany> UpdateAsync(CompanyUpdateDtos company)
-	{
-			JobProviderCompany jobProviderCompany=mapper.Map<JobProviderCompany>(company);
-			var jobProviderUpdatedCompany= await companyRepository.updateCompanyAsync(jobProviderCompany);
-			//var ComapnyRegistrationDto = mapper.Map<CompanyRegistrationDtos>(jobProviderUpdatedCompany);
-			return jobProviderUpdatedCompany;
-		}
-		
 
-		public async Task<PagedList<CompanyUser>> memberListing(Guid companyId, CompanyMemberListParam param)
-		{
-			return await companyRepository.memberListing(companyId, param);
-		}
-		public bool memberDeleteById(Guid id)
-		{
-			return companyRepository.memberDeleteById(id);
-		}
-	}
+        }
+
+        public GetCompanyDetailsDto GetCompany(Guid companyId)
+        {
+            var company = companyRepository.GetCompany(companyId);
+            var getCompanyDetailsDto = mapper.Map<GetCompanyDetailsDto>(company);
+            return getCompanyDetailsDto;
+        }
+        public async Task<JobProviderCompany> UpdateAsync(CompanyUpdateDtos company)
+        {
+            JobProviderCompany jobProviderCompany = mapper.Map<JobProviderCompany>(company);
+            var jobProviderUpdatedCompany = await companyRepository.updateCompanyAsync(jobProviderCompany);
+            //var ComapnyRegistrationDto = mapper.Map<CompanyRegistrationDtos>(jobProviderUpdatedCompany);
+            return jobProviderUpdatedCompany;
+        }
+
+
+        public async Task<PagedList<CompanyUser>> memberListing(Guid companyId, CompanyMemberListParam param)
+        {
+            return await companyRepository.memberListing(companyId, param);
+        }
+        public bool memberDeleteById(Guid id)
+        {
+            return companyRepository.memberDeleteById(id);
+        }
+
+        public async Task<CompanyMemberDtos> addMember(CompanyMemberDtos companyMember, Guid companyId)
+        {
+            return await companyRepository.AddMemberAsync(companyMember, companyId);
+        }
+    }
 }
