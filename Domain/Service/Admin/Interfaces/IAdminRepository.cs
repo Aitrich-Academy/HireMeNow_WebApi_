@@ -16,9 +16,11 @@ namespace Domain.Service.Admin.Interfaces
 
         public Task<List<CompanyUser>> GetCompanyUsers();
 
+
         public Task<List<Industry>> GetIndustries();
 
         public Task<List<Location>> GetLocations();
+
 
         public Task<List<JobCategory>> GetCategories();
         public void DeleteById(Guid id);

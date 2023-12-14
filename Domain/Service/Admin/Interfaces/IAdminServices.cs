@@ -7,8 +7,6 @@ using Domain.Service.Job.DTOs;
 using Domain.Service.Profile.DTOs;
 
 
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,9 +35,6 @@ namespace Domain.Service.Admin.Interfaces
         public int GetJobCount();
 
         public Task<List<JobPost>> GetJobs(string JobLitle);
-
-
-
 
 
         public Task<List<JobProviderCompany>> SearchCompanies(string name);
