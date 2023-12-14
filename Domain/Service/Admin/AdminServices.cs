@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MassTransit.ValidationResultExtensions;
+using Domain.Service.Admin.DTOs;
 
 namespace Domain.Service.Admin
 {
@@ -46,14 +48,42 @@ namespace Domain.Service.Admin
             return await _adminRepository.GetCompanyUsers();
         }
 
+        public async Task<List<Industry>> GetIndustries()
+        {
+            return await _adminRepository.GetIndustries();
+        }
+
+        public async Task<List<Location>> GetLocations()
+        {
+            return await _adminRepository.GetLocations();
+        }
+
+        public async Task<List<JobCategory>> GetCategories()
+        {
+            return await _adminRepository.GetCategories();
+        }
+
         public void DeleteById(Guid id)
         {
             _adminRepository.DeleteById(id);
         }
 
+        public void DeleteByLocationId(Guid id)
+        {
+            _adminRepository.DeleteByLocationId(id);
+        }
+
+        public void DeleteByCategoryId(Guid id)
+        {
+            _adminRepository.DeleteByCategoryId(id);
+        }
         public void DeleteCompaniesById(Guid id)
         {
             _adminRepository.DeleteCompaniesById(id);
+        }
+        public void DeleteByIndustryId(Guid id)
+        {
+            _adminRepository.DeleteByIndustryId(id);
         }
 
         public int GetCompanyCount()
@@ -118,6 +148,8 @@ namespace Domain.Service.Admin
         {
             return _adminRepository.addLocation(location);
         }
+
+
 
     }
 }

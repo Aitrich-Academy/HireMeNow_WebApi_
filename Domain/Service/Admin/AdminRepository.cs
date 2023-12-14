@@ -50,6 +50,16 @@ namespace Domain.Service.Admin
             }
         }
 
+        public void DeleteByLocationId(Guid id)
+        {
+            var item = _context.Locations.Where(e => e.Id == id).FirstOrDefault();
+            if (item != null)
+            {
+                _context.Locations.Remove(item);
+                _context.SaveChanges();
+            }
+        }
+
         public void DeleteCompaniesById(Guid id)
         {
             var item = _context.JobProviderCompanies.Where(e => e.Id == id).FirstOrDefault();
@@ -59,7 +69,25 @@ namespace Domain.Service.Admin
                 _context.SaveChanges();
             }
         }
+        public void DeleteByCategoryId(Guid id)
+        {
+            var item = _context.JobCategories.Where(e => e.Id == id).FirstOrDefault();
+            if (item != null)
+            {
+                _context.JobCategories.Remove(item);
+                _context.SaveChanges();
+            }
+        }
 
+        public void DeleteByIndustryId(Guid id)
+        {
+            var item = _context.Industries.Where(e => e.Id == id).FirstOrDefault();
+            if (item != null)
+            {
+                _context.Industries.Remove(item);
+                _context.SaveChanges();
+            }
+        }
         public int GetCompanyCount()
         {
             int count = _context.JobProviderCompanies.Count();
@@ -131,5 +159,42 @@ namespace Domain.Service.Admin
             return true; // Skill removed successfully
         }
 
+        public async Task<Industry> addIndustry(Industry industry)
+        {
+            await _context.Industries.AddAsync(industry);
+            await _context.SaveChangesAsync();
+            return industry;
+        }
+
+        public async Task<JobCategory> addCategory(JobCategory category)
+        {
+            await _context.JobCategories.AddAsync(category);
+            await _context.SaveChangesAsync();
+            return category;
+        }
+
+
+        public async Task<Location> addLocation(Location location)
+        {
+            await _context.Locations.AddAsync(location);
+            await _context.SaveChangesAsync();
+            return location;
+        }
+
+        public async Task<List<Industry>> GetIndustries()
+        {
+            return await _context.Industries.ToListAsync();
+        }
+
+
+        public async Task<List<Location>> GetLocations()
+        {
+            return await _context.Locations.ToListAsync();
+        }
+
+        public async Task<List<JobCategory>> GetCategories()
+        {
+            return await _context.JobCategories.ToListAsync();
+        }
     }
 }
