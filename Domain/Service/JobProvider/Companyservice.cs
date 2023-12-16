@@ -23,13 +23,19 @@ namespace Domain.Service.JobProvider
             companyRepository = _companyRepository;
         }
 
-        public async Task AddCompany(CompanyRegistrationDtos data, Guid UserId)
+
+        public async Task<JobProviderCompany> AddCompany(CompanyRegistrationDtos data, Guid UserId)
+
         {
             var jobproviderCompany = mapper.Map<JobProviderCompany>(data);
             await companyRepository.AddCompany(jobproviderCompany, UserId);
 
 
+            return jobproviderCompany;
+
         }
+
+
 
         public GetCompanyDetailsDto GetCompany(Guid companyId)
         {

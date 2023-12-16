@@ -12,8 +12,9 @@ namespace Domain.Service.JobProvider.Interfaces
 {
 	public interface ICompanyService
 	{
-		Task  AddCompany(CompanyRegistrationDtos data,Guid UserId);
-		GetCompanyDetailsDto GetCompany(Guid companyId);
+		Task<JobProviderCompany> AddCompany(CompanyRegistrationDtos data, Guid UserId);
+
+        GetCompanyDetailsDto GetCompany(Guid companyId);
 		Task<JobProviderCompany> UpdateAsync(CompanyUpdateDtos company);
 		Task<PagedList<CompanyUser>> memberListing(Guid companyId,CompanyMemberListParam param);
 		bool memberDeleteById(Guid id);

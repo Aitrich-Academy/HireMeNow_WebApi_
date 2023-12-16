@@ -183,7 +183,9 @@ namespace Domain.Service.Profile
             return _context.Skills.ToList();
         }
 
-        public async Task<AuthUserDTO> UpdateProfile(AuthUserDTO updatedProfile)
+        public async Task<AuthUserDTO> 
+            
+            UpdateProfile(AuthUserDTO updatedProfile)
         {
             var existingProfile2 = _context.JobSeekers
                                 .FirstOrDefault(e => e.Id == updatedProfile.JobseekerId);

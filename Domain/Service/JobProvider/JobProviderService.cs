@@ -41,9 +41,15 @@ namespace Domain.Service.JobProvider
             return await _jobProviderRepository.GetAllJobsByProvider(companyId, jobproviderId);
         }
 
-        public void PostJob(JobPost job)
+        public async Task<List<JobApplication>> GetAllJobApplicants(Guid jobproviderId)
         {
-            _jobProviderRepository.Create(job);
+            return await _jobProviderRepository.GetAllJobApplicants(jobproviderId);
+        }
+
+        public Task<Guid> PostJob(JobPost job)
+        {
+           var id = _jobProviderRepository.Create(job);
+            return id;
         }
 
         public async Task<JobPost> GetJobById(Guid jobId)
@@ -51,9 +57,9 @@ namespace Domain.Service.JobProvider
             return await _jobProviderRepository.GetJobById(jobId);
            
         }
-        public async Task<JobPost> Update(JobPost job)
+        public async Task<JobPost> Update(JobPost job, Guid id)
         {
-            var updatedjob = await _jobProviderRepository.UpdateAsync(job);
+            var updatedjob = await _jobProviderRepository.UpdateAsync(job ,id);
             return updatedjob;
         }
 
@@ -69,7 +75,7 @@ namespace Domain.Service.JobProvider
             var signUpId = _jobProviderRepository.AddSignupRequest(signUpRequest);
             MailRequest mailRequest = new MailRequest();
             mailRequest.Subject = "HireMeNow SignUp Verification";
-            mailRequest.Body = "http://localhost:4200/set-password?signupid=" + signUpId.ToString();
+            mailRequest.Body = "http://localhost:56067/set-password=" + signUpId.ToString();
             mailRequest.ToEmail = signUpRequest.Email;
             await _emailService.SendEmailAsync(mailRequest);
         }
@@ -121,6 +127,13 @@ namespace Domain.Service.JobProvider
                 throw ex;
             }
 
+          
+
+        }
+
+        public async Task<List<JobProviderCompany>> GetCompany(Guid jobproviderId)
+        {
+            return await _jobProviderRepository.GetCompany(jobproviderId);
         }
     }
 }
