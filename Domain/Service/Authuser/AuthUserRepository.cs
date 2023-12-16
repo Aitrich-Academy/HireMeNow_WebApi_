@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Models;
 using Domain.Service.Authuser.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -92,5 +93,48 @@ namespace Domain.Service.Authuser
             return _context.CompanyUsers.Where(e => e.Id == userid).FirstOrDefault();
         }
 
-	}
+
+        //for chat application
+
+        public async Task AddUserConnectionIdAsync(string email, string ConnectionId)
+        {
+
+            var userToUpdate = _context.AuthUsers.Where(e=>e.Email==email).FirstOrDefault();
+            if (userToUpdate!=null)
+            {
+                userToUpdate.ConnectionId=ConnectionId;
+                userToUpdate.OnlineStatus=true;
+                //userToUpdate.LastActive=DateTime.Now;
+                _context.AuthUsers.Update(userToUpdate);
+                _context.SaveChanges();
+            }
+           
+            //await _userRepository.Update(userToUpdate);
+        }
+
+        public AuthUser GetUserByConnectionId(string connectionId)
+        {
+
+            return _context.AuthUsers.Where(x => x.ConnectionId==connectionId).FirstOrDefault();
+        }
+
+        public async Task<AuthUser> GetAuthUserByUserEmail(string email)
+        {
+           
+            return await _context.AuthUsers.Where(x => x.Email==email).FirstOrDefaultAsync();
+        }
+
+        public void DisconnectUserByConnectionId(string connectionId)
+        {
+            var userToUpdate = _context.AuthUsers.Where(e => e.ConnectionId==connectionId).FirstOrDefault();
+            if (userToUpdate!=null)
+            {
+                userToUpdate.ConnectionId="";
+                userToUpdate.OnlineStatus=false;
+                //userToUpdate.LastActive=DateTime.Now;
+                _context.AuthUsers.Update(userToUpdate);
+                _context.SaveChanges();
+            }
+        }
+    }
 }
