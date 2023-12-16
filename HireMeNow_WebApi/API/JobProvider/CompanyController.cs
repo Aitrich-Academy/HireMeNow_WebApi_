@@ -40,8 +40,10 @@ namespace HireMeNow_WebApi.API.JobProvider
         {
             var UserId = authUserService.GetUserId();
             var companyRegistrationDtos = mapper.Map<CompanyRegistrationDtos>(data);
+
            var company = await companyService.AddCompany(companyRegistrationDtos, new Guid(UserId));
             return Ok(company);
+
         }
 
         [AllowAnonymous]
