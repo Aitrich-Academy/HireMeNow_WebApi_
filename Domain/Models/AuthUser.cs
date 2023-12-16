@@ -18,5 +18,8 @@ public partial class AuthUser: SystemUser
     //public virtual SystemUser SystemUser { get; set; } = null!;
 
     public string? Password { get; set; }
+    //for chat
+    public string? ConnectionId { get; set; }
+    public bool? OnlineStatus { get; set; } = false;
 
 }

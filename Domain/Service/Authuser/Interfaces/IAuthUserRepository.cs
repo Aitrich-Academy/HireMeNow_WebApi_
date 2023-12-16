@@ -14,6 +14,10 @@ namespace Domain.Service.Authuser.Interfaces
         Task<AuthUser> AddAuthUserJP(AuthUser authUser);
         string? CreateToken(AuthUser user);
         CompanyUser GetUser(Guid userid);
-
-	}
+        Task AddUserConnectionIdAsync(string email, string ConnectionId);
+        AuthUser GetUserByConnectionId(string connectionId);
+        Task<AuthUser> GetAuthUserByUserEmail(string user);
+        void DisconnectUserByConnectionId(string connectionId);
+        //Task<AuthUser> getUserByEmail(string? from);
+    }
 }

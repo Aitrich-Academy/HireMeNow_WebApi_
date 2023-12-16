@@ -25,6 +25,8 @@ using Domain.Service.Admin.Interfaces;
 using Domain.Service.Admin;
 using Domain.Service.User.Interface;
 using Domain.Service.User;
+using Domain.Service.Chat;
+using Domain.Service.Chat.MessageGroupServices;
 
 
 namespace HireMeNow_WebApi.Extensions
@@ -73,9 +75,10 @@ namespace HireMeNow_WebApi.Extensions
             services.AddScoped<IAdminServices, AdminServices>();
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService,UserServices>();    
+            services.AddScoped<IUserService,UserServices>();
 
-
+            services.AddScoped<IChatRepository, ChatRepository>();
+            services.AddScoped<IMessageGroupRepository, MessageGroupRepository>();
 
             return services;
         }
