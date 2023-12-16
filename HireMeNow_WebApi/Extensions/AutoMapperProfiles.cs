@@ -15,6 +15,7 @@ using HireMeNow_WebApi.JobSeeker;
 using Domain.Service.Admin.DTOs;
 using Domain.Service.JobSeeker.DTOs;
 using HireMeNow_WebApi.API.Admin.RequestObjects;
+using HireMeNow_WebApi.API.Chat.RequestObjects;
 
 namespace HireMeNow_WebApi.Extensions
 {
@@ -96,6 +97,8 @@ namespace HireMeNow_WebApi.Extensions
             CreateMap<ProfileDTO, JobSeekerProfile>();
             CreateMap<SkillRequest, SkillDto>();
             CreateMap<SkillDto, Skill>();
+
+            CreateMap<AuthUser, ChatUserDto>().ReverseMap();
         }
     }
 }
