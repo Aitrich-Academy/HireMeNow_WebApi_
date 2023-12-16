@@ -19,6 +19,7 @@ namespace Domain.Service.JobProvider.DTOs
         public string Phone { get; set; } = null!;
 
         public Guid? Company { get; set; }
+        public string Password { get; set; }
 
     }
 }

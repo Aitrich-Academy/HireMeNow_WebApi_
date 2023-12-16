@@ -5,13 +5,14 @@ using Domain.Service.JobProvider.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Service.JobProvider
 {
-    public class JobProviderRepository:IJobProviderRepository
+    public class JobProviderRepository : IJobProviderRepository
     {
         private List<JobPost> jobs = new();
 
@@ -34,33 +35,105 @@ namespace Domain.Service.JobProvider
             return await _context.JobPosts.Where(e => e.CompanyId == companyId && e.PostedBy == jobproviderId).ToListAsync();
         }
 
-        public async void Create(JobPost job)
+        public async Task<List<JobApplication>> GetAllJobApplicants(Guid jobproviderId)
         {
-            await _context.JobPosts.AddAsync(job);
-            _context.SaveChanges();
+            var companyUser = await _context.CompanyUsers
+            .Where(e => e.Id == jobproviderId)
+            .FirstOrDefaultAsync();
+
+            Guid? companyId = companyUser.Company;
+
+            var jobPosts = await _context.JobPosts.Where(e => e.CompanyId == companyId).ToListAsync();
+
+            var jobPostIds = jobPosts.Select(jp => jp.Id).ToList();
+
+            // Fetch job applications based on the extracted JobPostIds
+            /*    var jobApplications = await _context.JobApplications
+                    .Where(ja => jobPostIds.Contains(ja.JobPost_id))
+                    .ToListAsync();*/
+
+            var jobApplications = await _context.JobApplications
+            .Include(ja => ja.Resume)
+            .Include(ja => ja.Seeker)
+            .Include(ja => ja.JobPost)
+            .Where(ja => jobPostIds.Contains(ja.JobPost_id))
+            .ToListAsync();
+
+            return jobApplications;
         }
 
-   /*     public async Task<List<JobPost>> GetJobById(Guid jobId)
+
+        public async Task<List<JobProviderCompany>> GetCompany(Guid jobproviderId)
         {
-            return await _context.JobPosts.Where(j => j.Id == jobId).ToListAsync();
+            var companyUser = await _context.CompanyUsers
+            .Where(e => e.Id == jobproviderId)
+            .FirstOrDefaultAsync();
+
+            Guid? companyId = companyUser.Company;
+
+            /*var company = await _context.JobProviderCompanies
+        .Where(e => e.Id == companyId)
+        .FirstOrDefaultAsync();*/
+
+            var companies = await _context.JobProviderCompanies
+      .Where(e => e.Id == companyId)
+      .ToListAsync();
+
+
+            return companies;
+        }
+
+        public async Task<Guid> Create(JobPost job)
+        {
+            job.Id = Guid.NewGuid();
+            await _context.JobPosts.AddAsync(job);
+            _context.SaveChanges();
+            return job.Id;
+        }
+
+
+  /*      public async Task<JobPost> UpdateAsync(JobPost Updatedjob, Guid id)
+        {
+            *//*       var jobToUpdate = _context.JobPosts.Find(Updatedjob.Id);*//*
+            var jobToUpdate = await _context.JobPosts.SingleOrDefaultAsync(e => e.Id == id);
+            *//*
+                        jobToUpdate.Id = Updatedjob.Id;*//*
+            jobToUpdate.JobTitle = Updatedjob.JobTitle;
+            jobToUpdate.JobSummary = Updatedjob.JobSummary;
+            jobToUpdate.LocationId = Updatedjob.LocationId;
+            jobToUpdate.Company = Updatedjob.Company;
+            jobToUpdate.JobCategory = Updatedjob.JobCategory;
+            jobToUpdate.Industry = Updatedjob.Industry;
+            _context.JobPosts.Update(jobToUpdate);
+            await _context.SaveChangesAsync();
+
+            return jobToUpdate;
         }*/
 
-        public async Task<JobPost> UpdateAsync(JobPost Updatedjob)
+        public async Task<JobPost> UpdateAsync(JobPost Updatedjob, Guid id)
         {
-            var jobToUpdate = _context.JobPosts.Find(Updatedjob.Id);
-            
-                jobToUpdate.Id = Updatedjob.Id;
+            var jobToUpdate = await _context.JobPosts.FirstOrDefaultAsync(e => e.Id == id);
+
+
+            if (jobToUpdate != null)
+            {
                 jobToUpdate.JobTitle = Updatedjob.JobTitle;
                 jobToUpdate.JobSummary = Updatedjob.JobSummary;
                 jobToUpdate.LocationId = Updatedjob.LocationId;
                 jobToUpdate.Company = Updatedjob.Company;
                 jobToUpdate.JobCategory = Updatedjob.JobCategory;
                 jobToUpdate.Industry = Updatedjob.Industry;
+
                 _context.JobPosts.Update(jobToUpdate);
                 await _context.SaveChangesAsync();
-           
-            return jobToUpdate;
+
+                return jobToUpdate;
+            }
+
+            // Handle the case where no job with the specified id is found.
+            return null;
         }
+
         public void DeleteJob(Guid id)
         {
             var item = _context.JobPosts.Where(e => e.Id == id).FirstOrDefault();

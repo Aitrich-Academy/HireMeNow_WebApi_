@@ -14,9 +14,13 @@ namespace Domain.Service.JobProvider.Interfaces
 
         public Task<List<JobPost>> GetAllJobsByProvider(Guid companyId, Guid jobproviderId);
 
-        public void PostJob(JobPost job);
+        public Task<List<JobApplication>> GetAllJobApplicants(Guid jobproviderId);
 
-        public Task<JobPost> Update(JobPost job);
+        public Task<List<JobProviderCompany>> GetCompany(Guid jobproviderId);
+
+        public Task<Guid> PostJob(JobPost job);
+
+        public Task<JobPost> Update(JobPost job, Guid id);
 
         public Task<JobPost> GetJobById(Guid jobId);
 

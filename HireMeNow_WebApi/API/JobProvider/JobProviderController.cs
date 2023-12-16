@@ -128,30 +128,30 @@ namespace HireMeNow_WebApi.API.JobProvider
 		[HttpPost]
 		[Route("company/{companyId}/job-provider/{jobproviderId}/job")]
 
-		public async Task<IActionResult> PostJob(JobPostsDtos jobpostDto)
+		public async Task<IActionResult> PostJob(JobPostRequest request)
 		{
-			var job = _mapper.Map<JobPost>(jobpostDto);
-			_jobProviderService.PostJob(job);
-			return Ok(jobpostDto);
-
+			var job = _mapper.Map<JobPost>(request);
+			Guid id = await _jobProviderService.PostJob(job);
+			return Ok("The job id for the posted job is" + id);
 		}
 
 		[AllowAnonymous]
 		[HttpPut]
 		[Route("company/{companyId}/job-provider/{jobproviderId}/job/{id}")]
 
-		public async Task<IActionResult> UpdateJob(JobPostsDtos jobpostDto, Guid id)
+		public async Task<IActionResult> UpdateJob(JobPostRequest request, Guid id)
 		{
 			try
 			{
-				jobpostDto.Id = id;
-				var job = _mapper.Map<JobPost>(jobpostDto);
-				_jobProviderService.Update(job);
-				return Ok(_mapper.Map<JobPostsDtos>(job));
+				
+				/*jobpostDto.Id = id;*/
+				var job = _mapper.Map<JobPost>(request);
+                var jobUpdated = await _jobProviderService.Update(job ,id);
+				return Ok(request);
 			}
 			catch (Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -173,6 +173,40 @@ namespace HireMeNow_WebApi.API.JobProvider
 			}
 		}
 
-	}
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("job-provider/{jobproviderId}/getJobApplicants")]
+        public async Task<IActionResult> GetAllJobApplicants(Guid jobproviderId)
+        {
+            try
+            {
+                List<JobApplication> jobapplications = await _jobProviderService.GetAllJobApplicants(jobproviderId);
+                return Ok(_mapper.Map<List<JobApplicationDto>>(jobapplications));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message); 
+            }
+
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("job-provider/{jobproviderId}/getCompany")]
+        public async Task<IActionResult> GetCompany(Guid jobproviderId)
+        {
+            try
+            {
+                List<JobProviderCompany> jobapplications = await _jobProviderService.GetCompany(jobproviderId);
+
+                return Ok(_mapper.Map<List<Domain.Service.Admin.DTOs.JobProviderDto>>(jobapplications));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+    }
 
 }
