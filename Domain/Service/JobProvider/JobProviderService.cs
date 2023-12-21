@@ -75,7 +75,7 @@ namespace Domain.Service.JobProvider
             var signUpId = _jobProviderRepository.AddSignupRequest(signUpRequest);
             MailRequest mailRequest = new MailRequest();
             mailRequest.Subject = "HireMeNow SignUp Verification";
-            mailRequest.Body = "http://localhost:56067/set-password=" + signUpId.ToString();
+            mailRequest.Body = "http://localhost:56067/set-password?signupid=" + signUpId.ToString();
             mailRequest.ToEmail = signUpRequest.Email;
             await _emailService.SendEmailAsync(mailRequest);
         }

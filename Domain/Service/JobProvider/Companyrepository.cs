@@ -118,67 +118,6 @@ namespace Domain.Service.JobProvider
             }
         }
 
-			catch (Exception ex)
-			{
-				
-			}
-		
-		}
-		public JobProviderCompany GetCompany(Guid companyId)
-		{
-			JobProviderCompany company = _context.JobProviderCompanies.Where(e => e.Id == companyId).FirstOrDefault();
-			return company;
-
-		}
-		public async Task<JobProviderCompany> updateCompanyAsync(JobProviderCompany company)
-				{
-			var companyToUpdate = await _context.JobProviderCompanies.Where(e => e.Id == company.Id).FirstOrDefaultAsync();
-			if (companyToUpdate != null)
-			{
-				companyToUpdate.LegalName = company.LegalName ?? companyToUpdate.LegalName;
-				companyToUpdate.Address = company.Address ?? companyToUpdate.Address;
-				//companyToUpdate.Industry = company.Industry == null ? companyToUpdate.Industry : company.Industry;
-				////companyToUpdate.Location = company.Location == null ? companyToUpdate.Location : company.Location;
-				companyToUpdate.Email = company.Email ?? companyToUpdate.Email;
-				companyToUpdate.Phone = company.Phone == null ? companyToUpdate.Phone : company.Phone;
-				companyToUpdate.Website = company.Website == null ? company.Website : companyToUpdate.Website;
-				companyToUpdate.Address = company.Address ?? companyToUpdate.Address;
-				_context.JobProviderCompanies.Update(companyToUpdate);
-				_context.SaveChanges();
-
-
-			}
-			else
-			{
-				throw new FileNotFoundException("Company Not Found");
-			}
-			return companyToUpdate;
-		}
-		public async Task<PagedList<CompanyUser>> memberListing(Guid companyId,CompanyMemberListParam param)
-		{
-			var query =   _context.CompanyUsers.Where(e => e.Company == companyId)
-		   .AsQueryable();
-
-
-			return await PagedList<CompanyUser>.CreateAsync(query,
-				param.PageNumber, param.PageSize);
-		}
-		public bool memberDeleteById(Guid id)
-		{
-			CompanyUser user = _context.CompanyUsers.Where(e => e.Id == id).FirstOrDefault();
-			if (user != null)
-			{
-				_context.CompanyUsers.Remove(user);
-				_context.SaveChanges();
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-
         public async Task<CompanyMemberDtos> AddMemberAsync(CompanyMemberDtos companyMember, Guid companyId)
         {
             companyMember.Company = companyId;
@@ -191,11 +130,6 @@ namespace Domain.Service.JobProvider
 
             return companyMember;
         }
-
-
-
-
-
 
     }
 }
