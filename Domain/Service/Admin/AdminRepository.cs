@@ -176,6 +176,7 @@ namespace Domain.Service.Admin
 
         public async Task<Location> addLocation(Location location)
         {
+            location.Id = Guid.NewGuid();
             await _context.Locations.AddAsync(location);
             await _context.SaveChangesAsync();
             return location;
