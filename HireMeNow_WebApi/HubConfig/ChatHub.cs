@@ -14,6 +14,7 @@ namespace HireMeNow_WebApi.HubConfig
         IAuthUserRepository _authUserRepository;
         IMessageGroupRepository _messageGroupRepository;
         IMapper _mapper;
+       
         public ChatHub(IChatRepository chatRepository, IMessageGroupRepository messageGroupRepository, IAuthUserRepository authUserRepository, IMapper mapper)
         {
             _chatRepository = chatRepository;
@@ -101,7 +102,7 @@ namespace HireMeNow_WebApi.HubConfig
             message.ToUserId = toUser.Id;
 
             string privateGroupName = GetPrivateGroupName(message.From, message.To);
-            await _messageGroupRepository.CreateChatGroupAsync(privateGroupName, message);
+            await _messageGroupRepository.CreateChatGroupAsync( message);
             message.ToGroup=privateGroupName;
             await Groups.AddToGroupAsync(Context.ConnectionId, privateGroupName);
             var authUser = await _authUserRepository.GetAuthUserByUserEmail(message.To);
@@ -116,13 +117,13 @@ namespace HireMeNow_WebApi.HubConfig
         {
             if (message.ToGroup!=null)
             {
-                _chatRepository.AddMessage(message);
+                _chatRepository.AddMessageAsync(message);
                 await Clients.Group(message.ToGroup).SendAsync("NewPrivateMessage", message);
             }
             else
             {
                 string privateGroupName = GetPrivateGroupName(message.From, message.To);
-                _chatRepository.AddMessage(message);
+                _chatRepository.AddMessageAsync(message);
                 await Clients.Group(privateGroupName).SendAsync("NewPrivateMessage", message);
             }
         }
@@ -152,6 +153,14 @@ namespace HireMeNow_WebApi.HubConfig
             var stringToCompare = string.CompareOrdinal(from, to)<0;
             return stringToCompare ? $"{from}-{to}" : $"{to}-{from}";
 
+        }
+
+        public async Task notifyNewMessageAsync(Message message)
+        {
+            AuthUser touser = await _authUserRepository.GetAuthUserByUserId(message.ToUserId.Value);
+            await Clients.Client(touser.ConnectionId).SendAsync("NewMessage", message);
+
+            //await Clients.Group("Come2Chat").SendAsync("NewMessage", message);
         }
     }
 }

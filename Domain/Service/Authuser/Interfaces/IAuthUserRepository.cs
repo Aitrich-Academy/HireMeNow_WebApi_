@@ -18,6 +18,7 @@ namespace Domain.Service.Authuser.Interfaces
         AuthUser GetUserByConnectionId(string connectionId);
         Task<AuthUser> GetAuthUserByUserEmail(string user);
         void DisconnectUserByConnectionId(string connectionId);
+        Task<AuthUser> GetAuthUserByUserId(Guid value);
         //Task<AuthUser> getUserByEmail(string? from);
     }
 }

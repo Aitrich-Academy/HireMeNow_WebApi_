@@ -2,12 +2,14 @@
 
 using AutoMapper;
 using Domain.Models;
+using Domain.Service.Authuser.Interfaces;
 using Domain.Service.Chat;
 using Domain.Service.Chat.MessageGroupServices;
 using Domain.Service.SignUp.DTOs;
 using HireMeNow_WebApi.API.Chat.RequestObjects;
+using HireMeNow_WebApi.HubConfig;
 using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.AspNetCore.SignalR;
 
 namespace HireMeNow_WebApi.API.Chat
 {
@@ -16,19 +18,23 @@ namespace HireMeNow_WebApi.API.Chat
     public class ChatController : ControllerBase
     {
         IChatRepository chatRepository;
+        IAuthUserRepository _authUserRepository;
         IMessageGroupRepository messageGroupRepository;
         IMapper mapper;
-        public ChatController(IChatRepository _chatRepository,IMessageGroupRepository _messageGroupRepository, IMapper _mapper) {
+        private readonly IHubContext<ChatHub> _chatHubContext;
+        public ChatController(IChatRepository _chatRepository,IMessageGroupRepository _messageGroupRepository, IMapper _mapper, IAuthUserRepository authUserRepository, IHubContext<ChatHub> chatHubContext) {
             chatRepository= _chatRepository;
             messageGroupRepository= _messageGroupRepository;    
             mapper= _mapper;
+            _chatHubContext = chatHubContext;
+            _authUserRepository=authUserRepository;
         }
 
         [HttpPost]
         [Route("group/{groupId}/message")]
         public IActionResult AddMessage(Message message,Guid groupId)
         {
-            chatRepository.AddMessage(message);
+            chatRepository.AddMessageAsync(message);
             return Ok();
         }
 
@@ -62,8 +68,22 @@ namespace HireMeNow_WebApi.API.Chat
         public async Task<IActionResult> GetAllUsers()
         {
             IList<AuthUser> res = await messageGroupRepository.GetAllUsers();
-            mapper.Map<IList<ChatUserDto>>(res);
-            return Ok(res);
+           var returnUsers= mapper.Map<IList<ChatUserDto>>(res);
+            return Ok(returnUsers);
+        }
+
+
+        [HttpPost]
+        [Route("message")]
+        public async Task<IActionResult> CreateMessages(Message message)
+        {
+            try
+            {
+                message=await chatRepository.AddMessageAsync(message);
+                //AuthUser touser = await _authUserRepository.GetAuthUserByUserId(message.ToUserId.Value);
+                //await _chatHubContext.Clients.Client(touser.ConnectionId).InvokeAsync<string>("notifyNewMessageAsync", message, default); // Assuming string return type
+            }catch(Exception ex) { }
+                return Ok();
         }
 
     }

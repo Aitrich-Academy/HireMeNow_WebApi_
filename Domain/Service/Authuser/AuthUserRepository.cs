@@ -136,5 +136,11 @@ namespace Domain.Service.Authuser
                 _context.SaveChanges();
             }
         }
+
+        public async Task<AuthUser> GetAuthUserByUserId(Guid authUserId)
+        {
+            var authuser = await _context.AuthUsers.Where(e => e.Id==authUserId).FirstOrDefaultAsync();
+            return authuser;
+        }
     }
 }
