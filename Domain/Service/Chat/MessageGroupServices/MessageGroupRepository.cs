@@ -20,8 +20,9 @@ namespace Domain.Service.Chat.MessageGroupServices
             return messageGroup;
         }
 
-        public async Task CreateChatGroupAsync(string privateGroupName, Message message)
+        public async Task CreateChatGroupAsync( Message message)
         {
+            string privateGroupName = GetPrivateGroupName(message.From, message.To);
             MessageGroup group = new MessageGroup();
             group.Name = privateGroupName;
             group.Messages.Add(message);
@@ -62,9 +63,14 @@ namespace Domain.Service.Chat.MessageGroupServices
             //messagesDic.Add(groupName, new List<Message>() { message });
             var grp = DbContext.MessageGroups.Where(e => e.Name==privateGroupName).Count();
             if (grp == 0) {
-                await DbContext.MessageGroups.AddAsync(group);
-                DbContext.SaveChanges();
+                //if (DbContext.MessageGroups.Where(g => g.GroupMembers.Contains(groupMember)).Count()>0)
+                //{
+                    await DbContext.MessageGroups.AddAsync(group);
+                    DbContext.SaveChanges();
+                //}
+               
             }
+           
             
         }
 
@@ -77,6 +83,13 @@ namespace Domain.Service.Chat.MessageGroupServices
         {
            var res=await DbContext.MessageGroups.Include(e=>e.GroupMembers).Where(e => e.GroupMembers.Any(g=>g.ToUserId==userId)).ToListAsync();
             return res;
+        }
+
+        private string GetPrivateGroupName(string from, string to)
+        {
+            var stringToCompare = string.CompareOrdinal(from, to)<0;
+            return stringToCompare ? $"{from}-{to}" : $"{to}-{from}";
+
         }
     }
 }
