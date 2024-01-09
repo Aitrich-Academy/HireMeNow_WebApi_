@@ -21,6 +21,7 @@ namespace Domain.Service.Admin.Interfaces
 
         public Task<List<Location>> GetLocations();
 
+        public Task<List<JobPost>> GetJobs();
 
         public Task<List<JobCategory>> GetCategories();
         public void DeleteById(Guid id);
