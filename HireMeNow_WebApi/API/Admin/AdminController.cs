@@ -182,13 +182,25 @@ namespace HireMeNow_WebApi.API.Admin
 		}
 		[HttpGet]
 		[Route("alljobs")]
+        public async Task<IActionResult> alljobs()
+        {
 
-	
+            try
+            {
+                var jobs = await _adminService.GetJobs();
+                return Ok(_mapper.Map<List<Joblist>>(jobs));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
 
 
 
 
-		[HttpDelete]
+        [HttpDelete]
         [Route("admin/RemoveCompanyUsers/{id}")]
         public IActionResult Remove(Guid id)
         {
