@@ -178,6 +178,29 @@ namespace HireMeNow_WebApi.JobSeeker
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpPatch("JobSeekerProfileUpdate")]
+
+        public async Task<IActionResult> UpdateJobSeekerProfiles([FromForm] AuthUserDTO updatedProfile)
+        {
+            try
+            {
+                var result = await _profileService.UpdateJobSeekerProfile(updatedProfile);
+
+
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        //
         [HttpPost("AddProfile")]
         public async Task<IActionResult> AddProfile(JobseekerProfileRequest profileRequest)
         {
