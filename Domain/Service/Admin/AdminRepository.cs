@@ -115,8 +115,13 @@ namespace Domain.Service.Admin
         public async Task<List<JobPost>> GetJobs()
         {
 
-            return _context.JobPosts.ToList();
-
+            /*            return _context.JobPosts.ToList();*/
+            return await _context.JobPosts
+                    .Include(j => j.Location) 
+                    .Include(j => j.Industry) 
+                    .Include(j => j.JobCategory)
+                    .Include(j => j.PostedByNavigation)
+                    .ToListAsync();
         }
 
 

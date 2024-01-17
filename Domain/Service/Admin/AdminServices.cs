@@ -56,6 +56,10 @@ namespace Domain.Service.Admin
             return await _adminRepository.GetCategories();
         }
 
+        public async Task<List<JobPost>> GetJobs()
+        {
+            return await _adminRepository.GetJobs();
+        }
         public void DeleteById(Guid id)
         {
             _adminRepository.DeleteById(id);

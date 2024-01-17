@@ -54,6 +54,8 @@ namespace Domain.Service.Admin.Interfaces
         public Task<List<Industry>> GetIndustries();
         public Task<List<Location>> GetLocations();
         public Task<List<JobCategory>> GetCategories();
+        public Task<List<JobPost>> GetJobs();
+
     }
 
 }
