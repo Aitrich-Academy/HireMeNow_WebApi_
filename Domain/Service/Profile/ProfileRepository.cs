@@ -183,45 +183,94 @@ namespace Domain.Service.Profile
             return _context.Skills.ToList();
         }
 
-        public async Task<AuthUserDTO> 
-            
-            UpdateProfile(AuthUserDTO updatedProfile)
+        /*        public async Task<AuthUserDTO> UpdateProfile(AuthUserDTO updatedProfile)
+                {
+                    var existingProfile2 = _context.JobSeekers.FirstOrDefault(e => e.Id == updatedProfile.JobseekerId);
+
+                    var existingProfile = _context.AuthUsers.FirstOrDefault(e => e.Id == updatedProfile.JobseekerId);
+
+                    byte[] byteArray =ConvertImageToByteArray(updatedProfile.Image);
+                    existingProfile2.Image = byteArray;
+
+                    if (existingProfile == null)
+                    {
+                        // Handle case when the profile is not found
+                        return null;
+                    }
+                    existingProfile.FirstName = updatedProfile.FirstName;
+                    existingProfile.LastName = updatedProfile.LastName;
+                    existingProfile.Phone = updatedProfile.Phone;
+                    existingProfile.Password = updatedProfile.Password;
+                    existingProfile.Phone =updatedProfile.Phone;
+                    existingProfile.UserName = updatedProfile.UserName;
+
+                    existingProfile2.FirstName = updatedProfile.FirstName;
+                    existingProfile2.LastName = updatedProfile.LastName;
+                    existingProfile2.Phone = updatedProfile.Phone;
+                    existingProfile2.Phone = updatedProfile.Phone;
+                    existingProfile2.UserName = updatedProfile.UserName;
+
+                    // Save changes to the database
+                    await _context.SaveChangesAsync();
+
+                    return updatedProfile;
+                }*/
+
+        public async Task<AuthUserDTO> UpdateProfile(AuthUserDTO updatedProfile)
         {
-            var existingProfile2 = _context.JobSeekers
-                                .FirstOrDefault(e => e.Id == updatedProfile.JobseekerId);
+            // Retrieve the existing profiles
+            var existingProfile = _context.AuthUsers.FirstOrDefault(e => e.Id == updatedProfile.JobseekerId);
+            var existingProfile2 = _context.JobSeekers.FirstOrDefault(e => e.Id == updatedProfile.JobseekerId);
 
-            var existingProfile = _context.AuthUsers
-                             .FirstOrDefault(e => e.Id == updatedProfile.JobseekerId);
-            byte[] byteArray =ConvertImageToByteArray(updatedProfile.Image);
-            existingProfile2.Image = byteArray;
-            // Call the service
-            //var existingProfile = await _context.JobSeekerProfiles.FindAsync(id);
-
-            if (existingProfile == null)
+            if (existingProfile == null || existingProfile2 == null)
             {
                 // Handle case when the profile is not found
                 return null;
             }
-            existingProfile.FirstName = updatedProfile.FirstName;
-            existingProfile.LastName = updatedProfile.LastName;
-            existingProfile.Phone = updatedProfile.Phone;
-            existingProfile.Password = updatedProfile.Password;
-            existingProfile.Phone =updatedProfile.Phone;
-            existingProfile.UserName = updatedProfile.UserName;
 
-            existingProfile2.FirstName = updatedProfile.FirstName;
-            existingProfile2.LastName = updatedProfile.LastName;
-            existingProfile2.Phone = updatedProfile.Phone;
-            existingProfile2.Phone = updatedProfile.Phone;
-            existingProfile2.UserName = updatedProfile.UserName;
-            // existingProfile.JobSeeker.ImageUrl = updatedProfile.ImageUrl;
-            // ... update other properties accordingly
+            // Update image only if it's provided in the updatedProfile
+            if (updatedProfile.Image != null)
+            {
+                byte[] byteArray = ConvertImageToByteArray(updatedProfile.Image);
+                existingProfile2.Image = byteArray;
+            }
+
+            // Update fields only if they are provided in the updatedProfile and different from the current values
+            if (!string.IsNullOrEmpty(updatedProfile.FirstName))
+            {
+                existingProfile.FirstName = updatedProfile.FirstName;
+                existingProfile2.FirstName = updatedProfile.FirstName;
+            }
+
+            if (!string.IsNullOrEmpty(updatedProfile.LastName))
+            {
+                existingProfile.LastName = updatedProfile.LastName;
+                existingProfile2.LastName = updatedProfile.LastName;
+            }
+
+            if (!string.IsNullOrEmpty(updatedProfile.Phone))
+            {
+                existingProfile.Phone = updatedProfile.Phone;
+                existingProfile2.Phone = updatedProfile.Phone;
+            }
+
+            if (!string.IsNullOrEmpty(updatedProfile.Password))
+            {
+                existingProfile.Password = updatedProfile.Password;
+            }
+
+            if (!string.IsNullOrEmpty(updatedProfile.UserName))
+            {
+                existingProfile.UserName = updatedProfile.UserName;
+                existingProfile2.UserName = updatedProfile.UserName;
+            }
 
             // Save changes to the database
             await _context.SaveChangesAsync();
 
             return updatedProfile;
         }
+
         public byte[] ConvertImageToByteArray(IFormFile imageFile)
         {
             using (var memoryStream = new MemoryStream())
