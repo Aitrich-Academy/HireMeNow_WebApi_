@@ -27,7 +27,6 @@ namespace Domain.Models
 		public DateTime? Date { get; set; }
 
 		
-		public JobInterviewStatus Status { get; set; }
 		[ForeignKey(nameof(CompanyUser))]
 		public Guid? SheduledBy { get; set; }
 	

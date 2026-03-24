@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
-using HireMeNow_WebApi.HubConfig;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,9 +79,6 @@ app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOri
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-app.MapHub<ChatHub>("/hubs/chat");
 app.Run();

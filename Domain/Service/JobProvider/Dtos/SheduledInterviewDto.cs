@@ -20,7 +20,7 @@ namespace Domain.Service.JobProvider.Dtos
         public DateTime? Date { get; set; }
 
 
-        public JobInterviewStatus Status { get; set; }
+       
         public string CompanyUserUserName { get; set; }
 
         /*      public virtual CompanyUser? CompanyUser { get; set; }

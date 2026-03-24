@@ -29,7 +29,7 @@ namespace Domain.Models
         public string? Content { get; set; }
         public DateTime SentDate { get; set; } = DateTime.Now;
         public string? ToGroup { get; set; }
-        public MessageStatus Status { get; set; }
+       
         [JsonIgnore]
         public virtual MessageGroup? MessageGroup { get; set; }
     }

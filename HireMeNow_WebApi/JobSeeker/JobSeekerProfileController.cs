@@ -7,7 +7,6 @@ using Domain.Service.Profile;
 using Domain.Service.Profile.DTOs;
 using Domain.Service.Profile.Interface;
 using Domain.Service.SignUp.DTOs;
-using HireMeNow_WebApi.API.JobProvider;
 using HireMeNow_WebApi.API.JobSeeker.RequestObjects;
 using HireMeNow_WebApi.Controllers;
 using Microsoft.AspNetCore.Authorization;
@@ -64,23 +63,7 @@ namespace HireMeNow_WebApi.JobSeeker
             }
         }
 
-        [HttpPost]
-        [Route("{jobseekerId}/profile/{profileId}/Experience")]
-        public async Task<ActionResult> AddExperienceToProfile(Guid jobseekerId, Guid profileId, WorkExperieceRequest data)
-        {
-            var JobseekerWorkExperienceDTo = mapper.Map<JobseekerWorkExperienceDTo>(data);
-            await _profileService.AddWorkExpericeToProfileAsync(jobseekerId, profileId, JobseekerWorkExperienceDTo);
-            return Ok(data);
-        }
-
-        [HttpPost]
-        [Route("{jobseekerId}/profile/{profileId}/Qualification")]
-        public async Task<ActionResult> AddQualificationToProfile(Guid jobseekerId, Guid profileId, QualificationRequest data)
-        {
-            var JobseekerQualificationDTo = mapper.Map<JobseekerQualificationDTo>(data);
-            _profileService.AddQualificationToProfileAsync(jobseekerId, profileId, JobseekerQualificationDTo);
-            return Ok(data);
-        }
+    
         [HttpGet("{jobseekerId}/profiledetails")]
         public ActionResult<List<JobSeekerProfileDTo>> GetProfile(Guid jobseekerId)
         {

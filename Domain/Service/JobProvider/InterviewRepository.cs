@@ -36,7 +36,7 @@ namespace Domain.Service.JobProvider
 				var interviewtoshedule = mapper.Map<Interview>(interview);
 				interviewtoshedule.JobId = applicaction.JobPost_id;
 				interviewtoshedule.ApplicationId = applicaction.Id;
-				interviewtoshedule.Status = JobInterviewStatus.SCHEDULED;
+			
 				interviewtoshedule.SheduledBy = user.Id;
 				interviewtoshedule.interviewee = applicaction.Applicant;
 				interviewtoshedule.CompanyId = (Guid)user.Company;
